@@ -1,0 +1,78 @@
+/* The Boring Dev Website - Design System
+ * 
+ * This file contains design system variables and utility classes
+ * for the landing page. The colors are derived from the provided
+ * color palette.
+ */
+
+@layer base {
+  :root {
+    /* Color Palette */
+    --color-main: #00010D;
+    --color-gray: #626973;
+    --color-slate: #79818C;
+    --color-offwhite: #F2F2F0;
+    --color-dark: #0D0D0D;
+    
+    /* Typography */
+    --font-primary: 'Inter', sans-serif;
+    --font-heading: 'Inter', sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    
+    /* Border radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-normal: 300ms ease;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(to right, var(--color-main), var(--color-slate));
+  }
+  
+  .bg-gradient {
+    background-image: linear-gradient(to right, var(--color-main), var(--color-slate));
+  }
+}
+
+/* Common component styles */
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded font-medium transition-all duration-300;
+  }
+  
+  .btn-primary {
+    @apply bg-boring-main text-boring-offwhite hover:bg-opacity-90;
+  }
+  
+  .btn-secondary {
+    @apply bg-boring-offwhite text-boring-main border border-boring-main hover:bg-boring-main hover:text-boring-offwhite;
+  }
+  
+  .card {
+    @apply bg-boring-offwhite p-6 rounded-lg shadow-md;
+  }
+  
+  .section {
+    @apply py-12 md:py-24;
+  }
+  
+  .container {
+    @apply mx-auto px-4 max-w-7xl;
+  }
+} 

@@ -1,0 +1,98 @@
+/* The Boring Dev Website - Color Theme
+ * 
+ * This file contains color theme styles for the landing page.
+ * The colors are derived from the provided color palette image.
+ */
+
+:root {
+  /* Main Color Palette */
+  --main: #00010D;
+  --gray: #626973;
+  --slate: #79818C;
+  --offwhite: #F2F2F0;
+  --dark: #0D0D0D;
+}
+
+/* Background Color Utilities */
+.bg-theme-main {
+  background-color: var(--main);
+  color: var(--offwhite);
+}
+
+.bg-theme-dark {
+  background-color: var(--dark);
+  color: var(--offwhite);
+}
+
+.bg-theme-slate {
+  background-color: var(--slate);
+  color: var(--offwhite);
+}
+
+.bg-theme-offwhite {
+  background-color: var(--offwhite);
+  color: var(--dark);
+}
+
+.bg-theme-gray {
+  background-color: var(--gray);
+  color: var(--offwhite);
+}
+
+/* Text Color Utilities */
+.text-theme-main {
+  color: var(--main);
+}
+
+.text-theme-dark {
+  color: var(--dark);
+}
+
+.text-theme-slate {
+  color: var(--slate);
+}
+
+.text-theme-offwhite {
+  color: var(--offwhite);
+}
+
+.text-theme-gray {
+  color: var(--gray);
+}
+
+/* Gradient Backgrounds */
+.bg-theme-gradient {
+  background: linear-gradient(to right, var(--main), var(--slate));
+  color: var(--offwhite);
+}
+
+.bg-theme-gradient-vertical {
+  background: linear-gradient(to bottom, var(--main), var(--slate));
+  color: var(--offwhite);
+}
+
+/* Border Colors */
+.border-theme-main {
+  border-color: var(--main);
+}
+
+.border-theme-slate {
+  border-color: var(--slate);
+}
+
+.border-theme-gray {
+  border-color: var(--gray);
+}
+
+/* Hover Effects */
+.hover-theme-main:hover {
+  background-color: var(--main);
+  color: var(--offwhite);
+  transition: all 0.3s ease;
+}
+
+.hover-theme-dark:hover {
+  background-color: var(--dark);
+  color: var(--offwhite);
+  transition: all 0.3s ease;
+} 

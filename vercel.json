@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/reword-this", "destination": "/index.html" },
+    { "source": "/reword-this/(.*)", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+} 
