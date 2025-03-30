@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, ReactNode, CSSProperties, FC, cloneElement, isValidElement, Children, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 
 // Animated underline link
 export const AnimatedLink: React.FC<{ 
@@ -2606,6 +2607,162 @@ export const AccordionTabs: React.FC<AccordionTabsProps> = ({
           </div>
         );
       })}
+    </div>
+  );
+};
+
+export const VideoTooltip: FC<{
+  children: ReactNode;
+  videoSrc: string;
+  tooltipContent?: string;
+  className?: string;
+  position?: 'top' | 'bottom' | 'left' | 'right' | 'center';
+  width?: string;
+  arrowSize?: number;
+  showDelay?: number;
+}> = ({
+  children,
+  videoSrc,
+  tooltipContent,
+  className = '',
+  position = 'top',
+  width = '320px',
+  arrowSize = 8,
+  showDelay = 300
+}) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const childRef = useRef<HTMLDivElement>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+  
+  // Only run on client
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Update tooltip position when scrolling
+  useEffect(() => {
+    if (!isVisible) return;
+    
+    const updatePosition = () => {
+      if (childRef.current) {
+        setTooltipPosition(calculateTooltipPosition());
+      }
+    };
+    
+    // Update on scroll
+    window.addEventListener('scroll', updatePosition);
+    window.addEventListener('resize', updatePosition);
+    
+    return () => {
+      window.removeEventListener('scroll', updatePosition);
+      window.removeEventListener('resize', updatePosition);
+    };
+  }, [isVisible, position]);
+  
+  // Update position when the tooltip becomes visible
+  useEffect(() => {
+    if (isVisible && childRef.current) {
+      setTooltipPosition(calculateTooltipPosition());
+    }
+  }, [isVisible]);
+
+  if (!mounted) {
+    return (
+      <div className={`inline-block ${className}`} ref={childRef}>
+        {children}
+      </div>
+    );
+  }
+  
+  // Calculate position based on selected position parameter
+  const calculateTooltipPosition = () => {
+    if (!childRef.current) return { top: 0, left: 0 };
+    
+    const childRect = childRef.current.getBoundingClientRect();
+    const tooltipWidth = parseInt(width, 10);
+    
+    // For center position (on top of the card)
+    if (position === 'center') {
+      return {
+        top: childRect.top + (childRect.height / 2) - 150, // Center vertically, 150px is approx half the video height
+        left: childRect.left + (childRect.width / 2) - (tooltipWidth / 2) // Center horizontally
+      };
+    }
+    
+    // For top position (above the card)
+    if (position === 'top') {
+      return {
+        top: childRect.top - 300 - 20, // Above the card
+        left: childRect.left + (childRect.width / 2) - (tooltipWidth / 2)
+      };
+    }
+    
+    // For bottom position (below the card)
+    if (position === 'bottom') {
+      return {
+        top: childRect.bottom + 20,
+        left: childRect.left + (childRect.width / 2) - (tooltipWidth / 2)
+      };
+    }
+    
+    // Default center position
+    return {
+      top: childRect.top + (childRect.height / 2) - 150,
+      left: childRect.left + (childRect.width / 2) - (tooltipWidth / 2)
+    };
+  };
+  
+  return (
+    <div 
+      className={`relative inline-block transition-transform duration-300 ${isVisible && position === 'center' ? 'scale-[1.02]' : ''} ${className}`}
+      onMouseEnter={() => setTimeout(() => setIsVisible(true), showDelay)}
+      onMouseLeave={() => setIsVisible(false)}
+      ref={childRef}
+    >
+      {children}
+      
+      {isVisible && videoSrc && createPortal(
+        <div
+          ref={tooltipRef}
+          className={`fixed z-[9999] ${position === 'center' ? 'animate-scaleIn' : 'animate-fadeIn'}`}
+          style={{
+            width,
+            top: `${tooltipPosition.top}px`,
+            left: `${tooltipPosition.left}px`,
+          }}
+        >
+          <div className={`${position === 'center' ? 'bg-white/95 backdrop-blur-sm' : 'bg-white'} rounded-lg shadow-xl overflow-hidden border border-gray-200`}>
+            <video 
+              src={videoSrc} 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full"
+            />
+            {tooltipContent && (
+              <div className="p-2 text-sm text-center text-boring-dark">
+                {tooltipContent}
+              </div>
+            )}
+            {position !== 'center' && (
+              <div
+                className="absolute bottom-[-8px] left-1/2 transform -translate-x-1/2"
+                style={{
+                  width: 0,
+                  height: 0,
+                  borderLeft: `${arrowSize}px solid transparent`,
+                  borderRight: `${arrowSize}px solid transparent`,
+                  borderTop: `${arrowSize}px solid white`
+                }}
+              />
+            )}
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   );
 };
