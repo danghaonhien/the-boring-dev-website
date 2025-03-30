@@ -2250,6 +2250,13 @@ export const TabsWithSlider: React.FC<TabsWithSliderProps> = ({
     height: 0,
     transform: 'translateX(0)',
   });
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [movingTab, setMovingTab] = useState<string | null>(null);
+  const [moveDirection, setMoveDirection] = useState<'left' | 'right' | null>(null);
+  
+  // Threshold for swipe (in pixels)
+  const minSwipeDistance = 50;
 
   // Initialize and measure tabs
   useEffect(() => {
@@ -2345,43 +2352,114 @@ export const TabsWithSlider: React.FC<TabsWithSliderProps> = ({
     );
   };
 
+  // Handle touch events for mobile swipe
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    // Find current tab index
+    const currentIndex = tabs.findIndex(tab => tab.id === activeTab);
+    
+    if (isLeftSwipe && currentIndex < tabs.length - 1) {
+      // Navigate to next tab
+      handleTabChange(tabs[currentIndex + 1].id, 'right');
+    } else if (isRightSwipe && currentIndex > 0) {
+      // Navigate to previous tab
+      handleTabChange(tabs[currentIndex - 1].id, 'left');
+    }
+    
+    // Reset touch values
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
+  const handleTabChange = (tabId: string, direction: 'left' | 'right' | null = null) => {
+    if (activeTab === tabId) return;
+    
+    // Determine direction if not provided
+    if (!direction) {
+      const currentIndex = tabs.findIndex(tab => tab.id === activeTab);
+      const newIndex = tabs.findIndex(tab => tab.id === tabId);
+      direction = newIndex > currentIndex ? 'right' : 'left';
+    }
+    
+    // For pills style, add movement animation
+    if (variant === 'pills') {
+      setMovingTab(activeTab);
+      setMoveDirection(direction);
+      
+      // Clear animation after it completes
+      setTimeout(() => {
+        setMovingTab(null);
+        setMoveDirection(null);
+      }, 300);
+    }
+    
+    onChange(tabId);
+  };
+
+  const getTabMovementClass = (tabId: string) => {
+    if (variant !== 'pills' || movingTab !== tabId) return '';
+    
+    return moveDirection === 'right' 
+      ? 'animate-slide-out-left' 
+      : 'animate-slide-out-right';
+  };
+
   return (
     <div className={`relative ${className}`}>
       <div 
         ref={tabsContainerRef}
         className={`flex ${fullWidth ? 'w-full' : ''} relative`}
         style={{ height: contentHeight > 0 ? `${contentHeight}px` : 'auto' }}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
       >
         {renderSlider()}
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            ref={(el) => {
-              if (el) tabsRef.current.set(tab.id, el);
-            }}
-            className={`px-4 py-2 z-10 transition-all duration-200 whitespace-nowrap ${
-              fullWidth ? 'flex-1 text-center' : ''
-            } ${getTabStyles(activeTab === tab.id)}`}
-            onClick={() => onChange(tab.id)}
-            style={{ height: '100%' }}
-          >
-            <div className="flex items-center justify-center gap-2">
-              {tab.icon && <span className="text-lg">{tab.icon}</span>}
-              {tab.label}
-              {tab.badge !== undefined && (
-                <span className={`text-xs px-2 py-0.5 rounded-full ${
-                  activeTab === tab.id && variant === 'pills' 
-                    ? 'bg-white/30 text-white z-20' 
-                    : activeTab === tab.id 
-                      ? 'bg-boring-main/15 text-boring-main' 
-                      : 'bg-boring-slate/30 text-boring-dark'
-                }`}>
-                  {tab.badge}
-                </span>
-              )}
-            </div>
-          </button>
-        ))}
+        <div className="flex overflow-x-auto scrollbar-hide" style={{ width: '100%' }}>
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              ref={(el) => {
+                if (el) tabsRef.current.set(tab.id, el);
+              }}
+              className={`px-4 py-2 z-10 transition-all duration-200 whitespace-nowrap ${
+                fullWidth ? 'flex-1 text-center' : ''
+              } ${getTabStyles(activeTab === tab.id)} ${getTabMovementClass(tab.id)}`}
+              onClick={() => handleTabChange(tab.id)}
+              style={{ height: '100%' }}
+            >
+              <div className="flex items-center justify-center gap-2">
+                {tab.icon && <span className="text-lg">{tab.icon}</span>}
+                {tab.label}
+                {tab.badge !== undefined && (
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${
+                    activeTab === tab.id && variant === 'pills' 
+                      ? 'bg-white/30 text-white z-20' 
+                      : activeTab === tab.id 
+                        ? 'bg-boring-main/15 text-boring-main' 
+                        : 'bg-boring-slate/30 text-boring-dark'
+                  }`}>
+                    {tab.badge}
+                  </span>
+                )}
+              </div>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

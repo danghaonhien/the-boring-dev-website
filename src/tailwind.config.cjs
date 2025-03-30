@@ -60,15 +60,17 @@ module.exports = {
           '50%': { transform: 'scale(1.05)' },
         },
         'scale-fade-out': {
-          '0%': { 
-            transform: 'scale(0)',
-            opacity: '0.8'
-          },
-          '100%': { 
-            transform: 'scale(1)',
-            opacity: '0'
-          },
+          '0%': { transform: 'scale(0)', opacity: '0.7' },
+          '100%': { transform: 'scale(1.5)', opacity: '0' },
         },
+        'slide-out-left': {
+          '0%': { transform: 'translateX(0)', opacity: '1' },
+          '100%': { transform: 'translateX(-10px)', opacity: '0' },
+        },
+        'slide-out-right': {
+          '0%': { transform: 'translateX(0)', opacity: '1' },
+          '100%': { transform: 'translateX(10px)', opacity: '0' },
+        }
       },
       animation: {
         float: 'float 3s ease-in-out infinite',
@@ -81,7 +83,9 @@ module.exports = {
         'slide-up': 'slide-up 0.5s ease-out forwards',
         'wave': 'wave 2s ease-in-out infinite',
         'magnetic-pulse': 'magnetic-pulse 3s ease-in-out infinite',
-        'scale-fade-out': 'scale-fade-out 0.5s ease-out forwards',
+        'scale-fade-out': 'scale-fade-out 0.6s ease-out forwards',
+        'slide-out-left': 'slide-out-left 0.3s ease-out forwards',
+        'slide-out-right': 'slide-out-right 0.3s ease-out forwards',
       },
       backgroundSize: {
         'gradient-animate': '200% 200%',

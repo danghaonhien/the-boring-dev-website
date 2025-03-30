@@ -8,10 +8,10 @@ import InteractiveElements, { AnimatedGradientText, FloatingElement } from '../c
 import { 
   AnimatedLink, 
   ScrollReveal, 
-  ParallaxCard, 
+  ParallaxCard,
+  AnimatedGradientBlob,
   MagneticButton,
   TypewriterText,
-  AnimatedGradientBlob,
   TiltCard,
   ExpandingCircleButton,
   WaveText,
@@ -106,32 +106,110 @@ const HomePage = () => {
         </section>
 
         {/* Projects Section */}
-        <section className="py-16 bg-boring-slate/5 relative">
-          <AnimatedGradientBlob className="absolute bottom-0 left-0 w-96 h-96 opacity-20" />
-          
+        <section className="py-16 bg-boring-offwhite">
           <div className="container mx-auto px-4">
-            <ScrollReveal>
-              <ShimmerText
-                text="Projects"
+            <div className="text-center mb-12">
+              <ShimmerText 
+                text="Projects" 
+                className="text-4xl font-bold mb-4 text-boring-dark" 
                 as="h2"
-                className="text-3xl font-bold mb-2 text-center"
-                shimmerColor="rgba(0, 1, 13, 0.2)"
-                duration={3}
               />
-              <p className="text-boring-gray text-center mb-12">Here are some projects I've built</p>
-            </ScrollReveal>
+              <p className="text-boring-gray max-w-2xl mx-auto">
+                Check out some of my recent work. I'm passionate about creating clean, 
+                efficient solutions to challenging problems.
+              </p>
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project, index) => (
-                <ScrollReveal key={project.id} delay={index * 100}>
-                  <ProjectCard
-                    name={project.name}
-                    description={project.description}
-                    imageUrl={project.imageUrl}
-                    projectUrl={project.projectUrl}
-                  />
-                </ScrollReveal>
-              ))}
+              {/* Reword This Project */}
+              <ParallaxCard className="h-full">
+                <div className="bg-white rounded-lg shadow-md overflow-hidden h-full">
+                  <div className="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                    </svg>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-boring-dark mb-2">Reword This</h3>
+                    <p className="text-boring-gray mb-4">
+                      An AI-powered text paraphrasing application that helps users rewrite content for improved clarity, 
+                      tone, and engagement. Built with React, Node.js, and OpenAI.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">React</span>
+                      <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Node.js</span>
+                      <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">OpenAI</span>
+                      <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">TailwindCSS</span>
+                    </div>
+                    <Link 
+                      to="/reword-this" 
+                      className="inline-block text-boring-main font-medium hover:underline"
+                    >
+                      View Project →
+                    </Link>
+                  </div>
+                </div>
+              </ParallaxCard>
+              
+              {/* Blog App Project */}
+              <ParallaxCard className="h-full">
+                <div className="bg-white rounded-lg shadow-md overflow-hidden h-full">
+                  <div className="h-48 bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                    </svg>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-boring-dark mb-2">Modern Blog Platform</h3>
+                    <p className="text-boring-gray mb-4">
+                      A full-featured blogging platform with rich text editing, user authentication, 
+                      and comment functionality. Responsive design for all devices.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Typescript</span>
+                      <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">Next.js</span>
+                      <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">MongoDB</span>
+                      <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium">AWS</span>
+                    </div>
+                    <a 
+                      href="#" 
+                      className="inline-block text-boring-main font-medium hover:underline"
+                    >
+                      View Project →
+                    </a>
+                  </div>
+                </div>
+              </ParallaxCard>
+              
+              {/* E-commerce Dashboard Project */}
+              <ParallaxCard className="h-full">
+                <div className="bg-white rounded-lg shadow-md overflow-hidden h-full">
+                  <div className="h-48 bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-boring-dark mb-2">E-commerce Dashboard</h3>
+                    <p className="text-boring-gray mb-4">
+                      An analytics dashboard for e-commerce businesses with real-time sales tracking,
+                      inventory management, and customer insights. Customizable reports and visualizations.
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">React</span>
+                      <span className="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs font-medium">Redux</span>
+                      <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Node.js</span>
+                      <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">MySQL</span>
+                    </div>
+                    <a 
+                      href="#" 
+                      className="inline-block text-boring-main font-medium hover:underline"
+                    >
+                      View Project →
+                    </a>
+                  </div>
+                </div>
+              </ParallaxCard>
             </div>
           </div>
         </section>
