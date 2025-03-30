@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, ReactNode, CSSProperties, FC, cloneElement, isValidElement, Children } from 'react';
+import React, { useState, useEffect, useRef, ReactNode, CSSProperties, FC, cloneElement, isValidElement, Children, useCallback } from 'react';
 
 // Animated underline link
 export const AnimatedLink: React.FC<{ 
@@ -1912,6 +1912,622 @@ export const InteractiveToggle: React.FC<InteractiveToggleProps> = ({
           }}
         />
       </div>
+    </div>
+  );
+};
+
+// Tab Group Component
+interface TabProps {
+  label: string;
+  active?: boolean;
+  onClick: () => void;
+  badge?: number | string;
+}
+
+export const Tab: React.FC<TabProps> = ({ label, active = false, onClick, badge }) => {
+  return (
+    <button
+      className={`px-4 py-2 rounded-t-md transition-all duration-200 relative ${
+        active 
+          ? 'bg-white text-boring-main font-medium border-t border-l border-r border-boring-slate/20' 
+          : 'bg-boring-slate/10 text-boring-gray hover:bg-boring-slate/20'
+      }`}
+      onClick={onClick}
+    >
+      <div className="flex items-center">
+        {label}
+        {badge !== undefined && (
+          <span className={`ml-2 text-xs px-2 py-0.5 rounded-full ${
+            active ? 'bg-boring-main text-white' : 'bg-boring-slate/30 text-boring-dark'
+          }`}>
+            {badge}
+          </span>
+        )}
+      </div>
+      {active && (
+        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-boring-main rounded-full" />
+      )}
+    </button>
+  );
+};
+
+interface TabGroupProps {
+  tabs: Array<{
+    id: string;
+    label: string;
+    badge?: number | string;
+  }>;
+  activeTab: string;
+  onChange: (tabId: string) => void;
+  className?: string;
+}
+
+export const TabGroup: React.FC<TabGroupProps> = ({ 
+  tabs, 
+  activeTab, 
+  onChange, 
+  className = ""
+}) => {
+  return (
+    <div className={`flex border-b border-boring-slate/20 ${className}`}>
+      {tabs.map((tab) => (
+        <Tab
+          key={tab.id}
+          label={tab.label}
+          badge={tab.badge}
+          active={activeTab === tab.id}
+          onClick={() => onChange(tab.id)}
+        />
+      ))}
+    </div>
+  );
+};
+
+// Collapsible Section
+interface CollapsibleSectionProps {
+  title: string;
+  children: React.ReactNode;
+  initialOpen?: boolean;
+  className?: string;
+  iconPosition?: 'left' | 'right';
+  borderColor?: string;
+  titleClassName?: string;
+}
+
+export const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
+  title,
+  children,
+  initialOpen = false,
+  className = "",
+  iconPosition = 'right',
+  borderColor = "border-boring-slate/20",
+  titleClassName = "",
+}) => {
+  const [isOpen, setIsOpen] = useState(initialOpen);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [contentHeight, setContentHeight] = useState<number | undefined>(
+    initialOpen ? undefined : 0
+  );
+
+  useEffect(() => {
+    if (!contentRef.current) return;
+    
+    const resizeObserver = new ResizeObserver(() => {
+      if (contentRef.current && isOpen) {
+        setContentHeight(contentRef.current.scrollHeight);
+      }
+    });
+    
+    resizeObserver.observe(contentRef.current);
+    
+    return () => {
+      if (contentRef.current) {
+        resizeObserver.unobserve(contentRef.current);
+      }
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!contentRef.current) return;
+    
+    if (isOpen) {
+      setContentHeight(contentRef.current.scrollHeight);
+    } else {
+      setContentHeight(0);
+    }
+  }, [isOpen]);
+
+  const toggleOpen = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const renderIcon = () => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={`w-5 h-5 transform transition-transform duration-300 ${
+        isOpen ? 'rotate-180' : ''
+      }`}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M19 9l-7 7-7-7"
+      />
+    </svg>
+  );
+
+  return (
+    <div className={`border ${borderColor} rounded-md ${className}`}>
+      <button
+        onClick={toggleOpen}
+        className={`w-full p-4 flex items-center justify-between text-left font-medium ${titleClassName}`}
+      >
+        {iconPosition === 'left' && renderIcon()}
+        <span>{title}</span>
+        {iconPosition === 'right' && renderIcon()}
+      </button>
+      <div
+        ref={contentRef}
+        className="overflow-hidden transition-all duration-300"
+        style={{ height: contentHeight ? `${contentHeight}px` : '0px' }}
+      >
+        <div className="p-4 pt-0">{children}</div>
+      </div>
+    </div>
+  );
+};
+
+// Rating Stars Component
+interface RatingStarsProps {
+  total?: number;
+  initialRating?: number;
+  size?: 'sm' | 'md' | 'lg';
+  interactive?: boolean;
+  onChange?: (rating: number) => void;
+  color?: string;
+  className?: string;
+}
+
+export const RatingStars: React.FC<RatingStarsProps> = ({
+  total = 5,
+  initialRating = 0,
+  size = 'md',
+  interactive = true,
+  onChange,
+  color = 'text-yellow-400',
+  className = '',
+}) => {
+  const [rating, setRating] = useState(initialRating);
+  const [hoverRating, setHoverRating] = useState(0);
+
+  const handleSetRating = (newRating: number) => {
+    if (!interactive) return;
+    
+    setRating(newRating);
+    if (onChange) {
+      onChange(newRating);
+    }
+  };
+
+  const starSizes = {
+    sm: 'w-4 h-4',
+    md: 'w-6 h-6',
+    lg: 'w-8 h-8',
+  };
+  
+  return (
+    <div 
+      className={`flex items-center gap-1 ${className}`}
+      onMouseLeave={() => interactive && setHoverRating(0)}
+    >
+      {[...Array(total)].map((_, index) => {
+        const starValue = index + 1;
+        const isFilled = hoverRating ? starValue <= hoverRating : starValue <= rating;
+        
+        return (
+          <span
+            key={index}
+            onClick={() => handleSetRating(starValue)}
+            onMouseEnter={() => interactive && setHoverRating(starValue)}
+            className={`cursor-${interactive ? 'pointer' : 'default'} transition-transform duration-150 ${
+              interactive && 'hover:scale-110'
+            }`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className={`${starSizes[size]} ${
+                isFilled ? color : 'text-gray-300'
+              } transition-colors duration-200`}
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+              />
+            </svg>
+          </span>
+        );
+      })}
+    </div>
+  );
+};
+
+// Notification Badge Component
+interface NotificationBadgeProps {
+  count: number;
+  maxCount?: number;
+  children: React.ReactNode;
+  className?: string;
+  badgeColor?: string;
+  badgeTextColor?: string;
+  position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+  onClick?: (e: React.MouseEvent) => void;
+  animate?: boolean;
+}
+
+export const NotificationBadge: React.FC<NotificationBadgeProps> = ({
+  count,
+  maxCount = 99,
+  children,
+  className = '',
+  badgeColor = 'bg-boring-main',
+  badgeTextColor = 'text-white',
+  position = 'top-right',
+  onClick,
+  animate = true,
+}) => {
+  const displayCount = count > maxCount ? `${maxCount}+` : count;
+  
+  const positionClasses = {
+    'top-right': '-top-2 -right-2',
+    'top-left': '-top-2 -left-2',
+    'bottom-right': '-bottom-2 -right-2',
+    'bottom-left': '-bottom-2 -left-2',
+  };
+  
+  return (
+    <div 
+      className={`relative inline-flex ${className}`}
+      onClick={onClick}
+    >
+      {children}
+      
+      {count > 0 && (
+        <span 
+          className={`absolute ${positionClasses[position]} flex items-center justify-center min-w-[20px] h-5 px-1 rounded-full text-xs font-bold ${badgeColor} ${badgeTextColor} ${
+            animate ? 'animate-pulse-subtle' : ''
+          }`}
+        >
+          {displayCount}
+        </span>
+      )}
+    </div>
+  );
+};
+
+// TabsWithSlider Component
+interface TabsWithSliderProps {
+  tabs: Array<{
+    id: string;
+    label: string;
+    badge?: number | string;
+    icon?: React.ReactNode;
+  }>;
+  activeTab: string;
+  onChange: (tabId: string) => void;
+  className?: string;
+  variant?: 'underline' | 'contained' | 'pills';
+  fullWidth?: boolean;
+  sliderColor?: string;
+  tabClassName?: string;
+  activeTabClassName?: string;
+}
+
+export const TabsWithSlider: React.FC<TabsWithSliderProps> = ({
+  tabs,
+  activeTab,
+  onChange,
+  className = "",
+  variant = 'underline',
+  fullWidth = false,
+  sliderColor = 'bg-boring-main',
+  tabClassName = "",
+  activeTabClassName = "",
+}) => {
+  const tabsRef = useRef<Map<string, HTMLButtonElement>>(new Map());
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const [contentHeight, setContentHeight] = useState<number>(0);
+  const [sliderStyles, setSliderStyles] = useState({
+    width: 0,
+    height: 0,
+    transform: 'translateX(0)',
+  });
+
+  // Initialize and measure tabs
+  useEffect(() => {
+    const calculateInitialDimensions = () => {
+      const activeTabElement = tabsRef.current.get(activeTab);
+      if (!activeTabElement || !tabsContainerRef.current) return;
+
+      // Calculate tallest tab for consistent height
+      let maxHeight = 0;
+      tabsRef.current.forEach((tabEl) => {
+        const height = tabEl.offsetHeight;
+        if (height > maxHeight) {
+          maxHeight = height;
+        }
+      });
+
+      setContentHeight(maxHeight);
+      updateSliderPosition();
+    };
+
+    calculateInitialDimensions();
+    window.addEventListener('resize', calculateInitialDimensions);
+    
+    return () => {
+      window.removeEventListener('resize', calculateInitialDimensions);
+    };
+  }, [tabs]);
+
+  // Update slider position when tab changes
+  useEffect(() => {
+    updateSliderPosition();
+  }, [activeTab, variant]);
+
+  const updateSliderPosition = () => {
+    const activeTabElement = tabsRef.current.get(activeTab);
+    if (!activeTabElement || !tabsContainerRef.current) return;
+    
+    const { width, height, left } = activeTabElement.getBoundingClientRect();
+    const parentLeft = tabsContainerRef.current.getBoundingClientRect().left;
+    
+    if (variant === 'pills') {
+      setSliderStyles({
+        width: width,
+        height: height,
+        transform: `translateX(${left - parentLeft}px)`,
+      });
+    } else {
+      setSliderStyles({
+        width: width,
+        height: 2,
+        transform: `translateX(${left - parentLeft}px)`,
+      });
+    }
+  };
+
+  const getTabStyles = (isActive: boolean) => {
+    switch(variant) {
+      case 'underline':
+        return `border-b-2 ${isActive ? activeTabClassName || `border-transparent font-medium ${sliderColor === 'bg-boring-main' ? 'text-boring-main' : 'text-boring-dark'}` : `border-transparent text-boring-gray ${tabClassName}`}`;
+      case 'contained':
+        return `${isActive ? activeTabClassName || `bg-white font-medium ${sliderColor === 'bg-boring-main' ? 'text-boring-main' : 'text-boring-dark'}` : `bg-transparent text-boring-gray ${tabClassName}`}`;
+      case 'pills':
+        return `rounded-full ${isActive ? activeTabClassName || `font-medium z-20 ${sliderColor === 'bg-boring-main' ? 'text-white' : 'text-white'}` : `text-boring-gray ${tabClassName}`}`;
+      default:
+        return '';
+    }
+  };
+
+  const renderSlider = () => {
+    if (variant === 'pills') {
+      return (
+        <div
+          ref={sliderRef}
+          className={`absolute z-10 rounded-full transition-all duration-300 ${sliderColor}`}
+          style={{
+            width: `${sliderStyles.width}px`,
+            height: `${sliderStyles.height}px`,
+            transform: sliderStyles.transform,
+          }}
+        />
+      );
+    }
+
+    return (
+      <div
+        ref={sliderRef}
+        className={`absolute z-10 h-0.5 bottom-0 transition-all duration-300 ${sliderColor}`}
+        style={{
+          width: `${sliderStyles.width}px`,
+          transform: sliderStyles.transform,
+        }}
+      />
+    );
+  };
+
+  return (
+    <div className={`relative ${className}`}>
+      <div 
+        ref={tabsContainerRef}
+        className={`flex ${fullWidth ? 'w-full' : ''} relative`}
+        style={{ height: contentHeight > 0 ? `${contentHeight}px` : 'auto' }}
+      >
+        {renderSlider()}
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            ref={(el) => {
+              if (el) tabsRef.current.set(tab.id, el);
+            }}
+            className={`px-4 py-2 z-10 transition-all duration-200 whitespace-nowrap ${
+              fullWidth ? 'flex-1 text-center' : ''
+            } ${getTabStyles(activeTab === tab.id)}`}
+            onClick={() => onChange(tab.id)}
+            style={{ height: '100%' }}
+          >
+            <div className="flex items-center justify-center gap-2">
+              {tab.icon && <span className="text-lg">{tab.icon}</span>}
+              {tab.label}
+              {tab.badge !== undefined && (
+                <span className={`text-xs px-2 py-0.5 rounded-full ${
+                  activeTab === tab.id && variant === 'pills' 
+                    ? 'bg-white/30 text-white z-20' 
+                    : activeTab === tab.id 
+                      ? 'bg-boring-main/15 text-boring-main' 
+                      : 'bg-boring-slate/30 text-boring-dark'
+                }`}>
+                  {tab.badge}
+                </span>
+              )}
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Accordion Tabs Component (alternative tab style)
+interface AccordionTabsProps {
+  tabs: Array<{
+    id: string;
+    label: string;
+    content: React.ReactNode;
+    icon?: React.ReactNode;
+  }>;
+  initialActiveTab?: string;
+  allowMultiple?: boolean;
+  className?: string;
+  tabClassName?: string;
+  activeTabClassName?: string;
+  contentClassName?: string;
+}
+
+export const AccordionTabs: React.FC<AccordionTabsProps> = ({
+  tabs,
+  initialActiveTab,
+  allowMultiple = false,
+  className = "",
+  tabClassName = "",
+  activeTabClassName = "",
+  contentClassName = "",
+}) => {
+  const [activeTabs, setActiveTabs] = useState<Set<string>>(
+    new Set(initialActiveTab ? [initialActiveTab] : [])
+  );
+  
+  const contentRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const [contentHeights, setContentHeights] = useState<Record<string, number>>({});
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  
+  // Measure content heights whenever tabs or active state changes
+  const measureContentHeights = useCallback(() => {
+    setTimeout(() => {
+      const newHeights: Record<string, number> = {};
+      contentRefs.current.forEach((contentEl, tabId) => {
+        if (contentEl) {
+          newHeights[tabId] = contentEl.scrollHeight;
+        }
+      });
+      setContentHeights(newHeights);
+    }, 10); // Small delay to ensure DOM has updated
+  }, [tabs]);
+  
+  // Initialize measurement
+  useEffect(() => {
+    measureContentHeights();
+    window.addEventListener('resize', measureContentHeights);
+    
+    // Mark initial render complete after a short delay (for animations to work properly)
+    const timer = setTimeout(() => {
+      setIsInitialRender(false);
+    }, 50);
+    
+    return () => {
+      window.removeEventListener('resize', measureContentHeights);
+      clearTimeout(timer);
+    };
+  }, [tabs, measureContentHeights]);
+  
+  // Re-measure heights when active tabs change
+  useEffect(() => {
+    measureContentHeights();
+  }, [activeTabs, measureContentHeights]);
+  
+  const toggleTab = (tabId: string) => {
+    if (allowMultiple) {
+      const newActiveTabs = new Set(activeTabs);
+      if (newActiveTabs.has(tabId)) {
+        newActiveTabs.delete(tabId);
+      } else {
+        newActiveTabs.add(tabId);
+      }
+      setActiveTabs(newActiveTabs);
+    } else {
+      if (activeTabs.has(tabId)) {
+        // If clicking the active tab, close it
+        setActiveTabs(new Set());
+      } else {
+        // Otherwise, make only this tab active
+        setActiveTabs(new Set([tabId]));
+      }
+    }
+  };
+
+  return (
+    <div className={`border rounded-md overflow-hidden ${className}`}>
+      {tabs.map((tab, index) => {
+        const isActive = activeTabs.has(tab.id);
+        const isLast = index === tabs.length - 1;
+        
+        return (
+          <div key={tab.id} className={`${!isLast ? 'border-b' : ''}`}>
+            <button
+              className={`w-full px-4 py-3 flex items-center justify-between text-left ${
+                isActive ? activeTabClassName || 'bg-boring-main/5 text-boring-dark font-medium' : tabClassName || 'text-boring-gray'
+              }`}
+              onClick={() => toggleTab(tab.id)}
+              aria-expanded={isActive}
+            >
+              <div className="flex items-center gap-2">
+                {tab.icon && <span className="text-lg">{tab.icon}</span>}
+                <span>{tab.label}</span>
+              </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className={`h-5 w-5 transition-transform duration-300 ${isActive ? 'transform rotate-180' : ''}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            
+            <div
+              className={`overflow-hidden transition-[height,opacity] duration-300 ease-in-out`}
+              style={{
+                height: isActive ? `${contentHeights[tab.id] || 'auto'}px` : '0px',
+                opacity: isActive ? 1 : 0,
+              }}
+            >
+              <div 
+                ref={(el) => {
+                  if (el) {
+                    contentRefs.current.set(tab.id, el);
+                    if (isActive && contentHeights[tab.id] === undefined) {
+                      measureContentHeights();
+                    }
+                  }
+                }}
+                className={`p-4 ${contentClassName}`}
+              >
+                {tab.content}
+              </div>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
