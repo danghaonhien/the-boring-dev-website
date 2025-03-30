@@ -26,6 +26,7 @@ import EnhancedInteractiveElementsShowcase from '../components/EnhancedInteracti
 import PageTransition from '../components/PageTransition';
 import ProjectCard from '../components/ProjectCard';
 import DesignSystem from '../components/DesignSystem';
+import rewordThisHero from '../assets/images/reword-this/reword-this-hero.png';
 
 const HomePage = () => {
   const projects = [
@@ -84,15 +85,11 @@ const HomePage = () => {
             </ScrollReveal>
             
             <ScrollReveal delay={400}>
-              <BorderGradientButton
-                className="px-6 py-3 rounded-md font-medium"
-                gradientColors="from-boring-offwhite via-boring-slate to-boring-offwhite"
-                textColor="text-boring-offwhite"
-                hoverTextColor="text-boring-main"
-                borderWidth={2}
+              <MagneticButton
+                className="px-6 py-3 bg-boring-main/20 border border-boring-offwhite/30 rounded-md font-medium text-boring-offwhite hover:bg-boring-main/30 transition-colors"
               >
                 Explore Projects
-              </BorderGradientButton>
+              </MagneticButton>
             </ScrollReveal>
             
             <MagneticSection className="mt-12 relative" intensity={30}>
@@ -124,11 +121,14 @@ const HomePage = () => {
               {/* Reword This Project */}
               <ParallaxCard className="h-full">
                 <div className="bg-white rounded-lg shadow-md overflow-hidden h-full">
-                  <div className="h-48 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                    </svg>
+                  <div className="h-48 relative overflow-hidden">
+                    <img 
+                      src={rewordThisHero} 
+                      alt="Reword This" 
+                      className="w-full h-full object-cover"
+                    />
                   </div>
+
                   <div className="p-6">
                     <h3 className="text-xl font-bold text-boring-dark mb-2">Reword This</h3>
                     <p className="text-boring-gray mb-4">
@@ -141,12 +141,23 @@ const HomePage = () => {
                       <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">OpenAI</span>
                       <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">TailwindCSS</span>
                     </div>
-                    <Link 
-                      to="/reword-this" 
-                      className="inline-block text-boring-main font-medium hover:underline"
-                    >
-                      View Project →
-                    </Link>
+                    <div className="flex items-center justify-between">
+                      <Link 
+                        to="/reword-this" 
+                        className="inline-block text-boring-main font-medium hover:underline"
+                      >
+                        View Project →
+                      </Link>
+                      <a 
+                        href="#" 
+                        className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z" />
+                        </svg>
+                        Add to Chrome
+                      </a>
+                    </div>
                   </div>
                 </div>
               </ParallaxCard>
@@ -171,12 +182,23 @@ const HomePage = () => {
                       <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">MongoDB</span>
                       <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium">AWS</span>
                     </div>
-                    <a 
-                      href="#" 
-                      className="inline-block text-boring-main font-medium hover:underline"
-                    >
-                      View Project →
-                    </a>
+                    <div className="flex items-center justify-between">
+                      <a 
+                        href="#" 
+                        className="inline-block text-boring-main font-medium hover:underline"
+                      >
+                        View Project →
+                      </a>
+                      <a 
+                        href="#" 
+                        className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z" />
+                        </svg>
+                        Add to Chrome
+                      </a>
+                    </div>
                   </div>
                 </div>
               </ParallaxCard>
@@ -201,12 +223,23 @@ const HomePage = () => {
                       <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Node.js</span>
                       <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">MySQL</span>
                     </div>
-                    <a 
-                      href="#" 
-                      className="inline-block text-boring-main font-medium hover:underline"
-                    >
-                      View Project →
-                    </a>
+                    <div className="flex items-center justify-between">
+                      <a 
+                        href="#" 
+                        className="inline-block text-boring-main font-medium hover:underline"
+                      >
+                        View Project →
+                      </a>
+                      <a 
+                        href="#" 
+                        className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z" />
+                        </svg>
+                        Add to Chrome
+                      </a>
+                    </div>
                   </div>
                 </div>
               </ParallaxCard>
