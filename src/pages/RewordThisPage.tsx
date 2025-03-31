@@ -2,10 +2,26 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { useState } from 'react';
 
+// Define types for slides
+type ImageSlide = {
+  id: number;
+  image: string;
+  alt: string;
+}
+
+type VideoSlide = {
+  id: number;
+  video: string;
+  thumbnailImage?: string;
+  alt: string;
+}
+
+type Slide = ImageSlide | VideoSlide;
+
 const RewordThisPage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   
-  const slides = [
+  const slides: Slide[] = [
     {
       id: 1,
       image: "./src/assets/images/reword-this/reword-this-hero.png",
@@ -18,19 +34,20 @@ const RewordThisPage = () => {
     },
     {
       id: 3,
-        image: "./src/assets/images/reword-this/reword-this-slide-3.png", 
-        alt: "Reword This features overview"
+      image: "./src/assets/images/reword-this/reword-this-slide-3.png", 
+      alt: "Reword This features overview"
     },
     {
       id: 4,
       image: "./src/assets/images/reword-this/reword-this-slide-4.png",
       alt: "Reword This documentation"
     },
-    // {
-    //   id: 5,
-    //     image: "/assets/images/reword-this/reword-this-slide5.png",
-    //   alt: "Reword This interface"
-    // }
+    {
+      id: 5,
+      video: "./src/assets/videos/reword-this/reword-this-demo.mp4",
+      thumbnailImage: "./src/assets/images/reword-this/reword-this-hero.png", // Using hero image as fallback thumbnail
+      alt: "Reword This demo"
+    }
   ];
 
   const nextSlide = () => {
@@ -43,6 +60,11 @@ const RewordThisPage = () => {
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
+  };
+
+  // Helper function to check if slide is a video slide
+  const isVideoSlide = (slide: Slide): slide is VideoSlide => {
+    return 'video' in slide;
   };
 
   return (
@@ -69,15 +91,28 @@ const RewordThisPage = () => {
             
             {/* Right Column - Slider */}
             <div className="md:w-1/2 relative">
-              <div className="relative overflow-hidden rounded-lg shadow-xl">
-                <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+              <div className="relative overflow-hidden rounded-lg shadow-xl" style={{ height: "300px" }}>
+                <div className="flex transition-transform duration-500 ease-in-out h-full" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
                   {slides.map((slide) => (
-                    <div key={slide.id} className="min-w-full">
-                      <img 
-                        src={slide.image} 
-                        alt={slide.alt} 
-                        className="w-full rounded-lg shadow-xl"
-                      />
+                    <div key={slide.id} className="min-w-full h-full">
+                      {isVideoSlide(slide) ? (
+                        <video 
+                          src={slide.video} 
+                          className="w-full h-full object-cover rounded-lg shadow-xl"
+                          poster={slide.thumbnailImage}
+                          controls
+                          muted
+                          playsInline
+                          preload="auto"
+                          aria-label={slide.alt}
+                        />
+                      ) : (
+                        <img 
+                          src={slide.image} 
+                          alt={slide.alt} 
+                          className="w-full h-full object-cover rounded-lg shadow-xl"
+                        />
+                      )}
                     </div>
                   ))}
                 </div>
@@ -112,11 +147,28 @@ const RewordThisPage = () => {
                     className={`h-12 w-20 overflow-hidden rounded border-2 transition-all ${currentSlide === index ? 'border-white opacity-100' : 'border-transparent opacity-70'}`}
                     aria-label={`Go to slide ${index + 1}`}
                   >
-                    <img 
-                      src={slide.image} 
-                      alt={`Thumbnail ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
+                    {isVideoSlide(slide) ? (
+                      <div className="w-full h-full bg-blue-800 flex items-center justify-center relative">
+                        {slide.thumbnailImage && (
+                          <img 
+                            src={slide.thumbnailImage}
+                            alt={`Video thumbnail ${index + 1}`}
+                            className="w-full h-full object-cover opacity-70"
+                          />
+                        )}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      </div>
+                    ) : (
+                      <img 
+                        src={slide.image} 
+                        alt={`Thumbnail ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </button>
                 ))}
               </div>
