@@ -1,199 +1,313 @@
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
+import { useState } from 'react';
 
 const RewordThisPage = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  const slides = [
+    {
+      id: 1,
+      image: "./src/assets/images/reword-this/reword-this-hero.png",
+      alt: "Reword This Chrome Extension Screenshot"
+    },
+    {
+      id: 2,
+      image: "./src/assets/images/reword-this/reword-this-slide-2.png",
+      alt: "Reword This in action"
+    },
+    {
+      id: 3,
+        image: "./src/assets/images/reword-this/reword-this-slide-3.png", 
+        alt: "Reword This features overview"
+    },
+    {
+      id: 4,
+      image: "./src/assets/images/reword-this/reword-this-slide-4.png",
+      alt: "Reword This documentation"
+    },
+    // {
+    //   id: 5,
+    //     image: "/assets/images/reword-this/reword-this-slide5.png",
+    //   alt: "Reword This interface"
+    // }
+  ];
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
   return (
     <div className="min-h-screen">
       <Header />
       
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20">
-        <div className="container mx-auto text-center max-w-4xl">
-          <h1 className="text-5xl font-bold mb-4">Rewrite Anything in One Click</h1>
-          <p className="text-xl mb-8">Change your tone, sound smarter, save time — directly from your browser.</p>
-          <a 
-            href="https://chrome.google.com/webstore" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 md:py-4 md:text-lg md:px-8"
-          >
-            Add to Chrome
-          </a>
-          <div className="mt-12">
-            <img 
-              src="https://via.placeholder.com/800x400" 
-              alt="Reword This Chrome Extension Screenshot" 
-              className="rounded-lg shadow-xl mx-auto"
-            />
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="flex flex-col md:flex-row items-center">
+            {/* Left Column - Text Content */}
+            <div className="md:w-1/2 text-left md:pr-8 mb-8 md:mb-0">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">1-Click Rewriting for Better Communication</h1>
+              <p className="text-xl mb-8">Reword This ✍️: Instantly rephrase any text in the tone you want. Works across the web — perfect for job seekers, creators, founders, and ESL users.</p>
+              <a 
+                href="https://chrome.google.com/webstore" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-white hover:bg-blue-50 md:py-4 md:text-lg md:px-8"
+              >
+                Add to Chrome
+              </a>
+            </div>
+            
+            {/* Right Column - Slider */}
+            <div className="md:w-1/2 relative">
+              <div className="relative overflow-hidden rounded-lg shadow-xl">
+                <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+                  {slides.map((slide) => (
+                    <div key={slide.id} className="min-w-full">
+                      <img 
+                        src={slide.image} 
+                        alt={slide.alt} 
+                        className="w-full rounded-lg shadow-xl"
+                      />
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Navigation Arrows */}
+                <button 
+                  onClick={prevSlide}
+                  className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-blue-600 bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 focus:outline-none shadow-md"
+                  aria-label="Previous slide"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button 
+                  onClick={nextSlide}
+                  className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-blue-600 bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 focus:outline-none shadow-md"
+                  aria-label="Next slide"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+              
+              {/* Thumbnail Indicators */}
+              <div className="flex justify-center mt-4 space-x-2">
+                {slides.map((slide, index) => (
+                  <button
+                    key={slide.id}
+                    onClick={() => goToSlide(index)}
+                    className={`h-12 w-20 overflow-hidden rounded border-2 transition-all ${currentSlide === index ? 'border-white opacity-100' : 'border-transparent opacity-70'}`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  >
+                    <img 
+                      src={slide.image} 
+                      alt={`Thumbnail ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* What is Reword This */}
+      {/* Instantly Improve Your Writing */}
       <section className="py-16 bg-white">
-        <div className="container mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold mb-8">What is Reword This?</h2>
-          <p className="text-xl text-gray-600">
-            A Chrome extension that uses AI to reword selected text in different tones (Clarity, Friendly, Persuasive, etc.). 
-            Built for job seekers, creators, ESL users, and founders.
+        <div className="container mx-auto max-w-3xl">
+          <h2 className="text-3xl font-bold mb-8 text-center">Instantly Improve Your Writing</h2>
+          <p className="text-xl text-gray-600 mb-6 text-center">
+            With one click, you can rewrite anything — emails, LinkedIn posts, resumes, or web copy — in a clearer, friendlier, or more persuasive tone. Say goodbye to writer's block and hello to confident communication.
           </p>
-        </div>
-      </section>
-
-      {/* Key Features */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto max-w-4xl">
-          <h2 className="text-3xl font-bold mb-12 text-center">Key Features</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="flex items-center mb-4">
-                <span className="text-green-500 mr-2">✅</span>
-                <h3 className="text-xl font-semibold">One-click rewrite</h3>
-              </div>
-              <p className="text-gray-600">Instantly rewrite any text with a simple right-click menu.</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="flex items-center mb-4">
-                <span className="text-blue-500 mr-2">🎨</span>
-                <h3 className="text-xl font-semibold">Multiple tones</h3>
-              </div>
-              <p className="text-gray-600">Clarity, Friendly, Formal, Persuasive, Creative, Executive and more.</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="flex items-center mb-4">
-                <span className="text-purple-500 mr-2">🎲</span>
-                <h3 className="text-xl font-semibold">Surprise Me mode</h3>
-              </div>
-              <p className="text-gray-600">Let the AI choose a random tone for unexpected results.</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="flex items-center mb-4">
-                <span className="text-red-500 mr-2">🥊</span>
-                <h3 className="text-xl font-semibold">Battle of the Rewrites</h3>
-              </div>
-              <p className="text-gray-600">Compare different tones side-by-side to pick the perfect one.</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="flex items-center mb-4">
-                <span className="text-orange-500 mr-2">🔥</span>
-                <h3 className="text-xl font-semibold">XP + streak gamification</h3>
-              </div>
-              <p className="text-gray-600">Earn points and build streaks as you use the extension.</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="flex items-center mb-4">
-                <span className="text-pink-500 mr-2">🎁</span>
-                <h3 className="text-xl font-semibold">Unlockable themes + tones</h3>
-              </div>
-              <p className="text-gray-600">Earn rewards the more you use the extension.</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md col-span-1 md:col-span-2">
-              <div className="flex items-center mb-4">
-                <span className="text-gray-800 mr-2">🔐</span>
-                <h3 className="text-xl font-semibold">Privacy-first</h3>
-              </div>
-              <p className="text-gray-600">No tracking, no data stored. Your text remains private.</p>
-            </div>
+          <p className="text-xl text-gray-800 mb-12 text-center italic">
+            ✍️ "It's like Grammarly, but for tone — and way faster."
+          </p>
+          
+          <div className="bg-blue-50 p-6 rounded-lg border-l-4 border-blue-500">
+            <h3 className="text-xl font-bold mb-4">NEW</h3>
+            <ul className="space-y-3">
+              <li className="flex items-start">
+                <span className="text-xl mr-2">🎲</span>
+                <p><strong>Rewrite Battle Mode:</strong> Compare two AI-generated rewrites side-by-side and pick your favorite.</p>
+              </li>
+              <li className="flex items-start">
+                <span className="text-xl mr-2">🎯</span>
+                <p>Earn XP for every battle — train your tone and sharpen your instincts.</p>
+              </li>
+            </ul>
+          </div>
+          
+          <div className="mt-8">
+            <h3 className="text-lg font-semibold mb-4">✨ Also New:</h3>
+            <ul className="space-y-2 pl-8 list-disc">
+              <li>Unlock tones like "Creative" and "Executive"</li>
+              <li>Dark Mode and Focus Mode themes now available as rewards!</li>
+            </ul>
           </div>
         </div>
       </section>
 
       {/* Why Use It */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto max-w-3xl">
-          <h2 className="text-3xl font-bold mb-8 text-center">Why Use It?</h2>
-          <div className="space-y-6">
-            <div className="flex">
-              <div className="mr-4 flex-shrink-0">
-                <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-lg font-medium">Write faster and smarter</h3>
-                <p className="mt-1 text-gray-600">Save time by quickly transforming your writing without starting from scratch.</p>
-              </div>
+          <h2 className="text-3xl font-bold mb-8 text-center">Why Use Reword This?</h2>
+          <div className="space-y-4">
+            <div className="flex items-start">
+              <div className="mr-3 flex-shrink-0 text-green-500">✔️</div>
+              <div><p className="text-lg">Rewrite faster — no more second-guessing</p></div>
             </div>
             
-            <div className="flex">
-              <div className="mr-4 flex-shrink-0">
-                <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-lg font-medium">Match your tone to your audience</h3>
-                <p className="mt-1 text-gray-600">Adjust your communication style to fit different situations and readers.</p>
-              </div>
+            <div className="flex items-start">
+              <div className="mr-3 flex-shrink-0 text-green-500">✔️</div>
+              <div><p className="text-lg">Adjust tone in one click: Clarity, Persuasive, Formal, Friendly</p></div>
             </div>
             
-            <div className="flex">
-              <div className="mr-4 flex-shrink-0">
-                <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-lg font-medium">Eliminate writer's block</h3>
-                <p className="mt-1 text-gray-600">Get unstuck with AI-powered rewrites that maintain your original message.</p>
-              </div>
+            <div className="flex items-start">
+              <div className="mr-3 flex-shrink-0 text-green-500">✔️</div>
+              <div><p className="text-lg">Battle Mode gamifies rewriting and teaches better writing instincts</p></div>
             </div>
             
-            <div className="flex">
-              <div className="mr-4 flex-shrink-0">
-                <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-lg font-medium">Look more polished</h3>
-                <p className="mt-1 text-gray-600">Make your emails, posts, and resumes sound professional and well-crafted.</p>
-              </div>
+            <div className="flex items-start">
+              <div className="mr-3 flex-shrink-0 text-green-500">✔️</div>
+              <div><p className="text-lg">Works on any site — highlight → right click → rewrite</p></div>
+            </div>
+            
+            <div className="flex items-start">
+              <div className="mr-3 flex-shrink-0 text-green-500">✔️</div>
+              <div><p className="text-lg">Powered by GPT AI, optimized for natural tone</p></div>
+            </div>
+            
+            <div className="flex items-start">
+              <div className="mr-3 flex-shrink-0 text-green-500">✔️</div>
+              <div><p className="text-lg">Gamified: XP, streaks, tone & theme unlocks</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Reword Modes */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto max-w-4xl">
+          <h2 className="text-3xl font-bold mb-12 text-center">Reword Modes Include:</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-2">Clarity</h3>
+              <p className="text-gray-700">Cut the fluff, stay sharp</p>
+            </div>
+            
+            <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-2">Friendly</h3>
+              <p className="text-gray-700">Add warmth and personality</p>
+            </div>
+            
+            <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-2">Persuasive</h3>
+              <p className="text-gray-700">Make your writing compelling</p>
+            </div>
+            
+            <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-2">Formal</h3>
+              <p className="text-gray-700">Keep it polished and professional</p>
+            </div>
+            
+            <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-2">Creative</h3>
+              <p className="text-gray-700">Turn on the flair</p>
+            </div>
+            
+            <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+              <h3 className="text-xl font-semibold mb-2">Executive</h3>
+              <p className="text-gray-700">Sound like a CEO</p>
+            </div>
+          </div>
+          
+          <div className="mt-12 text-center bg-blue-100 p-6 rounded-lg">
+            <p className="text-xl font-medium">⌛ Save Time: Average user saves 15–30 minutes/day on rewriting</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Who It's For */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto max-w-4xl">
+          <h2 className="text-3xl font-bold mb-12 text-center">Who's It For?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold mb-2">Job Seekers</h3>
+              <p className="text-gray-600">Make every line count</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold mb-2">Creators & Marketers</h3>
+              <p className="text-gray-600">Nail your voice</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold mb-2">Freelancers</h3>
+              <p className="text-gray-600">Draft client emails fast</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold mb-2">ESL Users</h3>
+              <p className="text-gray-600">Instantly polish your tone</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-semibold mb-2">Founders</h3>
+              <p className="text-gray-600">Write like a pro in seconds</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-white">
         <div className="container mx-auto max-w-4xl">
-          <h2 className="text-3xl font-bold mb-12 text-center">How It Works</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <h2 className="text-3xl font-bold mb-12 text-center">How It Works:</h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">1</div>
-              <h3 className="text-xl font-semibold mb-2">Highlight Text</h3>
-              <p className="text-gray-600">Highlight any text on any website</p>
+              <p className="text-gray-700">Install Reword This from the Chrome Web Store</p>
             </div>
             
             <div className="text-center">
               <div className="bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">2</div>
-              <h3 className="text-xl font-semibold mb-2">Right-Click</h3>
-              <p className="text-gray-600">Choose "Reword This" from the context menu</p>
+              <p className="text-gray-700">Highlight any text and right-click → "Reword This"</p>
             </div>
             
             <div className="text-center">
               <div className="bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">3</div>
-              <h3 className="text-xl font-semibold mb-2">Get Results</h3>
-              <p className="text-gray-600">Instantly see your text rewritten in your chosen tone</p>
+              <p className="text-gray-700">Choose your tone, or try "Surprise Me" or "Rewrite Battle"</p>
+            </div>
+            
+            <div className="text-center">
+              <div className="bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">4</div>
+              <p className="text-gray-700">Copy or replace the rewritten version instantly</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Pricing Tiers */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto max-w-4xl">
-          <h2 className="text-3xl font-bold mb-12 text-center">Pricing</h2>
+          <h2 className="text-3xl font-bold mb-12 text-center">Plans:</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200">
-              <h3 className="text-2xl font-bold mb-2">Free Plan</h3>
-              <p className="text-gray-600 mb-6">Perfect for occasional use</p>
+              <h3 className="text-2xl font-bold mb-2">Free</h3>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center">
                   <svg className="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -205,19 +319,13 @@ const RewordThisPage = () => {
                   <svg className="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>3 core tones (Clarity, Friendly, Formal)</span>
+                  <span>3 core tones</span>
                 </li>
                 <li className="flex items-center">
                   <svg className="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>1 Surprise Me/day</span>
-                </li>
-                <li className="flex items-center">
-                  <svg className="h-5 w-5 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>Local XP & streak tracking</span>
+                  <span>1 battle/day</span>
                 </li>
               </ul>
               <a 
@@ -231,44 +339,26 @@ const RewordThisPage = () => {
             </div>
             
             <div className="bg-blue-600 text-white p-8 rounded-lg shadow-md">
-              <h3 className="text-2xl font-bold mb-2">Premium Plan</h3>
+              <h3 className="text-2xl font-bold mb-2">Premium</h3>
               <p className="text-blue-100 mb-6">Coming Soon</p>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center">
                   <svg className="h-5 w-5 text-white mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Unlimited rewrites</span>
+                  <span>Unlock all tones</span>
                 </li>
                 <li className="flex items-center">
                   <svg className="h-5 w-5 text-white mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Unlock all 10+ tones</span>
+                  <span>Unlimited usage</span>
                 </li>
                 <li className="flex items-center">
                   <svg className="h-5 w-5 text-white mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
-                  <span>Full gamification (XP leaderboard, streak rewards)</span>
-                </li>
-                <li className="flex items-center">
-                  <svg className="h-5 w-5 text-white mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>Rewrite Battle Mode</span>
-                </li>
-                <li className="flex items-center">
-                  <svg className="h-5 w-5 text-white mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>Custom tone trainer</span>
-                </li>
-                <li className="flex items-center">
-                  <svg className="h-5 w-5 text-white mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>Theme unlocks (Dark mode, Focus mode)</span>
+                  <span>Themes and battles</span>
                 </li>
               </ul>
               <button
@@ -281,20 +371,19 @@ const RewordThisPage = () => {
         </div>
       </section>
 
-      {/* Testimonials - Optional */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto max-w-4xl">
-          <h2 className="text-3xl font-bold mb-12 text-center">What Users Say</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <p className="text-gray-600 mb-4">"This helped me polish my resume instantly!"</p>
-              <p className="font-medium">— Job seeker</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <p className="text-gray-600 mb-4">"I use it every day to rewrite emails."</p>
-              <p className="font-medium">— Freelancer</p>
-            </div>
-          </div>
+      {/* Call to Action */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto max-w-3xl text-center">
+          <h2 className="text-3xl font-bold mb-4">Communicate smarter.</h2>
+          <p className="text-xl text-gray-600 mb-8">Try Reword This — your AI tone expert, just a click away.</p>
+          <a 
+            href="https://chrome.google.com/webstore" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 md:py-4 md:text-lg md:px-8"
+          >
+            Add to Chrome
+          </a>
         </div>
       </section>
 

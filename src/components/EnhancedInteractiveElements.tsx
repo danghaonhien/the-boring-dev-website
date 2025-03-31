@@ -2630,9 +2630,10 @@ export const VideoTooltip: FC<{
   width = '320px',
   height = '300px',
   arrowSize = 8,
-  showDelay = 300
+  showDelay = 20
 }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [recentlyClosed, setRecentlyClosed] = useState(false);
   const childRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
@@ -2674,6 +2675,17 @@ export const VideoTooltip: FC<{
       setTooltipPosition(calculateTooltipPosition());
     }
   }, [isVisible]);
+
+  // Handle close button click with delay
+  const handleCloseButtonClick = () => {
+    setIsVisible(false);
+    setRecentlyClosed(true);
+    
+    // Reset recentlyClosed after 2 seconds
+    setTimeout(() => {
+      setRecentlyClosed(false);
+    }, 500);
+  };
 
   if (!mounted) {
     return (
@@ -2745,7 +2757,11 @@ export const VideoTooltip: FC<{
   return (
     <div 
       className={`relative inline-block ${className}`}
-      onMouseEnter={() => setTimeout(() => setIsVisible(true), showDelay)}
+      onMouseEnter={() => {
+        if (!recentlyClosed) {
+          setTimeout(() => setIsVisible(true), showDelay);
+        }
+      }}
       onMouseLeave={() => setIsVisible(false)}
       ref={childRef}
     >
@@ -2795,7 +2811,7 @@ export const VideoTooltip: FC<{
           {position === 'center' && (
             <button
               className="absolute top-2 right-2 bg-white/80 rounded-full p-1 text-boring-dark hover:bg-white"
-              onClick={() => setIsVisible(false)}
+              onClick={handleCloseButtonClick}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
