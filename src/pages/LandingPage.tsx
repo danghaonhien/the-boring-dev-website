@@ -139,6 +139,16 @@ const LandingPage = () => {
   const secondProductRef = useRef<HTMLDivElement>(null);
   const thirdProductRef = useRef<HTMLDivElement>(null);
 
+  // Scroll to section handler
+  const scrollToSection = (elementRef: HTMLElement | null) => {
+    if (elementRef) {
+      elementRef.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   return (
     <PageTransition>
       <div className="relative min-h-screen bg-boring-offwhite overflow-hidden">
@@ -230,8 +240,9 @@ const LandingPage = () => {
                 <ScrollReveal delay={400}>
                   <MagneticButton
                     className="px-6 py-3 bg-boring-main text-boring-offwhite rounded-md font-medium hover:bg-boring-main/90 transition-colors"
+                    onClick={() => scrollToSection(productRef.current)}
                   >
-                    Explore Projects
+                    Explore Products
                   </MagneticButton>
                 </ScrollReveal>
               </div>
