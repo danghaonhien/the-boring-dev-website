@@ -2825,4 +2825,289 @@ export const VideoTooltip: FC<{
   );
 };
 
+// 3D Carousel component
+interface Carousel3DProps {
+  items: Array<{
+    id: string;
+    content: React.ReactNode;
+  }>;
+  className?: string;
+  itemWidth?: number;
+  itemHeight?: number;
+  radius?: number;
+  autoRotate?: boolean;
+  autoRotateSpeed?: number;
+  perspective?: number;
+  style?: React.CSSProperties;
+  showControls?: boolean;
+  controlsClassName?: string;
+}
+
+export const Carousel3D: React.FC<Carousel3DProps> = ({
+  items,
+  className = '',
+  itemWidth = 200,
+  itemHeight = 300,
+  radius = 250,
+  autoRotate = false,
+  autoRotateSpeed = 3,
+  perspective = 1000,
+  style,
+  showControls = true,
+  controlsClassName = ''
+}) => {
+  const [rotation, setRotation] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [lastRotation, setLastRotation] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Calculate the angle between items
+  const theta = (2 * Math.PI) / items.length;
+
+  // Update the active index based on rotation
+  useEffect(() => {
+    // Calculate which item is currently at the front
+    const normalizedRotation = rotation % (2 * Math.PI);
+    const index = Math.round(normalizedRotation / theta) % items.length;
+    // Convert to positive index (0 to items.length-1)
+    const positiveIndex = ((index % items.length) + items.length) % items.length;
+    setActiveIndex(positiveIndex);
+  }, [rotation, theta, items.length]);
+
+  // Handle auto rotation
+  useEffect(() => {
+    let animationFrameId: number;
+    let lastTimestamp: number;
+    
+    if (autoRotate && !dragging) {
+      const animate = (timestamp: number) => {
+        if (lastTimestamp === undefined) {
+          lastTimestamp = timestamp;
+        }
+        
+        const delta = timestamp - lastTimestamp;
+        const rotationDelta = (delta / 1000) * autoRotateSpeed * 0.1;
+        
+        setRotation(prev => prev + rotationDelta);
+        lastTimestamp = timestamp;
+        animationFrameId = requestAnimationFrame(animate);
+      };
+      
+      animationFrameId = requestAnimationFrame(animate);
+    }
+    
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [autoRotate, dragging, autoRotateSpeed]);
+
+  // Mouse/touch event handlers
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setDragging(true);
+    setStartX(e.clientX);
+    setLastRotation(rotation);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length === 1) {
+      setDragging(true);
+      setStartX(e.touches[0].clientX);
+      setLastRotation(rotation);
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (dragging) {
+      const deltaX = e.clientX - startX;
+      const rotationDelta = (deltaX / 200) * Math.PI; // Adjust sensitivity here
+      setRotation(lastRotation + rotationDelta);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (dragging && e.touches.length === 1) {
+      const deltaX = e.touches[0].clientX - startX;
+      const rotationDelta = (deltaX / 200) * Math.PI; // Adjust sensitivity here
+      setRotation(lastRotation + rotationDelta);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setDragging(false);
+  };
+
+  const handleTouchEnd = () => {
+    setDragging(false);
+  };
+
+  // Navigate to specific item
+  const navigateToItem = (index: number) => {
+    // Calculate the target rotation
+    const targetRotation = index * theta;
+    setRotation(targetRotation);
+  };
+
+  // Navigate to next or previous item
+  const navigateNext = () => {
+    const nextIndex = (activeIndex + 1) % items.length;
+    navigateToItem(nextIndex);
+  };
+
+  const navigatePrevious = () => {
+    const prevIndex = (activeIndex - 1 + items.length) % items.length;
+    navigateToItem(prevIndex);
+  };
+
+  // Attach and detach global event listeners
+  useEffect(() => {
+    const handleGlobalMouseUp = () => {
+      setDragging(false);
+    };
+
+    const handleGlobalTouchEnd = () => {
+      setDragging(false);
+    };
+
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+    document.addEventListener('touchend', handleGlobalTouchEnd);
+
+    return () => {
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+      document.removeEventListener('touchend', handleGlobalTouchEnd);
+    };
+  }, []);
+
+  return (
+    <div className={`flex flex-col ${className}`}>
+      <div
+        ref={containerRef}
+        className="relative select-none mx-auto"
+        style={{
+          width: `${itemWidth * 1.5}px`,
+          height: `${itemHeight * 1.5}px`,
+          perspective: `${perspective}px`,
+          cursor: dragging ? 'grabbing' : 'grab',
+          ...style
+        }}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        <div
+          className="absolute w-full h-full transform-style-preserve-3d transition-transform duration-100"
+          style={{
+            transformStyle: 'preserve-3d',
+            transform: `rotateY(${rotation}rad)`,
+            transition: dragging ? 'none' : 'transform 0.3s ease-out'
+          }}
+        >
+          {items.map((item, index) => {
+            // Calculate the position of each item
+            const angle = theta * index;
+            const x = radius * Math.sin(angle);
+            const z = radius * Math.cos(angle);
+            const isBack = Math.abs((Math.cos(angle - rotation) + 1) / 2) < 0.5;
+            
+            return (
+              <div
+                key={item.id}
+                className="absolute transform-style-preserve-3d origin-center transition-opacity duration-300"
+                style={{
+                  transformStyle: 'preserve-3d',
+                  width: `${itemWidth}px`,
+                  height: `${itemHeight}px`,
+                  left: `${(containerRef.current?.clientWidth || 0) / 2 - itemWidth / 2}px`,
+                  top: `${(containerRef.current?.clientHeight || 0) / 2 - itemHeight / 2}px`,
+                  transform: `translateX(${x}px) translateZ(${z}px) rotateY(${-angle}rad) ${isBack ? 'rotateY(180deg)' : ''}`,
+                  // Adjust opacity based on z position for a more realistic effect
+                  opacity: Math.abs(Math.cos(angle - rotation)) * 0.5 + 0.5
+                }}
+              >
+                {item.content}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {showControls && (
+        <div className={`flex justify-center items-center mt-4 space-x-4 ${controlsClassName}`}>
+          <button
+            onClick={navigatePrevious}
+            className="p-2 rounded-full bg-boring-slate/10 hover:bg-boring-slate/20 text-boring-dark transition-colors focus:outline-none focus:ring-2 focus:ring-boring-main/50"
+            aria-label="Previous item"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          
+          <div className="flex space-x-1">
+            {items.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => navigateToItem(index)}
+                className={`w-2 h-2 rounded-full transition-all focus:outline-none ${
+                  index === activeIndex
+                    ? 'bg-boring-main w-4'
+                    : 'bg-boring-slate/30 hover:bg-boring-slate/50'
+                }`}
+                aria-label={`Navigate to item ${index + 1}`}
+                aria-current={index === activeIndex ? 'true' : 'false'}
+              />
+            ))}
+          </div>
+          
+          <button
+            onClick={navigateNext}
+            className="p-2 rounded-full bg-boring-slate/10 hover:bg-boring-slate/20 text-boring-dark transition-colors focus:outline-none focus:ring-2 focus:ring-boring-main/50"
+            aria-label="Next item"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Carousel3D Item component
+interface Carousel3DItemProps {
+  children: React.ReactNode;
+  className?: string;
+  backgroundColor?: string;
+  borderRadius?: string;
+  shadow?: string;
+}
+
+export const Carousel3DItem: React.FC<Carousel3DItemProps> = ({
+  children,
+  className = '',
+  backgroundColor = 'bg-white',
+  borderRadius = 'rounded-lg',
+  shadow = 'shadow-lg'
+}) => {
+  return (
+    <div 
+      className={`w-full h-full flex items-center justify-center overflow-hidden ${backgroundColor} ${borderRadius} ${shadow} ${className}`}
+      style={{
+        backfaceVisibility: 'hidden',
+        willChange: 'transform, opacity'
+      }}
+    >
+      {children}
+    </div>
+  );
+};
+
 export default EnhancedInteractiveElements; 

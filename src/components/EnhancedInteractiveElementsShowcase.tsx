@@ -21,9 +21,267 @@ import {
   RatingStars,
   NotificationBadge,
   TabsWithSlider,
-  AccordionTabs
+  AccordionTabs,
+  Carousel3D,
+  Carousel3DItem
 } from './EnhancedInteractiveElements';
 import DesignSystem from './DesignSystem';
+
+// Carousel3D Demo Component
+const Carousel3DDemo = () => {
+  // Three different design options
+  const modernDesign = (
+    <Carousel3D
+      items={[
+        {
+          id: '1',
+          content: (
+            <Carousel3DItem backgroundColor="bg-gradient-to-br from-indigo-500 to-purple-600" className="p-6 text-white">
+              <div className="text-center">
+                <div className="mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-2">Modern Design</h3>
+                <p className="text-white/80">Clean, gradient style with bold colors</p>
+              </div>
+            </Carousel3DItem>
+          )
+        },
+        {
+          id: '2',
+          content: (
+            <Carousel3DItem backgroundColor="bg-gradient-to-br from-pink-500 to-orange-500" className="p-6 text-white">
+              <div className="text-center">
+                <div className="mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-2">Bold & Vibrant</h3>
+                <p className="text-white/80">Eye-catching colors that demand attention</p>
+              </div>
+            </Carousel3DItem>
+          )
+        },
+        {
+          id: '3',
+          content: (
+            <Carousel3DItem backgroundColor="bg-gradient-to-br from-teal-500 to-emerald-500" className="p-6 text-white">
+              <div className="text-center">
+                <div className="mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-2">Fresh & Natural</h3>
+                <p className="text-white/80">Calming green tones for organic feel</p>
+              </div>
+            </Carousel3DItem>
+          )
+        },
+        {
+          id: '4',
+          content: (
+            <Carousel3DItem backgroundColor="bg-gradient-to-br from-blue-500 to-indigo-600" className="p-6 text-white">
+              <div className="text-center">
+                <div className="mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-2">Smart Tech</h3>
+                <p className="text-white/80">Modern blue for innovative solutions</p>
+              </div>
+            </Carousel3DItem>
+          )
+        }
+      ]}
+      itemWidth={200}
+      itemHeight={250}
+      autoRotate={true}
+      autoRotateSpeed={1}
+      showControls={true}
+      controlsClassName="mb-4"
+      className="mx-auto"
+    />
+  );
+
+  const minimalDesign = (
+    <Carousel3D
+      items={[
+        {
+          id: '1',
+          content: (
+            <Carousel3DItem backgroundColor="bg-white" className="p-6 border border-boring-slate/10">
+              <div className="text-center">
+                <div className="mb-3 text-boring-main">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium mb-2 text-boring-dark">Minimal Style</h3>
+                <p className="text-boring-gray text-sm">Clean and simple design</p>
+              </div>
+            </Carousel3DItem>
+          )
+        },
+        {
+          id: '2',
+          content: (
+            <Carousel3DItem backgroundColor="bg-white" className="p-6 border border-boring-slate/10">
+              <div className="text-center">
+                <div className="mb-3 text-boring-main">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium mb-2 text-boring-dark">Visual Content</h3>
+                <p className="text-boring-gray text-sm">Images and media focused</p>
+              </div>
+            </Carousel3DItem>
+          )
+        },
+        {
+          id: '3',
+          content: (
+            <Carousel3DItem backgroundColor="bg-white" className="p-6 border border-boring-slate/10">
+              <div className="text-center">
+                <div className="mb-3 text-boring-main">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium mb-2 text-boring-dark">Customizable</h3>
+                <p className="text-boring-gray text-sm">Flexible component options</p>
+              </div>
+            </Carousel3DItem>
+          )
+        },
+        {
+          id: '4',
+          content: (
+            <Carousel3DItem backgroundColor="bg-white" className="p-6 border border-boring-slate/10">
+              <div className="text-center">
+                <div className="mb-3 text-boring-main">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium mb-2 text-boring-dark">Special Effects</h3>
+                <p className="text-boring-gray text-sm">Enhanced user experience</p>
+              </div>
+            </Carousel3DItem>
+          )
+        }
+      ]}
+      itemWidth={200}
+      itemHeight={200}
+      showControls={true}
+      controlsClassName="mb-4"
+      className="mx-auto"
+    />
+  );
+
+  const darkDesign = (
+    <Carousel3D
+      items={[
+        {
+          id: '1',
+          content: (
+            <Carousel3DItem backgroundColor="bg-boring-dark" className="p-6 text-boring-offwhite border border-boring-slate/20">
+              <div className="text-center">
+                <div className="w-12 h-12 rounded-full bg-boring-main/20 flex items-center justify-center mx-auto mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium mb-2">Dark Theme</h3>
+                <p className="text-boring-offwhite/60 text-sm">Perfect for night mode fans</p>
+              </div>
+            </Carousel3DItem>
+          )
+        },
+        {
+          id: '2',
+          content: (
+            <Carousel3DItem backgroundColor="bg-boring-dark" className="p-6 text-boring-offwhite border border-boring-slate/20">
+              <div className="text-center">
+                <div className="w-12 h-12 rounded-full bg-boring-main/20 flex items-center justify-center mx-auto mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium mb-2">Tech Focus</h3>
+                <p className="text-boring-offwhite/60 text-sm">For digital product displays</p>
+              </div>
+            </Carousel3DItem>
+          )
+        },
+        {
+          id: '3',
+          content: (
+            <Carousel3DItem backgroundColor="bg-boring-dark" className="p-6 text-boring-offwhite border border-boring-slate/20">
+              <div className="text-center">
+                <div className="w-12 h-12 rounded-full bg-boring-main/20 flex items-center justify-center mx-auto mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium mb-2">Adjustable</h3>
+                <p className="text-boring-offwhite/60 text-sm">Customize to your needs</p>
+              </div>
+            </Carousel3DItem>
+          )
+        },
+        {
+          id: '4',
+          content: (
+            <Carousel3DItem backgroundColor="bg-boring-dark" className="p-6 text-boring-offwhite border border-boring-slate/20">
+              <div className="text-center">
+                <div className="w-12 h-12 rounded-full bg-boring-main/20 flex items-center justify-center mx-auto mb-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-medium mb-2">Immersive</h3>
+                <p className="text-boring-offwhite/60 text-sm">Engaging user experience</p>
+              </div>
+            </Carousel3DItem>
+          )
+        }
+      ]}
+      itemWidth={180}
+      itemHeight={220}
+      radius={230}
+      autoRotate={true}
+      autoRotateSpeed={1.5}
+      showControls={true}
+      controlsClassName="mb-4"
+      className="mx-auto"
+    />
+  );
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 mb-8">
+      <div>
+        <h4 className="text-center text-boring-dark font-medium mb-6">Modern & Colorful</h4>
+        {modernDesign}
+      </div>
+      <div>
+        <h4 className="text-center text-boring-dark font-medium mb-6">Minimal & Clean</h4>
+        {minimalDesign}
+      </div>
+      <div>
+        <h4 className="text-center text-boring-dark font-medium mb-6">Dark & Professional</h4>
+        {darkDesign}
+      </div>
+    </div>
+  );
+};
 
 const EnhancedInteractiveElementsShowcase: React.FC = () => {
   return (
@@ -33,6 +291,13 @@ const EnhancedInteractiveElementsShowcase: React.FC = () => {
           <h2 className="text-3xl font-bold mb-2 text-center">Interactive Elements</h2>
           <p className="text-boring-gray text-center mb-10">Explore our collection of interactive UI elements</p>
         </ScrollReveal>
+
+        {/* 3D Carousel Section */}
+        <div className="mb-16">
+          <h3 className="text-xl font-semibold mb-4 text-boring-dark text-center">3D Carousel</h3>
+          <p className="text-boring-gray text-center mb-8">Interactive 3D carousel with drag rotation, arrow navigation, and dot indicators. Text stays readable on both front and back sides.</p>
+          <Carousel3DDemo />
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
           <div>
