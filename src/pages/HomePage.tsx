@@ -128,11 +128,10 @@ const HomePage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative">
               {/* Reword This Project */}
               <ParallaxCard className="h-full">
-                <div className="bg-white rounded-lg shadow-md overflow-hidden h-full">
-                  <div className="h-48 relative overflow-hidden group">
+                <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
+                  <div className="h-60 relative overflow-hidden group">
                     <VideoTooltip
                       videoSrc={videoSources.rewordThis}
-                      tooltipContent="See it in action"
                       position="center"
                       width="380px"
                       arrowSize={10}
@@ -156,19 +155,19 @@ const HomePage = () => {
                     </VideoTooltip>
                   </div>
 
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-boring-dark mb-2">Reword This</h3>
-                    <p className="text-boring-gray mb-4">
+                  <div className="p-8 flex-grow flex flex-col">
+                    <h3 className="text-xl font-bold text-boring-dark mb-3">Reword This</h3>
+                    <p className="text-boring-gray mb-6 line-clamp-3">
                       An AI-powered text paraphrasing application that helps users rewrite content for improved clarity, 
                       tone, and engagement. Built with React, Node.js, and OpenAI.
                     </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2 mb-6">
                       <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">React</span>
                       <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Node.js</span>
                       <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">OpenAI</span>
                       <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">TailwindCSS</span>
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mt-auto">
                       <Link 
                         to="/reword-this" 
                         className="inline-block text-boring-main font-medium hover:underline"
@@ -191,12 +190,11 @@ const HomePage = () => {
               
               {/* Blog App Project */}
               <ParallaxCard className="h-full">
-                <div className="bg-white rounded-lg shadow-md overflow-hidden h-full">
-                  <div className="h-48 bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center group relative">
+                <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
+                  <div className="h-60 bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center group relative">
                     {videoSources.blogApp ? (
                       <VideoTooltip
                         videoSrc={videoSources.blogApp}
-                        tooltipContent="Interactive demo"
                         position="center"
                         width="380px"
                         arrowSize={10}
@@ -225,19 +223,19 @@ const HomePage = () => {
                       </div>
                     )}
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-boring-dark mb-2">Modern Blog Platform</h3>
-                    <p className="text-boring-gray mb-4">
+                  <div className="p-8 flex-grow flex flex-col">
+                    <h3 className="text-xl font-bold text-boring-dark mb-3">Modern Blog Platform</h3>
+                    <p className="text-boring-gray mb-6 line-clamp-3">
                       A full-featured blogging platform with rich text editing, user authentication, 
                       and comment functionality. Responsive design for all devices.
                     </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2 mb-6">
                       <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Typescript</span>
                       <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">Next.js</span>
                       <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">MongoDB</span>
                       <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium">AWS</span>
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mt-auto">
                       <a 
                         href="#" 
                         className="inline-block text-boring-main font-medium hover:underline"
@@ -260,12 +258,11 @@ const HomePage = () => {
               
               {/* E-commerce Dashboard Project */}
               <ParallaxCard className="h-full">
-                <div className="bg-white rounded-lg shadow-md overflow-hidden h-full">
-                  <div className="h-48 bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center group relative">
+                <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
+                  <div className="h-60 bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center group relative">
                     {videoSources.ecommerceDashboard ? (
                       <VideoTooltip
                         videoSrc={videoSources.ecommerceDashboard}
-                        tooltipContent="Dashboard preview"
                         position="center"
                         width="380px"
                         arrowSize={10}
@@ -294,19 +291,19 @@ const HomePage = () => {
                       </div>
                     )}
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-boring-dark mb-2">E-commerce Dashboard</h3>
-                    <p className="text-boring-gray mb-4">
+                  <div className="p-8 flex-grow flex flex-col">
+                    <h3 className="text-xl font-bold text-boring-dark mb-3">E-commerce Dashboard</h3>
+                    <p className="text-boring-gray mb-6 line-clamp-3">
                       An analytics dashboard for e-commerce businesses with real-time sales tracking,
                       inventory management, and customer insights. Customizable reports and visualizations.
                     </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2 mb-6">
                       <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">React</span>
                       <span className="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs font-medium">Redux</span>
                       <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Node.js</span>
                       <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">MySQL</span>
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between mt-auto">
                       <a 
                         href="#" 
                         className="inline-block text-boring-main font-medium hover:underline"

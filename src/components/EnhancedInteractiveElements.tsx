@@ -2618,6 +2618,7 @@ export const VideoTooltip: FC<{
   className?: string;
   position?: 'top' | 'bottom' | 'left' | 'right' | 'center';
   width?: string;
+  height?: string;
   arrowSize?: number;
   showDelay?: number;
 }> = ({
@@ -2627,6 +2628,7 @@ export const VideoTooltip: FC<{
   className = '',
   position = 'top',
   width = '320px',
+  height = '300px',
   arrowSize = 8,
   showDelay = 300
 }) => {
@@ -2634,7 +2636,12 @@ export const VideoTooltip: FC<{
   const childRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
-  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+  const [tooltipPosition, setTooltipPosition] = useState<{ 
+    top: number; 
+    left: number; 
+    width?: number;
+    height?: number;
+  }>({ top: 0, left: 0 });
   
   // Only run on client
   useEffect(() => {
@@ -2651,7 +2658,7 @@ export const VideoTooltip: FC<{
       }
     };
     
-    // Update on scroll
+    // Update on scroll and resize only
     window.addEventListener('scroll', updatePosition);
     window.addEventListener('resize', updatePosition);
     
@@ -2682,19 +2689,24 @@ export const VideoTooltip: FC<{
     
     const childRect = childRef.current.getBoundingClientRect();
     const tooltipWidth = parseInt(width, 10);
+    const tooltipHeight = parseInt(height, 10);
+    const viewportHeight = window.innerHeight;
+    const viewportWidth = window.innerWidth;
     
-    // For center position (on top of the card)
+    // For center position (directly overlay on the hovered card)
     if (position === 'center') {
       return {
-        top: childRect.top + (childRect.height / 2) - 150, // Center vertically, 150px is approx half the video height
-        left: childRect.left + (childRect.width / 2) - (tooltipWidth / 2) // Center horizontally
+        top: childRect.top,
+        left: childRect.left,
+        width: childRect.width,
+        height: childRect.height
       };
     }
     
     // For top position (above the card)
     if (position === 'top') {
       return {
-        top: childRect.top - 300 - 20, // Above the card
+        top: childRect.top - tooltipHeight - 20, // Above the card
         left: childRect.left + (childRect.width / 2) - (tooltipWidth / 2)
       };
     }
@@ -2707,16 +2719,32 @@ export const VideoTooltip: FC<{
       };
     }
     
-    // Default center position
+    // For left position
+    if (position === 'left') {
+      return {
+        top: childRect.top + (childRect.height / 2) - (tooltipHeight / 2),
+        left: childRect.left - tooltipWidth - 20
+      };
+    }
+    
+    // For right position
+    if (position === 'right') {
+      return {
+        top: childRect.top + (childRect.height / 2) - (tooltipHeight / 2),
+        left: childRect.right + 20
+      };
+    }
+    
+    // Default to center of viewport if no valid position
     return {
-      top: childRect.top + (childRect.height / 2) - 150,
-      left: childRect.left + (childRect.width / 2) - (tooltipWidth / 2)
+      top: Math.max(20, (viewportHeight - tooltipHeight) / 2),
+      left: Math.max(20, (viewportWidth - tooltipWidth) / 2)
     };
   };
   
   return (
     <div 
-      className={`relative inline-block transition-transform duration-300 ${isVisible && position === 'center' ? 'scale-[1.02]' : ''} ${className}`}
+      className={`relative inline-block ${className}`}
       onMouseEnter={() => setTimeout(() => setIsVisible(true), showDelay)}
       onMouseLeave={() => setIsVisible(false)}
       ref={childRef}
@@ -2728,19 +2756,23 @@ export const VideoTooltip: FC<{
           ref={tooltipRef}
           className={`fixed z-[9999] ${position === 'center' ? 'animate-scaleIn' : 'animate-fadeIn'}`}
           style={{
-            width,
+            width: position === 'center' ? `${tooltipPosition.width}px` : width,
+            height: position === 'center' ? `${tooltipPosition.height}px` : height,
             top: `${tooltipPosition.top}px`,
             left: `${tooltipPosition.left}px`,
           }}
         >
-          <div className={`${position === 'center' ? 'bg-white/95 backdrop-blur-sm' : 'bg-white'} rounded-lg shadow-xl overflow-hidden border border-gray-200`}>
+          <div 
+            className={`${position === 'center' ? 'bg-white/95 backdrop-blur-md' : 'bg-white'} rounded-lg shadow-xl overflow-hidden border border-gray-200 ${position === 'center' ? 'h-full flex flex-col' : ''}`}
+          >
             <video 
               src={videoSrc} 
               autoPlay 
               loop 
               muted 
               playsInline
-              className="w-full"
+              className={`w-full ${position === 'center' ? 'flex-grow object-contain' : ''}`}
+              style={{ maxHeight: position === 'center' ? '100%' : 'auto' }}
             />
             {tooltipContent && (
               <div className="p-2 text-sm text-center text-boring-dark">
@@ -2760,6 +2792,16 @@ export const VideoTooltip: FC<{
               />
             )}
           </div>
+          {position === 'center' && (
+            <button
+              className="absolute top-2 right-2 bg-white/80 rounded-full p-1 text-boring-dark hover:bg-white"
+              onClick={() => setIsVisible(false)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
+          )}
         </div>,
         document.body
       )}
