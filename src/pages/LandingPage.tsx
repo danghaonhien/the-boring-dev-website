@@ -335,13 +335,13 @@ const LandingPage = () => {
           }}
         >
           <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-16 relative">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8 lg:gap-16 relative">
               {/* Product Image with enhanced animations and carousel */}
               <div 
-                className="w-full md:w-3/5 mb-12 md:mb-0 transition-all duration-1200 ease-out transform-gpu relative"
+                className="w-full md:w-1/2 lg:w-3/5 mb-12 md:mb-0 transition-all duration-1200 ease-out transform-gpu relative"
                 style={{
                   transform: productAnimationTriggered 
-                    ? `translateX(${window.innerWidth < 768 ? '0' : '-20%'}) ${scrollDirection === 'down' ? 'scale(0.98)' : 'scale(1.02)'}`
+                    ? `translateX(${window.innerWidth < 768 ? '0' : window.innerWidth < 1024 ? '-10%' : '-20%'}) ${scrollDirection === 'down' ? 'scale(0.98)' : 'scale(1.02)'}`
                     : 'translateX(0) scale(1)',
                   opacity: productAnimationTriggered ? 0.95 : 1,
                   transition: 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
@@ -427,9 +427,9 @@ const LandingPage = () => {
               
               {/* Product Info with refined staggered animation */}
               <div 
-                className="w-full md:w-2/5 transition-all duration-1000 ease-out transform-gpu"
+                className="w-full md:w-1/2 lg:w-2/5 transition-all duration-1000 ease-out transform-gpu"
                 style={{
-                  transform: productAnimationTriggered ? 'translateX(0)' : `translateX(${window.innerWidth < 768 ? '100px' : '100%'})`,
+                  transform: productAnimationTriggered ? 'translateX(0)' : `translateX(${window.innerWidth < 768 ? '100px' : window.innerWidth < 1024 ? '50%' : '100%'})`,
                   opacity: productAnimationTriggered ? 1 : 0,
                   transition: 'all 1s cubic-bezier(0.34, 1.56, 0.64, 1)'
                 }}
@@ -517,12 +517,12 @@ const LandingPage = () => {
           }}
         >
           <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row-reverse items-center justify-between gap-16 relative">
+            <div className="flex flex-col md:flex-row-reverse items-center justify-between gap-8 lg:gap-16 relative">
               {/* Product Image */}
-              <div className="w-full md:w-3/5 mb-12 md:mb-0 transition-all duration-1200 ease-out transform-gpu relative"
+              <div className="w-full md:w-1/2 lg:w-3/5 mb-12 md:mb-0 transition-all duration-1200 ease-out transform-gpu relative"
                 style={{
                   transform: productAnimationTriggered 
-                    ? `translateX(${window.innerWidth < 768 ? '0' : '20%'}) ${scrollDirection === 'down' ? 'scale(0.98)' : 'scale(1.02)'}`
+                    ? `translateX(${window.innerWidth < 768 ? '0' : window.innerWidth < 1024 ? '10%' : '20%'}) ${scrollDirection === 'down' ? 'scale(0.98)' : 'scale(1.02)'}`
                     : 'translateX(0) scale(1)',
                   opacity: productAnimationTriggered ? 0.95 : 1,
                   transition: 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
@@ -559,9 +559,9 @@ const LandingPage = () => {
               </div>
               
               {/* Product Info */}
-              <div className="w-full md:w-2/5 transition-all duration-1000 ease-out transform-gpu"
+              <div className="w-full md:w-1/2 lg:w-2/5 transition-all duration-1000 ease-out transform-gpu"
                 style={{
-                  transform: productAnimationTriggered ? 'translateX(0)' : `translateX(${window.innerWidth < 768 ? '-100px' : '-100%'})`,
+                  transform: productAnimationTriggered ? 'translateX(0)' : `translateX(${window.innerWidth < 768 ? '-100px' : window.innerWidth < 1024 ? '-50%' : '-100%'})`,
                   opacity: productAnimationTriggered ? 1 : 0,
                   transition: 'all 1s cubic-bezier(0.34, 1.56, 0.64, 1)'
                 }}
@@ -649,12 +649,12 @@ const LandingPage = () => {
           }}
         >
           <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-16 relative">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8 lg:gap-16 relative">
               {/* Product Image */}
-              <div className="w-full md:w-3/5 mb-12 md:mb-0 transition-all duration-1200 ease-out transform-gpu relative"
+              <div className="w-full md:w-1/2 lg:w-3/5 mb-12 md:mb-0 transition-all duration-1200 ease-out transform-gpu relative"
                 style={{
                   transform: productAnimationTriggered 
-                    ? `translateX(${window.innerWidth < 768 ? '0' : '-20%'}) ${scrollDirection === 'down' ? 'scale(0.98)' : 'scale(1.02)'}`
+                    ? `translateX(${window.innerWidth < 768 ? '0' : window.innerWidth < 1024 ? '-10%' : '-20%'}) ${scrollDirection === 'down' ? 'scale(0.98)' : 'scale(1.02)'}`
                     : 'translateX(0) scale(1)',
                   opacity: productAnimationTriggered ? 0.95 : 1,
                   transition: 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
@@ -691,9 +691,9 @@ const LandingPage = () => {
               </div>
               
               {/* Product Info */}
-              <div className="w-full md:w-2/5 transition-all duration-1000 ease-out transform-gpu"
+              <div className="w-full md:w-1/2 lg:w-2/5 transition-all duration-1000 ease-out transform-gpu"
                 style={{
-                  transform: productAnimationTriggered ? 'translateX(0)' : `translateX(${window.innerWidth < 768 ? '100px' : '100%'})`,
+                  transform: productAnimationTriggered ? 'translateX(0)' : `translateX(${window.innerWidth < 768 ? '100px' : window.innerWidth < 1024 ? '50%' : '100%'})`,
                   opacity: productAnimationTriggered ? 1 : 0,
                   transition: 'all 1s cubic-bezier(0.34, 1.56, 0.64, 1)'
                 }}
