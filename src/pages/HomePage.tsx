@@ -168,12 +168,12 @@ const HomePage = () => {
                       <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">TailwindCSS</span>
                     </div>
                     <div className="flex items-center justify-between mt-auto">
-                      <Link 
-                        to="/reword-this" 
-                        className="inline-block text-boring-main font-medium hover:underline"
+                      <AnimatedLink 
+                        href="/reword-this" 
+                        className="text-boring-main font-medium"
                       >
                         View Project →
-                      </Link>
+                      </AnimatedLink>
                       <a 
                         href="#" 
                         className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
@@ -236,12 +236,12 @@ const HomePage = () => {
                       <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium">AWS</span>
                     </div>
                     <div className="flex items-center justify-between mt-auto">
-                      <a 
+                      <AnimatedLink 
                         href="#" 
-                        className="inline-block text-boring-main font-medium hover:underline"
+                        className="text-boring-main font-medium"
                       >
                         View Project →
-                      </a>
+                      </AnimatedLink>
                       <a 
                         href="#" 
                         className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
@@ -304,12 +304,12 @@ const HomePage = () => {
                       <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">MySQL</span>
                     </div>
                     <div className="flex items-center justify-between mt-auto">
-                      <a 
+                      <AnimatedLink 
                         href="#" 
-                        className="inline-block text-boring-main font-medium hover:underline"
+                        className="text-boring-main font-medium"
                       >
                         View Project →
-                      </a>
+                      </AnimatedLink>
                       <a 
                         href="#" 
                         className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
