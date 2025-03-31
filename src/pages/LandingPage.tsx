@@ -109,6 +109,36 @@ const LandingPage = () => {
     };
   };
 
+  // Calculate opacity based on scroll position
+  const calculateSectionOpacity = (section: HTMLElement | null, offset = 300, speed = 1) => {
+    if (!section) return 1;
+    
+    const rect = section.getBoundingClientRect();
+    const sectionTop = rect.top;
+    const sectionHeight = rect.height;
+    
+    // When section is coming into view from bottom
+    if (sectionTop > window.innerHeight - offset) {
+      return 0;
+    }
+    
+    // When section is in view
+    if (sectionTop > 0) {
+      return Math.min(1, (window.innerHeight - sectionTop) / (window.innerHeight * 0.5 * speed));
+    }
+    
+    // When section is scrolling out of view
+    if (sectionTop > -sectionHeight) {
+      return Math.max(0, 1 - (Math.abs(sectionTop) / (sectionHeight * 0.5 * speed)));
+    }
+    
+    return 0;
+  };
+
+  // Refs for product sections
+  const secondProductRef = useRef<HTMLDivElement>(null);
+  const thirdProductRef = useRef<HTMLDivElement>(null);
+
   return (
     <PageTransition>
       <div className="relative min-h-screen bg-boring-offwhite overflow-hidden">
@@ -183,14 +213,14 @@ const LandingPage = () => {
               <div>
                 <ScrollReveal>
                   <h2 className="text-5xl md:text-6xl font-bold mb-4 text-boring-dark leading-tight">
-                    Distinctive website solutions for leading and rising companies
+                 from Boredom springs Greatness
                   </h2>
                 </ScrollReveal>
                 
                 <ScrollReveal delay={200}>
                   <div className="mb-8">
                     <WaveText 
-                      text="Simple tools, thoughtful design." 
+                      text="Boring tools, thoughtful design." 
                       className="text-xl text-boring-dark opacity-90"
                       waveSpeed={4}
                     />
@@ -244,10 +274,54 @@ const LandingPage = () => {
           </div>
         </section>
 
+        {/* Large Text Section with Scroll Animation - Replacing the old parallax section */}
+        <section className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden">
+          {/* Text container with scroll-based opacity */}
+          <div 
+            className="container mx-auto px-4 text-center transition-opacity duration-1000"
+            style={{
+              opacity: Math.max(0, 1 - (scrollPosition / (window.innerHeight * 1.2))),
+              transform: `translateY(${Math.min(0, -(scrollPosition * 0.08))}px)`
+            }}
+          >
+            <h2 className="text-6xl md:text-8xl lg:text-9xl font-bold text-boring-dark leading-tight mb-6">
+              Boring, <span className="text-boring-main">yet</span>
+              <br />
+              <span className="ml-4 md:ml-8">Powerful.</span>
+            </h2>
+            <p className="text-2xl md:text-3xl text-boring-dark/70 max-w-3xl mx-auto">
+              Building digital experiences that last
+            </p>
+          </div>
+          
+          {/* Indicator to scroll showing only when text is visible */}
+          <div 
+            className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center transition-opacity duration-700"
+            style={{
+              opacity: Math.max(0, 0.8 - (scrollPosition / (window.innerHeight * 0.8)))
+            }}
+          >
+            <p className="text-boring-dark/50 mb-2 text-sm font-medium">Scroll to explore</p>
+            <div className="w-6 h-10 border-2 border-boring-dark/30 rounded-full flex justify-center p-1">
+              <div 
+                className="w-1 h-1 bg-boring-main rounded-full animate-scroll-pulse" 
+                style={{
+                  animationDuration: '1.5s',
+                  animationIterationCount: 'infinite'
+                }}
+              ></div>
+            </div>
+          </div>
+        </section>
+
         {/* Product Section */}
         <section 
           ref={productRef} 
           className="min-h-screen relative flex flex-col items-center justify-center py-24"
+          style={{
+            opacity: calculateSectionOpacity(productRef.current, 200, 0.7),
+            transition: 'opacity 0.8s ease-out'
+          }}
         >
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center justify-between gap-16 relative">
@@ -422,37 +496,15 @@ const LandingPage = () => {
           </div>
         </section>
 
-        {/* Additional Section with parallax effect */}
-        <section className="py-20 bg-boring-dark relative overflow-hidden">
-          <AnimatedGradientBlob 
-            color1="from-boring-slate/10" 
-            color2="to-boring-main/5" 
-            className="absolute top-0 right-0 w-96 h-96" 
-          />
-          
-          <div 
-            className="container mx-auto px-4 relative z-10"
-            style={getParallaxStyle(-0.1)}
-          >
-            <ScrollReveal>
-              <h2 className="text-4xl font-bold mb-6 text-boring-offwhite">
-                For 10 years, we've been delivering powerful,
-                <br />
-                tailor-made websites
-              </h2>
-            </ScrollReveal>
-            
-            <ScrollReveal delay={200}>
-              <p className="text-xl text-boring-offwhite/80 max-w-3xl">
-                that have helped brands anchor their authority. Now, we're harnessing
-                this cargo of expertise to propel your projects toward new and exciting horizons.
-              </p>
-            </ScrollReveal>
-          </div>
-        </section>
-
         {/* Second Project Section */}
-        <section className="min-h-screen relative flex flex-col items-center justify-center py-24">
+        <section 
+          ref={secondProductRef}
+          className="min-h-screen relative flex flex-col items-center justify-center py-24"
+          style={{
+            opacity: calculateSectionOpacity(secondProductRef.current, 200, 0.7),
+            transition: 'opacity 0.8s ease-out'
+          }}
+        >
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row-reverse items-center justify-between gap-16 relative">
               {/* Product Image */}
@@ -577,7 +629,14 @@ const LandingPage = () => {
         </section>
 
         {/* Third Project Section */}
-        <section className="min-h-screen relative flex flex-col items-center justify-center py-24 bg-boring-offwhite/50">
+        <section 
+          ref={thirdProductRef}
+          className="min-h-screen relative flex flex-col items-center justify-center py-24 bg-boring-offwhite/50"
+          style={{
+            opacity: calculateSectionOpacity(thirdProductRef.current, 200, 0.7),
+            transition: 'opacity 0.8s ease-out'
+          }}
+        >
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center justify-between gap-16 relative">
               {/* Product Image */}
