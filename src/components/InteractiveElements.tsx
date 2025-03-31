@@ -112,11 +112,13 @@ export const AnimatedCheckbox: React.FC<{
   checked?: boolean;
   onChange?: () => void;
   id?: string;
+  labelColor?: string;
 }> = ({ 
   label,
   checked = false,
   onChange,
-  id
+  id,
+  labelColor = 'text-boring-dark'
 }) => {
   const [isChecked, setIsChecked] = useState(checked);
   
@@ -135,16 +137,16 @@ export const AnimatedCheckbox: React.FC<{
   return (
     <div className="flex items-center space-x-3 cursor-pointer" onClick={handleToggle}>
       <div 
-        className={`w-6 h-6 rounded border transition-all duration-200 flex items-center justify-center
+        className={`w-5 h-5 rounded border transition-all duration-200 flex items-center justify-center
           ${isChecked 
             ? 'bg-boring-main border-boring-main' 
-            : 'border-boring-slate bg-white'}`}
+            : 'border-boring-offwhite/50 bg-transparent'}`}
         id={id}
       >
         {isChecked && (
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
-            className="h-4 w-4 text-boring-offwhite" 
+            className="h-3 w-3 text-boring-offwhite" 
             viewBox="0 0 20 20" 
             fill="currentColor"
           >
@@ -152,7 +154,7 @@ export const AnimatedCheckbox: React.FC<{
           </svg>
         )}
       </div>
-      {label && <span className="text-boring-dark">{label}</span>}
+      {label && <span className={`text-sm ${labelColor}`}>{label}</span>}
     </div>
   );
 };
