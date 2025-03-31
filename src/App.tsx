@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
+import LandingPage from './pages/LandingPage';
 import RewordThisPage from './pages/RewordThisPage';
 import AdminLogin from './pages/admin/AdminLogin';
 import WaitlistDashboard from './pages/admin/WaitlistDashboard';
@@ -11,7 +12,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/reword-this" element={<RewordThisPage />} />
         
         {/* Admin Routes */}

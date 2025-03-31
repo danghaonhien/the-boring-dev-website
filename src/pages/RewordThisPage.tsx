@@ -25,6 +25,12 @@ const RewordThisPage = () => {
   
   const slides: Slide[] = [
     {
+      id: 5,
+      video: "./src/assets/videos/reword-this/reword-this-demo.mp4",
+      thumbnailImage: "./src/assets/images/reword-this/reword-this-hero.png", // Using hero image as fallback thumbnail
+      alt: "Reword This demo"
+    },
+    {
       id: 1,
       image: "./src/assets/images/reword-this/reword-this-hero.png",
       alt: "Reword This Chrome Extension Screenshot"
@@ -44,12 +50,7 @@ const RewordThisPage = () => {
       image: "./src/assets/images/reword-this/reword-this-slide-4.png",
       alt: "Reword This documentation"
     },
-    {
-      id: 5,
-      video: "./src/assets/videos/reword-this/reword-this-demo.mp4",
-      thumbnailImage: "./src/assets/images/reword-this/reword-this-hero.png", // Using hero image as fallback thumbnail
-      alt: "Reword This demo"
-    }
+  
   ];
 
   const nextSlide = () => {
