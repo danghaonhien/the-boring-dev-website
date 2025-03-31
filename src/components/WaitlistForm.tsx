@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { supabase } from '../utils/supabaseClient';
+import { supabase, sanitizeInput, handleSupabaseError } from '../utils/supabaseClient';
 
 export default function WaitlistForm() {
   const [email, setEmail] = useState('');
@@ -24,25 +24,45 @@ export default function WaitlistForm() {
       return;
     }
 
+    // Limit message length to prevent abuse
+    if (message && message.length > 1000) {
+      setError('Message is too long. Please keep it under 1000 characters.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
+      // Get client IP address for rate limiting (if server supports it)
+      const clientIp = await fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => data.ip)
+        .catch(() => null);
+
+      // Sanitize inputs before sending to database
+      const sanitizedEmail = sanitizeInput(email);
+      const sanitizedMessage = message ? sanitizeInput(message) : null;
+
       const { error: supabaseError } = await supabase
         .from('waitlist')
         .insert({
-          email,
-          message,
+          email: sanitizedEmail,
+          message: sanitizedMessage,
           project: 'Reword This',
+          ip_address: clientIp // This will be used for rate limiting
         });
 
       if (supabaseError) {
         throw supabaseError;
       }
 
+      // Clear form and show success
+      setEmail('');
+      setMessage('');
       setSubmitted(true);
     } catch (err: any) {
-      console.error('Error submitting to waitlist:', err);
-      setError(err.message || 'An error occurred. Please try again.');
+      // Use the enhanced error handler
+      setError(handleSupabaseError(err, 'Failed to join waitlist. Please try again later.'));
     } finally {
       setIsSubmitting(false);
     }
@@ -72,6 +92,7 @@ export default function WaitlistForm() {
           placeholder="Enter your email"
           className="w-full p-2 border rounded focus:ring-2 focus:ring-[#D97904] focus:outline-none"
           disabled={isSubmitting}
+          maxLength={254} // Standard email length limit
         />
       </div>
       
@@ -87,6 +108,7 @@ export default function WaitlistForm() {
           className="w-full p-2 border rounded focus:ring-2 focus:ring-[#D97904] focus:outline-none"
           rows={3}
           disabled={isSubmitting}
+          maxLength={1000} // Prevent excessively long messages
         />
       </div>
       
