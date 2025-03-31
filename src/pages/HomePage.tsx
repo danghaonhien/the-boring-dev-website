@@ -127,202 +127,52 @@ const HomePage = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative">
               {/* Reword This Project */}
-              <ParallaxCard className="h-full">
-                <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
-                  <div className="h-60 relative overflow-hidden group">
-                    <VideoTooltip
-                      videoSrc={videoSources.rewordThis}
-                      position="center"
-                      width="380px"
-                      arrowSize={10}
-                    >
-                      <img 
-                        src={rewordThisHero} 
-                        alt="Reword This" 
-                        className="w-full h-full object-cover cursor-pointer group-hover:scale-105 transition-all duration-300 ease-in-out"
-                      />
-                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
-                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110 transition-transform bg-boring-main/40 p-3 rounded-full backdrop-blur-sm">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                        </div>
-                        <div className="absolute top-2 right-2 bg-white bg-opacity-90 px-2 py-1 rounded text-xs font-medium text-boring-dark opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          Hover for demo
-                        </div>
-                      </div>
-                    </VideoTooltip>
-                  </div>
-
-                  <div className="p-8 flex-grow flex flex-col">
-                    <h3 className="text-xl font-bold text-boring-dark mb-3">Reword This</h3>
-                    <p className="text-boring-gray mb-6 line-clamp-3">
-                      An AI-powered text paraphrasing application that helps users rewrite content for improved clarity, 
-                      tone, and engagement. Built with React, Node.js, and OpenAI.
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">React</span>
-                      <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Node.js</span>
-                      <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">OpenAI</span>
-                      <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">TailwindCSS</span>
-                    </div>
-                    <div className="flex items-center justify-between mt-auto">
-                      <AnimatedLink 
-                        href="/reword-this" 
-                        className="text-boring-main font-medium"
-                      >
-                        View Project →
-                      </AnimatedLink>
-                      <a 
-                        href="#" 
-                        className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z" />
-                        </svg>
-                        Add to Chrome
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </ParallaxCard>
+              <ProjectCard 
+                name="Reword This"
+                description="An AI-powered text paraphrasing application that helps users rewrite content for improved clarity, tone, and engagement. Built with React, Node.js, and OpenAI."
+                imageUrl={rewordThisHero}
+                projectUrl="/reword-this"
+                videoSrc={videoSources.rewordThis}
+                tags={[
+                  { name: "React", color: "bg-blue-100", textColor: "text-blue-800" },
+                  { name: "Node.js", color: "bg-green-100", textColor: "text-green-800" },
+                  { name: "OpenAI", color: "bg-purple-100", textColor: "text-purple-800" },
+                  { name: "TailwindCSS", color: "bg-yellow-100", textColor: "text-yellow-800" }
+                ]}
+                chromeExtension={true}
+              />
               
               {/* Blog App Project */}
-              <ParallaxCard className="h-full">
-                <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
-                  <div className="h-60 bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center group relative">
-                    {videoSources.blogApp ? (
-                      <VideoTooltip
-                        videoSrc={videoSources.blogApp}
-                        position="center"
-                        width="380px"
-                        arrowSize={10}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 text-white cursor-pointer group-hover:scale-110 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                        </svg>
-                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110 transition-transform">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-2 right-2 bg-white bg-opacity-90 px-2 py-1 rounded text-xs font-medium text-boring-dark opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            Hover for demo
-                          </div>
-                        </div>
-                      </VideoTooltip>
-                    ) : (
-                      <div className="relative group-hover:scale-110 transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
-                        </svg>
-                        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-2 text-white text-xs bg-black bg-opacity-50 px-2 py-1 rounded">Demo coming soon</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-8 flex-grow flex flex-col">
-                    <h3 className="text-xl font-bold text-boring-dark mb-3">Modern Blog Platform</h3>
-                    <p className="text-boring-gray mb-6 line-clamp-3">
-                      A full-featured blogging platform with rich text editing, user authentication, 
-                      and comment functionality. Responsive design for all devices.
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">Typescript</span>
-                      <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-medium">Next.js</span>
-                      <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">MongoDB</span>
-                      <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-medium">AWS</span>
-                    </div>
-                    <div className="flex items-center justify-between mt-auto">
-                      <AnimatedLink 
-                        href="#" 
-                        className="text-boring-main font-medium"
-                      >
-                        View Project →
-                      </AnimatedLink>
-                      <a 
-                        href="#" 
-                        className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z" />
-                        </svg>
-                        Add to Chrome
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </ParallaxCard>
+              <ProjectCard 
+                name="Modern Blog Platform"
+                description="A full-featured blogging platform with rich text editing, user authentication, and comment functionality. Responsive design for all devices."
+                imageBgColor="bg-gradient-to-br from-green-500 to-teal-600"
+                projectUrl="#"
+                videoSrc={videoSources.blogApp}
+                tags={[
+                  { name: "Typescript", color: "bg-blue-100", textColor: "text-blue-800" },
+                  { name: "Next.js", color: "bg-yellow-100", textColor: "text-yellow-800" },
+                  { name: "MongoDB", color: "bg-green-100", textColor: "text-green-800" },
+                  { name: "AWS", color: "bg-red-100", textColor: "text-red-800" }
+                ]}
+                chromeExtension={true}
+              />
               
               {/* E-commerce Dashboard Project */}
-              <ParallaxCard className="h-full">
-                <div className="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
-                  <div className="h-60 bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center group relative">
-                    {videoSources.ecommerceDashboard ? (
-                      <VideoTooltip
-                        videoSrc={videoSources.ecommerceDashboard}
-                        position="center"
-                        width="380px"
-                        arrowSize={10}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 text-white cursor-pointer group-hover:scale-110 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                        </svg>
-                        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110 transition-transform">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                          </div>
-                          <div className="absolute top-2 right-2 bg-white bg-opacity-90 px-2 py-1 rounded text-xs font-medium text-boring-dark opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            Hover for demo
-                          </div>
-                        </div>
-                      </VideoTooltip>
-                    ) : (
-                      <div className="relative group-hover:scale-110 transition-all duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                        </svg>
-                        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-2 text-white text-xs bg-black bg-opacity-50 px-2 py-1 rounded">Demo coming soon</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-8 flex-grow flex flex-col">
-                    <h3 className="text-xl font-bold text-boring-dark mb-3">E-commerce Dashboard</h3>
-                    <p className="text-boring-gray mb-6 line-clamp-3">
-                      An analytics dashboard for e-commerce businesses with real-time sales tracking,
-                      inventory management, and customer insights. Customizable reports and visualizations.
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">React</span>
-                      <span className="px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-xs font-medium">Redux</span>
-                      <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">Node.js</span>
-                      <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">MySQL</span>
-                    </div>
-                    <div className="flex items-center justify-between mt-auto">
-                      <AnimatedLink 
-                        href="#" 
-                        className="text-boring-main font-medium"
-                      >
-                        View Project →
-                      </AnimatedLink>
-                      <a 
-                        href="#" 
-                        className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 transition-colors"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z" />
-                        </svg>
-                        Add to Chrome
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </ParallaxCard>
+              <ProjectCard 
+                name="E-commerce Dashboard"
+                description="An analytics dashboard for e-commerce businesses with real-time sales tracking, inventory management, and customer insights. Customizable reports and visualizations."
+                imageBgColor="bg-gradient-to-br from-red-500 to-orange-600"
+                projectUrl="#"
+                videoSrc={videoSources.ecommerceDashboard}
+                tags={[
+                  { name: "React", color: "bg-blue-100", textColor: "text-blue-800" },
+                  { name: "Redux", color: "bg-indigo-100", textColor: "text-indigo-800" },
+                  { name: "Node.js", color: "bg-green-100", textColor: "text-green-800" },
+                  { name: "MySQL", color: "bg-blue-100", textColor: "text-blue-800" }
+                ]}
+                chromeExtension={true}
+              />
             </div>
           </div>
         </section>
