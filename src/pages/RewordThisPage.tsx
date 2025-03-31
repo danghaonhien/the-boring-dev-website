@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { useState } from 'react';
 import { AccordionTabs } from '../components/EnhancedInteractiveElements';
+import WaitlistForm from '../components/WaitlistForm';
 
 // Define types for slides
 type ImageSlide = {
@@ -562,11 +563,25 @@ const RewordThisPage = () => {
               <div className="mt-auto pt-4">
                 <button
                   className="block w-full text-center py-2 px-4 border border-[#D97904] rounded-md shadow-sm text-sm font-medium bg-transparent text-[#D97904] hover:bg-[#D97904]/10 transition-colors"
+                  onClick={() => document.getElementById('premium-waitlist')?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   Join the waitlist for Premium
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Premium Waitlist Section */}
+      <section id="premium-waitlist" className="py-16 bg-[#0D0D0D] text-[#F2F2F2]">
+        <div className="container mx-auto px-4 max-w-md">
+          <h2 className="text-3xl font-bold mb-4 text-center">Join the Premium Waitlist</h2>
+          <p className="text-lg text-[#F2F2F2]/70 mb-8 text-center">
+            Get early access and special offers when Reword This Premium launches
+          </p>
+          <div className="bg-[#3C3E40] p-6 rounded-lg shadow-lg border border-[#6E7073]/20">
+            <WaitlistForm />
           </div>
         </div>
       </section>
