@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { useState } from 'react';
+import { AccordionTabs } from '../components/EnhancedInteractiveElements';
 
 // Define types for slides
 type ImageSlide = {
@@ -294,51 +295,119 @@ const RewordThisPage = () => {
                 </div>
               </div>
             </div>
+            
           </div>
         </div>
       </section>
 
-      {/* Reword Modes */}
+      {/* Reword Tones */}
       <section className="py-16 bg-[#F2F2F2]">
         <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="text-3xl font-bold mb-12 text-[#0D0D0D]">Reword Modes Include:</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#D97904]">
-              <h3 className="text-xl font-semibold mb-2 text-[#0D0D0D]">Clarity</h3>
-              <p className="text-[#6E7073]">Cut the fluff, stay sharp</p>
+          <h2 className="text-3xl font-bold mb-12 text-[#0D0D0D]">Reword This Tones Include:</h2>
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Left Column - Accordion Tabs */}
+           
+            {/*  */}
+            <div className="md:w-1/2 flex items-center justify-center">
+              <div className="relative">
+                <div className="absolute -top-4 -right-4 w-32 h-32 rounded-full bg-[#D97904]/20 z-0"></div>
+                <div className="relative z-10">
+                  <img 
+                    src="./src/assets/images/reword-this/reword-this-slide-3.png" 
+                    alt="Reword This modes in action" 
+                    className="w-full h-auto rounded-lg shadow-xl border-2 border-[#D97904]" 
+                  />
+                  <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-[#3C3E40] px-5 py-2 rounded-full shadow-lg">
+                    <p className="text-[#F2F2F2] text-sm font-medium whitespace-nowrap">Find your perfect tone!</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#D97904]">
-              <h3 className="text-xl font-semibold mb-2 text-[#0D0D0D]">Friendly</h3>
-              <p className="text-[#6E7073]">Add warmth and personality</p>
+            {/* Right Column - Image */}
+            <div className="md:w-1/2">
+              <AccordionTabs
+                tabs={[
+                  {
+                    id: "clarity",
+                    label: "Clarity",
+                    icon: <span className="text-xl text-[#D97904] mr-2">✨</span>,
+                    content: (
+                      <div className="p-4">
+                        <p className="text-[#6E7073]">Cut the fluff, stay sharp. Perfect for professional emails and technical writing where direct communication is key.</p>
+                        <p className="mt-2 text-[#3C3E40] italic">"Before you hit send on that important email, use Clarity mode to make your message concise and easily understood."</p>
+                      </div>
+                    )
+                  },
+                  {
+                    id: "friendly",
+                    label: "Friendly",
+                    icon: <span className="text-xl text-[#D97904] mr-2">😊</span>,
+                    content: (
+                      <div className="p-4">
+                        <p className="text-[#6E7073]">Add warmth and personality. Great for customer service emails, social media posts, and any time you want to build rapport.</p>
+                        <p className="mt-2 text-[#3C3E40] italic">"Transform cold messages into warm, personable communication that builds connections."</p>
+                      </div>
+                    )
+                  },
+                  {
+                    id: "genz",
+                    label: "Gen Z",
+                    icon: <span className="text-xl text-[#D97904] mr-2">🔥</span>,
+                    content: (
+                      <div className="p-4">
+                        <p className="text-[#6E7073]">Use slang and emojis for a more casual, contemporary tone. Ideal for social media and connecting with younger audiences.</p>
+                        <p className="mt-2 text-[#3C3E40] italic">"Keep your content fresh and relatable with terms and expressions that resonate with Gen Z."</p>
+                      </div>
+                    )
+                  },
+                  {
+                    id: "formal",
+                    label: "Formal",
+                    icon: <span className="text-xl text-[#D97904] mr-2">🤵</span>,
+                    content: (
+                      <div className="p-4">
+                        <p className="text-[#6E7073]">Keep it polished and professional. Perfect for business proposals, academic writing, and official communications.</p>
+                        <p className="mt-2 text-[#3C3E40] italic">"Make a strong impression with language that conveys professionalism and attention to detail."</p>
+                      </div>
+                    )
+                  },
+                  {
+                    id: "creative",
+                    label: "Creative",
+                    icon: <span className="text-xl text-[#D97904] mr-2">🎨</span>,
+                    content: (
+                      <div className="p-4">
+                        <p className="text-[#6E7073]">Turn on the flair with more expressive and imaginative language. Great for marketing copy, storytelling, and content that needs to stand out.</p>
+                        <p className="mt-2 text-[#3C3E40] italic">"Add color and life to your writing with creative, attention-grabbing phrases."</p>
+                      </div>
+                    )
+                  },
+                  {
+                    id: "executive",
+                    label: "Executive",
+                    icon: <span className="text-xl text-[#D97904] mr-2">💼</span>,
+                    content: (
+                      <div className="p-4">
+                        <p className="text-[#6E7073]">Sound like a CEO with authoritative and strategic language. Ideal for leadership communications, business strategy, and executive summaries.</p>
+                        <p className="mt-2 text-[#3C3E40] italic">"Command attention and respect with communication that reflects leadership and strategic thinking."</p>
+                      </div>
+                    )
+                  }
+                ]}
+                className="border border-[#6E7073]/20 rounded-lg overflow-hidden shadow-md"
+                tabClassName="bg-white hover:bg-[#F2F2F2] border-b border-[#6E7073]/10 px-4 py-3 font-medium"
+                activeTabClassName="bg-[#F2F2F2] text-[#D97904] font-semibold"
+                contentClassName="bg-white"
+              />
             </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#D97904]">
-              <h3 className="text-xl font-semibold mb-2 text-[#0D0D0D]">Gen Z</h3>
-              <p className="text-[#6E7073]">Use slangs and emojis</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#D97904]">
-              <h3 className="text-xl font-semibold mb-2 text-[#0D0D0D]">Formal</h3>
-              <p className="text-[#6E7073]">Keep it polished and professional</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#D97904]">
-              <h3 className="text-xl font-semibold mb-2 text-[#0D0D0D]">Creative</h3>
-              <p className="text-[#6E7073]">Turn on the flair</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-[#D97904]">
-              <h3 className="text-xl font-semibold mb-2 text-[#0D0D0D]">Executive</h3>
-              <p className="text-[#6E7073]">Sound like a CEO</p>
-            </div>
+          {/*  */}
           </div>
-          
           <div className="mt-12 bg-[#6E7073]/10 p-6 rounded-lg border border-[#6E7073]/20">
             <p className="text-xl font-medium text-[#3C3E40]">⌛ Save Time: Average user saves 15–30 minutes/day on rewriting</p>
           </div>
         </div>
       </section>
+{/*  */}
 
       {/* Who It's For */}
       <section className="py-16 bg-[#0D0D0D] text-[#F2F2F2]">
@@ -374,57 +443,54 @@ const RewordThisPage = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-16 bg-[#F2F2F2]">
+      <section className="py-12 bg-[#F2F2F2]">
         <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="text-3xl font-bold mb-12 text-[#0D0D0D] text-center">How It Works:</h2>
+          <h2 className="text-3xl font-bold mb-8 text-[#0D0D0D]">How It Works:</h2>
           
-          <div className="flex flex-col-reverse md:flex-row items-center gap-8 mb-10">
-            {/* Left Column - Steps */}
-            <div className="md:w-3/5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white p-5 rounded-lg shadow-md border-l-2 border-[#D97904]">
-                  <div className="bg-[#D97904] text-[#F2F2F2] w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold mb-3">1</div>
-                  <p className="text-[#3C3E40] font-medium">Install Reword This from the Chrome Web Store</p>
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <div className="flex flex-wrap">
+              {/* Step 1 */}
+              <div className="w-full md:w-1/4 p-3 border-b md:border-b-0 md:border-r border-[#6E7073]/10">
+                <div className="flex items-center mb-2">
+                  <div className="bg-[#D97904] text-[#F2F2F2] w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">1</div>
+                  <h3 className="font-semibold text-[#0D0D0D]">Install</h3>
                 </div>
-                
-                <div className="bg-white p-5 rounded-lg shadow-md border-l-2 border-[#D97904]">
-                  <div className="bg-[#D97904] text-[#F2F2F2] w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold mb-3">2</div>
-                  <p className="text-[#3C3E40] font-medium">Highlight any text and right-click → "Reword This"</p>
+                <p className="text-sm text-[#6E7073] pl-11">Add Reword This from the Chrome Web Store</p>
+              </div>
+              
+              {/* Step 2 */}
+              <div className="w-full md:w-1/4 p-3 border-b md:border-b-0 md:border-r border-[#6E7073]/10">
+                <div className="flex items-center mb-2">
+                  <div className="bg-[#D97904] text-[#F2F2F2] w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">2</div>
+                  <h3 className="font-semibold text-[#0D0D0D]">Highlight</h3>
                 </div>
-                
-                <div className="bg-white p-5 rounded-lg shadow-md border-l-2 border-[#D97904]">
-                  <div className="bg-[#D97904] text-[#F2F2F2] w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold mb-3">3</div>
-                  <p className="text-[#3C3E40] font-medium">Choose your tone, or try "Surprise Me" or "Rewrite Battle"</p>
+                <p className="text-sm text-[#6E7073] pl-11">Select text and right-click → "Reword This"</p>
+              </div>
+              
+              {/* Step 3 */}
+              <div className="w-full md:w-1/4 p-3 border-b md:border-b-0 md:border-r border-[#6E7073]/10">
+                <div className="flex items-center mb-2">
+                  <div className="bg-[#D97904] text-[#F2F2F2] w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">3</div>
+                  <h3 className="font-semibold text-[#0D0D0D]">Choose</h3>
                 </div>
-                
-                <div className="bg-white p-5 rounded-lg shadow-md border-l-2 border-[#D97904]">
-                  <div className="bg-[#D97904] text-[#F2F2F2] w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold mb-3">4</div>
-                  <p className="text-[#3C3E40] font-medium">Copy or replace the rewritten version instantly</p>
+                <p className="text-sm text-[#6E7073] pl-11">Select your tone or try "Rewrite Battle"</p>
+              </div>
+              
+              {/* Step 4 */}
+              <div className="w-full md:w-1/4 p-3">
+                <div className="flex items-center mb-2">
+                  <div className="bg-[#D97904] text-[#F2F2F2] w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-3">4</div>
+                  <h3 className="font-semibold text-[#0D0D0D]">Use</h3>
                 </div>
+                <p className="text-sm text-[#6E7073] pl-11">Copy or replace the rewritten content</p>
               </div>
             </div>
             
-            {/* Right Column - Image */}
-            <div className="md:w-2/5 mb-8 md:mb-0">
-              <div className="relative">
-                <div className="absolute -bottom-3 -right-3 w-32 h-32 rounded-full bg-[#D97904]/20 z-0"></div>
-                <div className="relative z-10">
-                  <img 
-                    src="./src/assets/images/reword-this/reword-this-slide-4.png" 
-                    alt="Reword This workflow diagram" 
-                    className="w-full h-auto rounded-lg shadow-lg border-2 border-[#D97904]" 
-                  />
-                  <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-[#3C3E40] px-5 py-2 rounded-full shadow-lg">
-                    <p className="text-[#F2F2F2] text-sm font-medium whitespace-nowrap">Ready in seconds!</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="text-center mt-8">
-            <div className="inline-block bg-[#6E7073]/10 p-6 rounded-lg border border-[#6E7073]/20 max-w-2xl">
-              <p className="text-xl font-medium text-[#3C3E40]">⌛ Save Time: Average user saves 15–30 minutes/day on rewriting</p>
+            <div className="mt-6 pt-4 border-t border-[#6E7073]/10 text-center">
+              <p className="font-medium text-[#3C3E40] flex items-center justify-center">
+                <span className="text-[#D97904] mr-2">⌛</span> 
+                Average user saves 15–30 minutes per day on rewriting
+              </p>
             </div>
           </div>
         </div>
@@ -435,9 +501,10 @@ const RewordThisPage = () => {
         <div className="container mx-auto px-4 max-w-6xl">
           <h2 className="text-3xl font-bold mb-12">Plans:</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-[#0D0D0D] p-8 rounded-lg shadow-md border border-[#6E7073]/20">
+            <div className="bg-[#0D0D0D] p-8 rounded-lg shadow-md border border-[#6E7073]/20 flex flex-col h-full">
               <h3 className="text-2xl font-bold mb-2">Free</h3>
-              <ul className="space-y-3 mb-8">
+              <p className="text-[#F2F2F2]/70 mb-6">Get started instantly with no commitment</p>
+              <ul className="space-y-3 mb-6">
                 <li className="flex items-center">
                   <svg className="h-5 w-5 text-[#D97904] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -457,20 +524,22 @@ const RewordThisPage = () => {
                   <span>1 battle/day</span>
                 </li>
               </ul>
-              <a 
-                href="https://chrome.google.com/webstore" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="block w-full text-center py-2 px-4 border border-[#F2F2F2]/30 rounded-md shadow-sm text-sm font-medium text-[#0D0D0D] bg-[#D97904] hover:bg-[#D97904]/90 transition-colors"
-              >
-                Get Reword This Free
-              </a>
+              <div className="mt-auto pt-4">
+                <a 
+                  href="https://chrome.google.com/webstore" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block w-full text-center py-2 px-4 border border-[#F2F2F2]/30 rounded-md shadow-sm text-sm font-medium text-[#0D0D0D] bg-[#D97904] hover:bg-[#D97904]/90 transition-colors"
+                >
+                  Get Reword This Free
+                </a>
+              </div>
             </div>
             
-            <div className="bg-gradient-to-r from-[#3C3E40] to-[#0D0D0D] text-[#F2F2F2] p-8 rounded-lg shadow-md ">
+            <div className="bg-gradient-to-r from-[#3C3E40] to-[#0D0D0D] text-[#F2F2F2] p-8 rounded-lg shadow-md flex flex-col h-full">
               <h3 className="text-2xl font-bold mb-2">Premium</h3>
-              <p className="text-[#F2F2F2]/70 mb-6">Coming Soon</p>
-              <ul className="space-y-3 mb-8">
+              <p className="text-[#F2F2F2]/70 mb-6">Coming Soon - Unlock the full potential</p>
+              <ul className="space-y-3 mb-6">
                 <li className="flex items-center">
                   <svg className="h-5 w-5 text-[#D97904] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -490,11 +559,13 @@ const RewordThisPage = () => {
                   <span>Themes and battles</span>
                 </li>
               </ul>
-              <button
-                className="block w-full text-center py-2 px-4 border border-[#D97904] rounded-md shadow-sm text-sm font-medium bg-transparent text-[#D97904] hover:bg-[#D97904]/10 transition-colors"
-              >
-                Join the waitlist for Premium
-              </button>
+              <div className="mt-auto pt-4">
+                <button
+                  className="block w-full text-center py-2 px-4 border border-[#D97904] rounded-md shadow-sm text-sm font-medium bg-transparent text-[#D97904] hover:bg-[#D97904]/10 transition-colors"
+                >
+                  Join the waitlist for Premium
+                </button>
+              </div>
             </div>
           </div>
         </div>
