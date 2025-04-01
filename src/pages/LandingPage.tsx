@@ -54,8 +54,18 @@ const LandingPage = () => {
       }
     }, 100);
 
-    return () => clearInterval(interval);
-  }, []);
+    // Prevent scrolling during loading
+    if (isLoading) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      clearInterval(interval);
+      document.body.style.overflow = '';
+    };
+  }, [isLoading]);
 
   // Auto-rotate product images
   useEffect(() => {
@@ -160,7 +170,7 @@ const LandingPage = () => {
         >
           <div className="w-full max-w-md px-4 relative">
             <h1 className="text-6xl font-bold text-boring-offwhite mb-12 absolute bottom-full left-0">
-              the <span className="bg-white text-boring-main px-3 py-1 rounded-md shadow-lg">boring</span> dev
+              the <span className="inline-block bg-white text-transparent bg-clip-text bg-gradient-to-r from-white to-boring-slate px-3 py-3 rounded-md">boring</span> dev
             </h1>
             
             <div className="h-2 w-full bg-boring-slate/30 rounded-full overflow-hidden shadow-lg">
@@ -286,7 +296,7 @@ const LandingPage = () => {
         </section>
 
         {/* Large Text Section with Scroll Animation - Replacing the old parallax section */}
-        <section className="max-h-[75vh] flex items-center justify-center py-24 relative overflow-hidden">
+        <section className="max-h-[100vh] flex items-center justify-center py-24 relative overflow-hidden">
           {/* Text container with scroll-based opacity */}
           <div 
             className="container mx-auto px-4 text-center transition-opacity duration-1000"
@@ -328,7 +338,7 @@ const LandingPage = () => {
         {/* Product Section */}
         <section 
           ref={productRef} 
-          className="max-h-[75vh] relative flex flex-col items-center justify-center py-24"
+          className="max-h-[100vh] relative flex flex-col items-center justify-center py-24"
           style={{
             opacity: calculateSectionOpacity(productRef.current, 200, 0.7),
             transition: 'opacity 0.8s ease-out'
@@ -510,7 +520,7 @@ const LandingPage = () => {
         {/* Second Project Section */}
         <section 
           ref={secondProductRef}
-          className="max-h-[75vh] relative flex flex-col items-center justify-center py-24"
+          className="max-h-[100vh] relative flex flex-col items-center justify-center py-24"
           style={{
             opacity: calculateSectionOpacity(secondProductRef.current, 200, 0.7),
             transition: 'opacity 0.8s ease-out'
@@ -642,7 +652,7 @@ const LandingPage = () => {
         {/* Third Project Section */}
         <section 
           ref={thirdProductRef}
-          className="max-h-[75vh] relative flex flex-col items-center justify-center py-24 bg-boring-offwhite/50"
+          className="max-h-[100vh] relative flex flex-col items-center justify-center py-24 bg-boring-offwhite/50"
           style={{
             opacity: calculateSectionOpacity(thirdProductRef.current, 200, 0.7),
             transition: 'opacity 0.8s ease-out'
