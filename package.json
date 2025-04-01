@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "build:prod": "tsc -b && vite build --mode production",
+    "build": "tsc -b --force && vite build",
+    "build:prod": "tsc -b --force && vite build --mode production",
     "preview": "vite preview",
     "lint": "eslint .",
     "deploy": "node deploy-vercel.js"
