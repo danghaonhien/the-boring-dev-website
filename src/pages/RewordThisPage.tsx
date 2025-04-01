@@ -4,6 +4,14 @@ import { useState } from 'react';
 import { AccordionTabs } from '../components/EnhancedInteractiveElements';
 import WaitlistForm from '../components/WaitlistForm';
 
+// Import images properly
+import rewordThisHero from '../assets/images/reword-this/reword-this-hero.png';
+import rewordThisSlide2 from '../assets/images/reword-this/reword-this-slide-2.png';
+import rewordThisSlide3 from '../assets/images/reword-this/reword-this-slide-3.png';
+import rewordThisSlide4 from '../assets/images/reword-this/reword-this-slide-4.png';
+// Import video
+import rewordThisDemo from '../assets/videos/reword-this/reword-this-demo.mp4';
+
 // Define types for slides
 type ImageSlide = {
   id: number;
@@ -26,28 +34,28 @@ const RewordThisPage = () => {
   const slides: Slide[] = [
     {
       id: 5,
-      video: "./src/assets/videos/reword-this/reword-this-demo.mp4",
-      thumbnailImage: "./src/assets/images/reword-this/reword-this-hero.png", // Using hero image as fallback thumbnail
+      video: rewordThisDemo,
+      thumbnailImage: rewordThisHero,
       alt: "Reword This demo"
     },
     {
       id: 1,
-      image: "./src/assets/images/reword-this/reword-this-hero.png",
+      image: rewordThisHero,
       alt: "Reword This Chrome Extension Screenshot"
     },
     {
       id: 2,
-      image: "./src/assets/images/reword-this/reword-this-slide-2.png",
+      image: rewordThisSlide2,
       alt: "Reword This in action"
     },
     {
       id: 3,
-      image: "./src/assets/images/reword-this/reword-this-slide-3.png", 
+      image: rewordThisSlide3,
       alt: "Reword This features overview"
     },
     {
       id: 4,
-      image: "./src/assets/images/reword-this/reword-this-slide-4.png",
+      image: rewordThisSlide4,
       alt: "Reword This documentation"
     },
   
@@ -225,7 +233,7 @@ const RewordThisPage = () => {
                 <div className="absolute -bottom-3 -right-3 w-32 h-32 rounded-full bg-[#D97904]/20 z-0"></div>
                 <div className="relative z-10">
                   <img 
-                    src="./src/assets/images/reword-this/reword-this-slide-4.png" 
+                    src={rewordThisSlide4}
                     alt="Rewrite Battle mode screenshot" 
                     className="w-full h-auto rounded-lg shadow-lg border-2 border-[#D97904]" 
                   />
@@ -285,7 +293,7 @@ const RewordThisPage = () => {
                 <div className="absolute -top-4 -left-4 w-24 h-24 bg-[#D97904] rounded-full opacity-50 blur-xl z-0"></div>
                 <div className="relative z-10 bg-[#0D0D0D] p-4 rounded-lg shadow-xl border border-[#6E7073]/30">
                   <img 
-                    src="./src/assets/images/reword-this/reword-this-slide-2.png" 
+                    src={rewordThisSlide2}
                     alt="Reword This tool in action" 
                     className="w-full h-auto rounded border border-[#6E7073]/20" 
                   />
@@ -315,7 +323,7 @@ const RewordThisPage = () => {
                 <div className="absolute -top-4 -right-4 w-32 h-32 rounded-full bg-[#D97904]/20 z-0"></div>
                 <div className="relative z-10">
                   <img 
-                    src="./src/assets/images/reword-this/reword-this-slide-3.png" 
+                    src={rewordThisSlide3}
                     alt="Reword This modes in action" 
                     className="w-full h-auto rounded-lg shadow-xl border-2 border-[#D97904]" 
                   />
