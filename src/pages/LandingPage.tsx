@@ -286,7 +286,7 @@ const LandingPage = () => {
         </section>
 
         {/* Large Text Section with Scroll Animation - Replacing the old parallax section */}
-        <section className="min-h-screen flex items-center justify-center py-24 relative overflow-hidden">
+        <section className="max-h-[75vh] flex items-center justify-center py-24 relative overflow-hidden">
           {/* Text container with scroll-based opacity */}
           <div 
             className="container mx-auto px-4 text-center transition-opacity duration-1000"
@@ -328,7 +328,7 @@ const LandingPage = () => {
         {/* Product Section */}
         <section 
           ref={productRef} 
-          className="min-h-screen relative flex flex-col items-center justify-center py-24"
+          className="max-h-[75vh] relative flex flex-col items-center justify-center py-24"
           style={{
             opacity: calculateSectionOpacity(productRef.current, 200, 0.7),
             transition: 'opacity 0.8s ease-out'
@@ -510,7 +510,7 @@ const LandingPage = () => {
         {/* Second Project Section */}
         <section 
           ref={secondProductRef}
-          className="min-h-screen relative flex flex-col items-center justify-center py-24"
+          className="max-h-[75vh] relative flex flex-col items-center justify-center py-24"
           style={{
             opacity: calculateSectionOpacity(secondProductRef.current, 200, 0.7),
             transition: 'opacity 0.8s ease-out'
@@ -642,7 +642,7 @@ const LandingPage = () => {
         {/* Third Project Section */}
         <section 
           ref={thirdProductRef}
-          className="min-h-screen relative flex flex-col items-center justify-center py-24 bg-boring-offwhite/50"
+          className="max-h-[75vh] relative flex flex-col items-center justify-center py-24 bg-boring-offwhite/50"
           style={{
             opacity: calculateSectionOpacity(thirdProductRef.current, 200, 0.7),
             transition: 'opacity 0.8s ease-out'
