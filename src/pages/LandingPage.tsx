@@ -270,7 +270,7 @@ const LandingPage = () => {
         {/* Products Section */}
         <div ref={productRef}>
           <ProductsSection scrollToRef={scrollToSection} />
-        </div>
+                </div>
 
         {/* Boring Stories Section */}
         <section className="py-24 bg-boring-dark relative overflow-hidden">

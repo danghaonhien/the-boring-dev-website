@@ -25,62 +25,11 @@ import {
 } from '../components/EnhancedInteractiveElements';
 import EnhancedInteractiveElementsShowcase from '../components/EnhancedInteractiveElementsShowcase';
 import PageTransition from '../components/PageTransition';
-import ProjectCard from '../components/ProjectCard';
-import ProjectsSection, { ProjectType } from '../components/ProjectsSection';
 import DesignSystem from '../components/DesignSystem';
 import rewordThisHero from '../assets/images/reword-this/reword-this-hero.png';
 import rewordThisVideo from '../assets/videos/reword-this/reword-this-demo.mp4';
-import BoringStoriesSection from '../components/BoringStoriesSection';
 
 const HomePage = () => {
-  const projects: ProjectType[] = [
-    {
-      id: 1,
-      name: 'Reword This',
-      description: 'An AI-powered text paraphrasing application that helps users rewrite content for improved clarity, tone, and engagement. Built with React, Node.js, and OpenAI.',
-      imageUrl: rewordThisHero,
-      projectUrl: '/reword-this',
-      videoSrc: rewordThisVideo,
-      tags: [
-        { name: "React", color: "bg-blue-100", textColor: "text-blue-800" },
-        { name: "Node.js", color: "bg-green-100", textColor: "text-green-800" },
-        { name: "OpenAI", color: "bg-purple-100", textColor: "text-purple-800" },
-        { name: "TailwindCSS", color: "bg-yellow-100", textColor: "text-yellow-800" }
-      ],
-      chromeExtension: true
-    },
-    {
-      id: 2,
-      name: 'Modern Blog Platform',
-      description: 'A full-featured blogging platform with rich text editing, user authentication, and comment functionality. Responsive design for all devices.',
-      imageBgColor: 'bg-gradient-to-br from-green-500 to-teal-600',
-      projectUrl: '#',
-      videoSrc: null,
-      tags: [
-        { name: "Typescript", color: "bg-blue-100", textColor: "text-blue-800" },
-        { name: "Next.js", color: "bg-yellow-100", textColor: "text-yellow-800" },
-        { name: "MongoDB", color: "bg-green-100", textColor: "text-green-800" },
-        { name: "AWS", color: "bg-red-100", textColor: "text-red-800" }
-      ],
-      chromeExtension: true
-    },
-    {
-      id: 3,
-      name: 'E-commerce Dashboard',
-      description: 'An analytics dashboard for e-commerce businesses with real-time sales tracking, inventory management, and customer insights. Customizable reports and visualizations.',
-      imageBgColor: 'bg-gradient-to-br from-red-500 to-orange-600',
-      projectUrl: '#',
-      videoSrc: null,
-      tags: [
-        { name: "React", color: "bg-blue-100", textColor: "text-blue-800" },
-        { name: "Redux", color: "bg-indigo-100", textColor: "text-indigo-800" },
-        { name: "Node.js", color: "bg-green-100", textColor: "text-green-800" },
-        { name: "MySQL", color: "bg-blue-100", textColor: "text-blue-800" }
-      ],
-      chromeExtension: true
-    },
-  ];
-
   return (
     <PageTransition>
       <div className="min-h-screen bg-boring-offwhite">
@@ -130,11 +79,23 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* Projects Section */}
-        <ProjectsSection projects={projects} />
-
-        {/* Boring Tech Stories Section */}
-        <BoringStoriesSection />
+        {/* Projects Section Placeholder */}
+        <section className="py-16 bg-boring-offwhite">
+          <div className="container mx-auto px-4">
+            <ScrollReveal>
+              <h2 className="text-4xl font-bold mb-4 text-boring-dark">Projects</h2>
+              <p className="text-boring-gray mb-8">
+                Check out some of my recent work. I'm passionate about creating clean, efficient solutions to challenging problems.
+              </p>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={200}>
+              <div className="bg-boring-dark/5 p-8 rounded-lg text-center">
+                <p className="text-boring-gray text-lg">Projects section coming soon...</p>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
 
         {/* About Section & Contact Combined */}
         <section className="py-16 bg-boring-dark relative overflow-hidden">
