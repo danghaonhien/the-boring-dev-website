@@ -196,7 +196,7 @@ const ProductsSection: React.FC<ProductsSectionProps> = ({ scrollToRef }) => {
           transition: 'opacity 0.8s ease-out'
         }}
       >
-        <div className="container mx-auto px-4">
+        <div>
           <div className={`flex flex-col ${isReverse ? 'md:flex-row-reverse' : 'md:flex-row'} items-center justify-between gap-8 lg:gap-16 relative`}>
             {/* Product Image */}
             <div 
