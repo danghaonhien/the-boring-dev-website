@@ -223,7 +223,7 @@ const LandingPage = () => {
               <SloganGenerator />
 
               <h1
-                className="text-boring-dark font-bold text-[23vw] md:text-[22vw] lg:text-[25vw] leading-none select-none text-left"
+                className="text-boring-dark font-bold text-[22vw] md:text-[22vw] lg:text-[25vw] leading-none select-none text-left"
               >
                 BORING
               </h1>
@@ -232,19 +232,31 @@ const LandingPage = () => {
 
           <section className="py-20 md:py-32">
             
-              <ScrollReveal>
-                <p className="text-left text-4xl md:text-5xl lg:text-8xl font-medium text-boring-dark  leading-tight">
-                <span className="inline-block pl-42">We're a community of devs,</span> designers, {' '}
+              <div className="text-left text-4xl md:text-5xl lg:text-8xl font-medium text-boring-dark leading-tight">
+                <ScrollReveal>
+                  <span className="reveal-text-line inline-block pl-42">We're a community of devs,</span>
+                </ScrollReveal>{' '}
+                <ScrollReveal delay={50}>
+                  <span className="reveal-text-line inline-block">designers, {' '}</span>
+                </ScrollReveal>
+                <ScrollReveal delay={100}>
                   <WordCycle 
                     words={["daydreamers", "rulebreakers", "wanderers"]} 
                     interval={5000}
-                    className="inline-block"
-                  /> 
-                  {' '}who take breaks more seriously than deadlines. Come vibe with us. 
-                 
-      
-                </p>
-              </ScrollReveal>
+                    className="inline-block reveal-text-line" 
+                  />
+                </ScrollReveal>
+                {' '}
+                <ScrollReveal delay={150}>
+                  <span className="reveal-text-line inline-block">who take breaks more</span>
+                </ScrollReveal>{' '}
+                <ScrollReveal delay={200}>
+                  <span className="reveal-text-line inline-block">seriously than deadlines.</span>
+                </ScrollReveal>{' '}
+                <ScrollReveal delay={250}>
+                  <span className="reveal-text-line inline-block">Come vibe with us.</span>
+                </ScrollReveal> 
+              </div>
           
           </section>
 

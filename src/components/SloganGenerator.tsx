@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MagneticButton } from './EnhancedInteractiveElements';
+// Removed MagneticButton import as it wasn't used
+// import { MagneticButton } from './EnhancedInteractiveElements';
 
 // Array of slogans (with quotes)
 const slogans = [
@@ -64,79 +65,107 @@ const defaultSlogan = "\"Low-key building, high-key tired.\""; // Default with q
 
 const SloganGenerator = () => {
   const [targetSlogan, setTargetSlogan] = useState(defaultSlogan); // The actual slogan we want to show
-  const [displayText, setDisplayText] = useState(defaultSlogan); // What's currently shown (can be shuffled)
+  const [displayText, setDisplayText] = useState(defaultSlogan); // What's currently shown
   const [isAnimating, setIsAnimating] = useState(false);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const animationFrameRef = useRef<number | null>(null); // Use requestAnimationFrame
+  const revealedCountRef = useRef<number>(0); // Track revealed characters
+  const lastUpdateTimeRef = useRef<number>(0); // Track time for reveal progression
+  const shuffleCharsRef = useRef<string>(''); // Characters allowed for shuffling
 
-  // Helper function to generate a random string of a given length using characters from the target
-  const generateRandomString = (length: number, allowedChars: string): string => {
-    let result = '';
-    const uniqueChars = Array.from(new Set(allowedChars.replace(/\s/g, ''))).join('') || ' '; // Use unique non-space chars, fallback to space
-    
-    for (let i = 0; i < length; i++) {
-      result += uniqueChars.charAt(Math.floor(Math.random() * uniqueChars.length));
-    }
-    return result;
+  // Helper function to generate a random character from allowed set
+  const getRandomChar = (allowedChars: string): string => {
+    if (!allowedChars) return ' '; // Handle empty case
+    return allowedChars.charAt(Math.floor(Math.random() * allowedChars.length));
   };
 
   // Function to generate a new random slogan and trigger animation
   const generateNewSlogan = () => {
-    if (isAnimating) return; // Prevent starting animation if already running
+    if (isAnimating) return; // Prevent re-triggering
 
+    // --- Select New Slogan (same logic as before) ---
     let newSlogan = targetSlogan;
-    // Ensure the new slogan is different from the current one, unless there's only one slogan
     if (slogans.length > 1) {
       while (newSlogan === targetSlogan) {
         const randomIndex = Math.floor(Math.random() * slogans.length);
         newSlogan = slogans[randomIndex];
       }
     } else if (slogans.length === 1) {
-      newSlogan = slogans[0]; // Just set it if there's only one
+      newSlogan = slogans[0];
     } else {
-      newSlogan = "No slogans available."; // Handle empty array case
+      newSlogan = "No slogans available.";
+    }
+    if (newSlogan === targetSlogan && slogans.length > 1) return;
+    // --- End Select New Slogan ---
+
+    setTargetSlogan(newSlogan);
+    setIsAnimating(true);
+    revealedCountRef.current = 0; // Reset revealed count
+    lastUpdateTimeRef.current = performance.now(); // Reset timer
+    // Generate unique non-space characters from the new slogan for shuffling
+    shuffleCharsRef.current = Array.from(new Set(newSlogan.replace(/\s/g, ''))).join('') || ' ';
+
+    // Clear previous animation frame if any
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
     }
 
-    if (newSlogan === targetSlogan && slogans.length > 1) return; // Do nothing if the slogan didn't change
+    // --- Animation Loop using requestAnimationFrame ---
+    const animate = (currentTime: number) => {
+      const targetLength = newSlogan.length;
+      const revealSpeed = 50; // Milliseconds per character reveal
 
-    setTargetSlogan(newSlogan); // Update the target slogan
-    setIsAnimating(true);
+      // Calculate how many characters *should* be revealed by now
+      const elapsedTime = currentTime - lastUpdateTimeRef.current;
+      const shouldRevealCount = Math.min(targetLength, Math.floor(elapsedTime / revealSpeed));
 
-    const animationDuration = 600; // Total animation time (ms)
-    const shuffleInterval = 40;   // How often to change characters (ms)
-    const targetLength = newSlogan.length;
-    const allowedCharsForShuffle = newSlogan; // Use the new slogan's characters
+      // Update revealed count if it needs to increase
+      if (shouldRevealCount > revealedCountRef.current) {
+        revealedCountRef.current = shouldRevealCount;
+      }
 
-    // Clear previous timers if any
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      const currentRevealed = revealedCountRef.current;
 
-    // Start shuffling
-    intervalRef.current = setInterval(() => {
-      setDisplayText(generateRandomString(targetLength, allowedCharsForShuffle));
-    }, shuffleInterval);
+      // Build the display string
+      let tempDisplay = '';
+      for (let i = 0; i < targetLength; i++) {
+        if (i < currentRevealed) {
+          // Use the final character if revealed
+          tempDisplay += newSlogan[i];
+        } else {
+          // Otherwise, use a random character from the allowed set
+          tempDisplay += getRandomChar(shuffleCharsRef.current);
+        }
+      }
+      setDisplayText(tempDisplay);
 
-    // Stop shuffling after animationDuration
-    timeoutRef.current = setTimeout(() => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      setIsAnimating(false);
-      setDisplayText(newSlogan); // Set the final target slogan
-      intervalRef.current = null;
-      timeoutRef.current = null;
-    }, animationDuration);
+      // Continue animation if not all characters are revealed
+      if (currentRevealed < targetLength) {
+        animationFrameRef.current = requestAnimationFrame(animate);
+      } else {
+        // Animation finished
+        setDisplayText(newSlogan); // Ensure final text is correct
+        setIsAnimating(false);
+        animationFrameRef.current = null;
+      }
+    };
+
+    // Start the animation loop
+    animationFrameRef.current = requestAnimationFrame(animate);
   };
 
-  // Cleanup timers on component unmount
+  // Cleanup animation frame on component unmount
   useEffect(() => {
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
     };
   }, []);
 
   return (
     <div className="group flex flex-col md:flex-row md:items-center mb-4 z-10 relative min-h-[9em] md:min-h-[3em]">
-      <p className={`text-boring-dark font-medium text-3xl md:text-xl lg:text-[3rem] tracking-tight flex-grow md:mr-4 transition-opacity duration-200 ${isAnimating ? 'whitespace-nowrap overflow-hidden md:overflow-visible leading-normal' : 'leading-tight'}`}>
+      <p className={`text-boring-dark font-medium text-3xl md:text-xl lg:text-[3rem] flex-grow md:mr-4 transition-opacity duration-200 ${isAnimating ? 'whitespace-nowrap overflow-hidden md:overflow-visible leading-normal' : 'leading-tight'}`}>
+        {/* Render text directly, font style is now always the same */}
         {displayText}
       </p>
       <div className="mt-3 md:mt-0 flex-shrink-0">
