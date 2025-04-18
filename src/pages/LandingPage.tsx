@@ -319,7 +319,7 @@ const LandingPage = () => {
                 <ScrollReveal delay={100}>
                   <WordCycle 
                     words={["daydreamers", "rulebreakers", "wanderers"]} 
-                    interval={5000}
+                    interval={3000}
                     className="inline-block reveal-text-line" 
                   />
                 </ScrollReveal>

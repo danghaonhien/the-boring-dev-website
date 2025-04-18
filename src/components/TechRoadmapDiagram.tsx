@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Xarrow, { Xwrapper } from 'react-xarrows'; 
 import TechRoadmapCard from './TechRoadmapCard'; // Import the TSX Card component
 // Note: Tailwind styles assumed to be globally available or imported elsewhere
@@ -78,13 +78,38 @@ const arrowPropsVertical = {
 const TechRoadmapDiagram: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<SelectedRole>('engineer');
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false); // State for hover
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    const checkScreenSize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', checkScreenSize);
-    return () => window.removeEventListener('resize', checkScreenSize);
+
+    const handleMouseMove = (event: MouseEvent) => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setMousePosition({ x: event.clientX - rect.left, y: event.clientY - rect.top });
+      }
+    };
+    const handleMouseEnter = () => setIsHovering(true);
+    const handleMouseLeave = () => setIsHovering(false);
+
+    const currentRef = containerRef.current;
+    if (currentRef) {
+      currentRef.addEventListener('mousemove', handleMouseMove);
+      currentRef.addEventListener('mouseenter', handleMouseEnter); // Use mouseenter
+      currentRef.addEventListener('mouseleave', handleMouseLeave);
+    }
+
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+      if (currentRef) {
+        currentRef.removeEventListener('mousemove', handleMouseMove);
+        currentRef.removeEventListener('mouseenter', handleMouseEnter);
+        currentRef.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
   }, []);
 
   const handleRoleSelect = (role: SelectedRole) => {
@@ -270,13 +295,50 @@ const TechRoadmapDiagram: React.FC = () => {
     </Xwrapper>
   );
 
+  // Inline styles for setting CSS custom properties
+  const containerStyle: React.CSSProperties = {
+    ['--mouse-x' as string]: `${mousePosition.x}px`,
+    ['--mouse-y' as string]: `${mousePosition.y}px`,
+    ['--glow-opacity' as string]: isHovering ? 0.25 : 0, // Increased opacity from 0.15 to 0.25
+  };
+
+  // CSS for the pseudo-element glow effect
+  const glowStyles = `
+    .glow-container::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit; /* Match parent's border radius */
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(
+        400px circle at var(--mouse-x) var(--mouse-y),
+        rgba(90, 88, 166, 1), /* Use main color, opacity controlled below */
+        transparent 80%
+      );
+      opacity: var(--glow-opacity);
+      transition: opacity 0.3s ease-in-out;
+    }
+  `;
+
   return (
-    <div className="bg-boring-dark text-boring-offwhite flex flex-col items-center justify-start pt-10 pb-20 font-sans overflow-auto  shadow-inner min-w-full">
-      <h2 className="text-3xl font-bold mb-10 md:mb-16 text-center text-boring-offwhite px-4">The Hilariously Real "Boring" Tech Roadmap</h2>
-      
-      {isMobile ? renderMobileLayout() : renderDesktopLayout()}
-      
-    </div>
+    <>
+      <style>{glowStyles}</style> { /* Inject styles */}
+      <div 
+        ref={containerRef}
+        style={containerStyle} // Apply custom properties
+        className="glow-container bg-boring-dark relative text-boring-offwhite flex flex-col items-center justify-start pt-10 pb-20 font-sans overflow-auto  shadow-inner min-w-full"
+        // Added glow-container class and relative
+      >
+        <h2 className="relative z-10 text-3xl font-bold mb-10 md:mb-16 text-center text-boring-offwhite px-4">
+          The Hilariously Real "Boring" Tech Roadmap
+        </h2>
+        
+        <div className="relative z-10 w-full"> 
+          {isMobile ? renderMobileLayout() : renderDesktopLayout()}
+        </div>
+      </div>
+    </>
   );
 };
 
