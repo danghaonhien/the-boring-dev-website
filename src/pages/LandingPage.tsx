@@ -223,7 +223,7 @@ const LandingPage = () => {
               <SloganGenerator />
 
               <h1
-                className="text-boring-dark font-bold text-[22vw] md:text-[22vw] lg:text-[25vw] leading-none select-none text-left"
+                className="text-boring-dark font-bold text-[23vw] md:text-[22vw] lg:text-[25vw] leading-none select-none text-left"
               >
                 BORING
               </h1>
