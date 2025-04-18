@@ -4,7 +4,7 @@ import { MagneticButton } from './EnhancedInteractiveElements';
 // Array of slogans (with quotes)
 const slogans = [
   "\"Low-key building, high-key tired.\"",
-  "\"Not changing the world. Just trying to center this div.\"",
+
 
   "\"We ship vibes, not features.\"",
   "\"Just some pixels, code, and existential dread.\"",
@@ -13,10 +13,10 @@ const slogans = [
   "\"For devs, designers, and digital gremlins.\"",
   "\"Quietly quitting hustle culture since 2025.\"",
   "\"Your side project's safe space.\"",
-  "\"Because not everyone wants to be a unicorn founder.\"",
+
   "\"We don't move fast. We don't break things. We nap.\"",
   "\"Code. Cry. Coffee. Repeat.\"",
-  "\"For people who design in grayscale and feel in RGB.\"",
+
   "\"Your daily dose of 'meh, it compiles.'\"",
   "\"Building quietly. Judging loudly.\"",
 
@@ -26,7 +26,7 @@ const slogans = [
   "\"Minimalist tools for maximalist overthinkers.\"",
   "\"We make stuff. Sometimes on purpose.\"",
   "\"Community for devs who can't even.\"",
-  "\"Where tabs are infinite and motivation is finite.\"",
+
   "\"Let's pretend we're working together.\"",
   "\"Code is temporary. Regret is forever.\"",
   "\"We write code and cry in Tailwind.\"",
@@ -48,7 +48,7 @@ const slogans = [
   "\"Helping devs feel seen (but not too seen).\"",
   "\"All the bugs. None of the blame.\"",
   "\"It's giving… broken production.\"",
-  "\"We write code like we write tweets: chaotically.\"",
+
 
   "\"A calm corner of the internet with mild chaos.\"",
   "\"Deploying our feelings since forever.\"",
@@ -102,7 +102,7 @@ const SloganGenerator = () => {
     setTargetSlogan(newSlogan); // Update the target slogan
     setIsAnimating(true);
 
-    const animationDuration = 400; // Total animation time (ms)
+    const animationDuration = 600; // Total animation time (ms)
     const shuffleInterval = 40;   // How often to change characters (ms)
     const targetLength = newSlogan.length;
     const allowedCharsForShuffle = newSlogan; // Use the new slogan's characters

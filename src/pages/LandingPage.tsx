@@ -11,6 +11,8 @@ import { AnimatedGradientText } from '../components/InteractiveElements';
 import PageTransition from '../components/PageTransition';
 import ProductsSection from '../components/ProductsSection';
 import SloganGenerator from '../components/SloganGenerator';
+import WordCycle from '../components/WordCycle';
+import CustomCursor from '../components/CustomCursor';
 // import boringSvg from '../assets/images/homepage/BORING.svg'; // Removed SVG import
 
 // Array of slogans
@@ -156,44 +158,33 @@ const LandingPage = () => {
 
   return (
     <PageTransition>
-      <div className="relative min-h-screen bg-white overflow-hidden">
-        {/* Initial Loading Screen Container */}
+      <div className="relative min-h-screen bg-white overflow-hidden" style={{ cursor: 'none' }}>
+        <CustomCursor />
         <div 
           className={`fixed inset-0 z-50 overflow-hidden ${
             startCurtainAnimation ? 'pointer-events-none' : '' 
           }`}
         >
-          {/* Single Vertical Slide-Up Curtain */}
           <div
             className={`absolute top-0 left-0 w-full h-full bg-white transition-transform duration-700 ease-in-out ${
               startCurtainAnimation ? '-translate-y-full' : 'translate-y-0'
             }`}
           ></div>
 
-          {/* Loading Content - Container no longer fades */}
           <div 
             className={`absolute inset-0 p-12 flex flex-col justify-between min-h-screen ${
-              !isLoading ? 'invisible' : '' // Hide container when loading is fully done
+              !isLoading ? 'invisible' : ''
             }`}
           >
-            {/* Header visible during loading (Top) - Fades out when curtain starts */}
             <header className={`w-full transition-opacity duration-500 ease-linear ${startCurtainAnimation ? 'opacity-0' : 'opacity-100'}`}>
               <div className="flex justify-between items-center">
-                  {/* Site Name */}
                   <div className="text-boring-dark font-bold text-2xl uppercase">
                     THE BORING DEV
                   </div>
-                  
-                  {/* Spinning Plus Sign/Button - Added inline-block */}
-                  {/* <button className={`text-boring-dark text-4xl font-bold origin-center inline-block ${isLoading ? 'animate-spin' : ''}`}>
-                    +
-                  </button> */}
               </div>
             </header>
 
-            {/* Content Area Mimicking Hero's Bottom Alignment */}
             <div className="flex-grow flex flex-col justify-end">
-              {/* Loading Percentage (Bottom Left) */}
               <div className="text-boring-dark font-bold text-[25vw] leading-none select-none text-left">
                 {loadingProgress}
               </div>
@@ -201,44 +192,36 @@ const LandingPage = () => {
           </div>
         </div>
 
-        {/* Main Content Wrapper */}
-        <div className="p-12 relative z-10 min-h-screen"> {/* Ensure wrapper has min-height for positioning */} 
-          {/* Hero Section */}
+        <div className="p-12 relative z-10 min-h-screen">
           <section 
-            className={`relative min-h-screen pb-12 flex flex-col justify-between transition-opacity duration-500 ${ // Removed extra padding potentially? Check original
-              isHeroRevealed ? 'opacity-100' : 'opacity-0 pointer-events-none' // Hide hero until revealed
+            className={`relative min-h-screen pb-12 flex flex-col justify-between transition-opacity duration-500 ${
+              isHeroRevealed ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
           >
-            {/* Header with Site Name and Menu Toggle Button */} 
             <header 
               className={`w-full transition-all duration-1000 transform  ${
                 isHeroRevealed ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0' 
               }`}
             >
               <div className="flex justify-between items-center">
-                {/* Site Name */}
                 <div className="text-boring-dark font-bold text-2xl uppercase">
                   THE BORING DEV
                 </div>
                 
-                {/* Menu Toggle Button (+/X) */}
                 <button 
-                  className="text-boring-dark text-4xl font-bold z-30 relative" // Increased z-index
+                  className="text-boring-dark text-4xl font-bold z-30 relative"
                   onClick={toggleMenu}
                   aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                   disabled={!isHeroRevealed}
                 >
-                  {isMenuOpen ? '\u00D7' : '+'} {/* Unicode multiplication sign for X */}
+                  {isMenuOpen ? '\u00D7' : '+'}
                 </button>
               </div>
             </header>
             
-            {/* Content Area: Slogan generator above BORING text */}
             <div className="flex-grow flex flex-col justify-end">
-              {/* Slogan Generator Component */}
               <SloganGenerator />
 
-              {/* Large BORING Text at the bottom - Use responsive font sizes */}
               <h1
                 className="text-boring-dark font-bold text-[20vw] md:text-[22vw] lg:text-[25vw] leading-none select-none text-left"
               >
@@ -247,7 +230,24 @@ const LandingPage = () => {
             </div>
           </section>
 
-          {/* Navigation Menu - Full screen overlay on mobile, absolute on desktop */}
+          <section className="py-20 md:py-32">
+            
+              <ScrollReveal>
+                <p className="text-left text-4xl md:text-5xl lg:text-8xl font-medium text-boring-dark  leading-tight">
+                <span className="inline-block pl-48">We're a community of devs,</span> designers, {' '}
+                  <WordCycle 
+                    words={["daydreamers", "rulebreakers", "wanderers"]} 
+                    interval={5000}
+                    className="inline-block"
+                  /> 
+                  {' '}who take breaks more seriously than deadlines. Come vibe with us. 
+                 
+      
+                </p>
+              </ScrollReveal>
+          
+          </section>
+
           <nav 
             className={`
               fixed inset-0 p-12 bg-white z-40 flex flex-col 
@@ -256,11 +256,10 @@ const LandingPage = () => {
               ${
                 isMenuOpen 
                   ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 -translate-y-4 pointer-events-none md:translate-y-0' // Keep desktop position stable when closed
+                  : 'opacity-0 -translate-y-4 pointer-events-none md:translate-y-0'
               }`}
           >
-            {/* Menu Header (Mobile Only) */}
-            <header className="w-full md:hidden"> {/* Hide on md and up */} 
+            <header className="w-full md:hidden">
               <div className="flex justify-between items-center">
                 <div className="text-boring-dark font-bold text-2xl uppercase">
                   THE BORING DEV
@@ -270,18 +269,17 @@ const LandingPage = () => {
                   onClick={toggleMenu}
                   aria-label="Close menu"
                 >
-                  &times; {/* Close icon */}
+                  &times;
                 </button>
               </div>
             </header>
 
-            {/* Links Container */}
             <ul className="space-y-4 text-right mt-20 md:mt-0">
               <li>
                 <Link 
                   to="/products" 
                   className="text-boring-dark hover:text-boring-main text-4xl md:text-3xl font-medium uppercase transition-colors duration-200"
-                  onClick={toggleMenu} // Close menu on link click
+                  onClick={toggleMenu}
                 >
                   Products
                 </Link>
@@ -290,7 +288,7 @@ const LandingPage = () => {
                 <Link 
                   to="/about" 
                   className="text-boring-dark hover:text-boring-main text-4xl md:text-3xl font-medium uppercase transition-colors duration-200"
-                  onClick={toggleMenu} // Close menu on link click
+                  onClick={toggleMenu}
                 >
                   About
                 </Link>
@@ -299,7 +297,7 @@ const LandingPage = () => {
                 <Link 
                   to="/contact" 
                   className="text-boring-dark hover:text-boring-main text-4xl md:text-3xl font-medium uppercase transition-colors duration-200"
-                  onClick={toggleMenu} // Close menu on link click
+                  onClick={toggleMenu}
                 >
                   Contact
                 </Link>
@@ -307,12 +305,10 @@ const LandingPage = () => {
             </ul>
           </nav>
 
-          {/* Products Section */}
           <div ref={productRef}>
             <ProductsSection scrollToRef={scrollToSection} />
           </div>
 
-          {/* Boring Stories Section */}
           <section className="py-24 bg-boring-dark relative overflow-hidden">
             <AnimatedGradientBlob 
               color1="from-boring-main/10" 
@@ -337,7 +333,6 @@ const LandingPage = () => {
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {/* Story Card 1 */}
                 <ScrollReveal delay={300}>
                   <div className="bg-boring-dark/50 backdrop-blur-sm p-8 rounded-xl border border-boring-slate/10 shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-boring-main/5 hover:border-boring-main/20 hover:-translate-y-1">
                     <div className="mb-6">
@@ -360,7 +355,6 @@ const LandingPage = () => {
                   </div>
                 </ScrollReveal>
                 
-                {/* Story Card 2 */}
                 <ScrollReveal delay={400}>
                   <div className="bg-boring-dark/50 backdrop-blur-sm p-8 rounded-xl border border-boring-slate/10 shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-boring-main/5 hover:border-boring-main/20 hover:-translate-y-1">
                     <div className="mb-6">
@@ -383,7 +377,6 @@ const LandingPage = () => {
                   </div>
                 </ScrollReveal>
                 
-                {/* Story Card 3 */}
                 <ScrollReveal delay={500}>
                   <div className="bg-boring-dark/50 backdrop-blur-sm p-8 rounded-xl border border-boring-slate/10 shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-boring-main/5 hover:border-boring-main/20 hover:-translate-y-1">
                     <div className="mb-6">
@@ -409,7 +402,6 @@ const LandingPage = () => {
             </div>
           </section>
 
-          {/* Footer */}
           <footer className="py-12 bg-boring-offwhite relative">
             <div className="container mx-auto px-4">
               <div className="flex flex-col md:flex-row justify-between items-center">

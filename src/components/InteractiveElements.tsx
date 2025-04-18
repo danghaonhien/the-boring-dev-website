@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 // Color change button that cycles through theme colors on hover
 export const ColorChangeButton: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -186,6 +186,62 @@ export const ThemeModeToggle: React.FC = () => {
         {darkMode ? 'Dark' : 'Light'}
       </span>
     </button>
+  );
+};
+
+interface WordCycleProps {
+  words: string[];
+  interval?: number; // milliseconds
+  className?: string; // Allow passing additional classes
+}
+
+export const WordCycle: React.FC<WordCycleProps> = ({ words, interval = 2500, className = '' }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    // Validate words prop
+    if (!words || words.length === 0) {
+      console.error("WordCycle component requires a non-empty 'words' array.");
+      return; // Exit early if words array is invalid
+    }
+
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
+    }, interval);
+    return () => clearInterval(timer);
+  }, [words, words.length, interval]); // Include words in dependency array for safety if it could change
+
+  // Return null or a placeholder if words are not valid
+  if (!words || words.length === 0) {
+    return null;
+  }
+
+  return (
+    <span
+      className={`inline-block relative overflow-hidden align-bottom ${className}`}
+      style={{ height: '1.3em' }} // Set height based on relative font size (adjust if needed)
+    >
+      {words.map((word, index) => (
+        <span
+          key={word + index} // Add index to key for cases where words might not be unique
+          aria-hidden={index !== currentIndex} // Hide non-visible words from accessibility tree
+          className={`absolute left-0 w-full transition-transform duration-500 ease-in-out ${
+            index === currentIndex
+              ? 'translate-y-0 opacity-100' // Current word slides in
+              : (index === (currentIndex - 1 + words.length) % words.length)
+                ? '-translate-y-full opacity-0' // Previous word slides up and out
+                : 'translate-y-full opacity-0' // Other words stay below and hidden
+          }`}
+          style={{ willChange: 'transform, opacity' }} // Performance hint
+        >
+          {word}
+        </span>
+      ))}
+      {/* Screen reader announcement - Optional but good for accessibility */}
+      <span className="sr-only" aria-live="polite" aria-atomic="true">
+        {words[currentIndex]}
+      </span>
+    </span>
   );
 };
 
