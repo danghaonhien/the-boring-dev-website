@@ -158,8 +158,8 @@ const LandingPage = () => {
 
   return (
     <PageTransition>
-      <div className="relative min-h-screen bg-white overflow-hidden" style={{ cursor: 'none' }}>
-        <CustomCursor />
+      <div className="relative min-h-screen bg-white overflow-hidden" style={{ cursor: isMobile ? 'auto' : 'none' }}>
+        {!isMobile && <CustomCursor />}
         <div 
           className={`fixed inset-0 z-50 overflow-hidden ${
             startCurtainAnimation ? 'pointer-events-none' : '' 
@@ -172,7 +172,7 @@ const LandingPage = () => {
           ></div>
 
           <div 
-            className={`absolute inset-0 p-12 flex flex-col justify-between min-h-screen ${
+            className={`absolute inset-0 p-12 flex flex-col justify-between h-screen ${
               !isLoading ? 'invisible' : ''
             }`}
           >
@@ -194,7 +194,7 @@ const LandingPage = () => {
 
         <div className="p-12 relative z-10 min-h-screen">
           <section 
-            className={`relative min-h-screen pb-12 flex flex-col justify-between transition-opacity duration-500 ${
+            className={`relative h-screen pb-12 flex flex-col justify-between transition-opacity duration-500 ${
               isHeroRevealed ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
           >

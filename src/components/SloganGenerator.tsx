@@ -135,8 +135,8 @@ const SloganGenerator = () => {
   }, []);
 
   return (
-    <div className="group flex flex-col md:flex-row md:items-center mb-4 z-10 relative min-h-[6em] md:min-h-[3em]">
-      <p className={`text-boring-dark font-medium text-lg md:text-xl lg:text-[3rem] tracking-tight flex-grow md:mr-4 transition-opacity duration-200 ${isAnimating ? 'whitespace-nowrap overflow-hidden md:overflow-visible leading-normal' : 'leading-tight'}`}>
+    <div className="group flex flex-col md:flex-row md:items-center mb-4 z-10 relative min-h-[9em] md:min-h-[3em]">
+      <p className={`text-boring-dark font-medium text-3xl md:text-xl lg:text-[3rem] tracking-tight flex-grow md:mr-4 transition-opacity duration-200 ${isAnimating ? 'whitespace-nowrap overflow-hidden md:overflow-visible leading-normal' : 'leading-tight'}`}>
         {displayText}
       </p>
       <div className="mt-3 md:mt-0 flex-shrink-0">
