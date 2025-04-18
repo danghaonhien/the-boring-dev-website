@@ -16,11 +16,23 @@ import frame9 from '../assets/images/meme/frame9.png';
 import frame10 from '../assets/images/meme/frame10.png';
 import frame11 from '../assets/images/meme/frame11.png';
 import frame12 from '../assets/images/meme/frame12.png';
+import frame13 from '../assets/images/meme/frame13.png';
+import frame14 from '../assets/images/meme/frame14.png';
+import frame15 from '../assets/images/meme/frame15.png';
+import frame16 from '../assets/images/meme/frame16.png';
+import frame17 from '../assets/images/meme/frame17.png';
+import frame18 from '../assets/images/meme/frame18.png';
+import frame19 from '../assets/images/meme/frame19.png';
+import frame20 from '../assets/images/meme/frame20.png';
+import frame21 from '../assets/images/meme/frame21.png';
+import frame22 from '../assets/images/meme/frame22.png';
+import frame23 from '../assets/images/meme/frame23.png';
+
 
 // Array of available meme frames
 const memeFrames = [
   frame0, frame1, frame2, frame3, frame4, frame5,
-  frame6, frame7, frame8, frame9, frame10, frame11, frame12
+  frame6, frame7, frame8, frame9, frame10, frame11, frame12, frame13, frame14, frame15, frame16, frame17, frame18, frame19, frame20, frame21, frame22, frame23
 ];
 
 const MemeGenerator: React.FC = () => {
