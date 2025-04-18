@@ -1,0 +1,33 @@
+<svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <!-- 
+    preserveAspectRatio="xMidYMid slice" ensures the SVG covers the area, 
+    maintaining aspect ratio and slicing off excess if needed.
+  -->
+  <defs>
+    <!-- Optional: Define gradient if you want SVG to handle background color -->
+    <!-- <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F8F7F3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FDFCFB;stop-opacity:1" />
+    </linearGradient> -->
+  </defs>
+  <!-- Optional: Background handled by Tailwind instead -->
+  <!-- <rect width="100%" height="100%" fill="url(#bgGradient)" /> -->
+
+  <!-- Subtle grid lines -->
+  <!-- <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#E0E0E0" stroke-width="0.5" /> -->
+  <line x1="75%" y1="0" x2="75%" y2="100%" stroke="#E0E0E0" stroke-width="0.5" />
+  <!-- <line x1="0" y1="70%" x2="100%" y2="70%" stroke="#E0E0E0" stroke-width="0.5" /> -->
+  <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#E0E0E0" stroke-width="0.5" />
+
+  <!-- Large subtle arc -->
+  <!-- 
+    M: Move to start point (x y) - Starting far left, slightly above vertical center
+    A: Elliptical Arc (rx ry x-axis-rotation large-arc-flag sweep-flag x y)
+       rx, ry: radii of the ellipse (equal for a circle)
+       x-axis-rotation: usually 0
+       large-arc-flag: 0 for small arc (< 180deg), 1 for large arc (>= 180deg)
+       sweep-flag: 0 for counter-clockwise, 1 for clockwise
+       x, y: end point of the arc - Ending far right, same y as start
+  -->
+  <path d="M -300 400 A 1000 1000 0 0 1 1740 400" stroke="#E0E0E0" stroke-width="0.5" fill="none" />
+</svg> 

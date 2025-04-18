@@ -158,34 +158,39 @@ const LandingPage = () => {
 
   return (
     <PageTransition>
-      <div className="relative min-h-screen bg-white overflow-hidden" style={{ cursor: isMobile ? 'auto' : 'none' }}>
+      <div 
+        className="relative min-h-screen bg-boring-hero-bg overflow-hidden"
+        style={{ cursor: isMobile ? 'auto' : 'none' }}
+      >
         {!isMobile && <CustomCursor />}
+        
         <div 
-          className={`fixed inset-0 z-50 overflow-hidden ${
-            startCurtainAnimation ? 'pointer-events-none' : '' 
+          className="absolute inset-0 h-screen z-0 
+                     bg-[url('/src/assets/images/hero-grid-background.svg')]
+                     bg-cover bg-center bg-no-repeat"
+          aria-hidden="true" // Hide from screen readers
+        ></div>
+
+        <div 
+          className={`fixed inset-0 z-50 bg-boring-dark transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] ${
+            startCurtainAnimation ? '-translate-y-full pointer-events-none' : 'translate-y-0'
           }`}
         >
-          <div
-            className={`absolute top-0 left-0 w-full h-full bg-white transition-transform duration-700 ease-in-out ${
-              startCurtainAnimation ? '-translate-y-full' : 'translate-y-0'
-            }`}
-          ></div>
-
           <div 
-            className={`absolute inset-0 p-6 md:p-12 flex flex-col justify-between pb-20 h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible ${
-              !isLoading ? 'invisible' : ''
-            }`}
+            className={`absolute inset-0 p-6 md:p-12 flex flex-col justify-between pb-20 h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible transition-opacity duration-700 ease-linear ${
+              !isLoading ? 'opacity-100' : 'opacity-100'
+            } ${startCurtainAnimation ? 'opacity-0' : 'opacity-100'}`}
           >
-            <header className={`w-full transition-opacity duration-500 ease-linear ${startCurtainAnimation ? 'opacity-0' : 'opacity-100'}`}>
+            <header className={`w-full transition-opacity duration-700 ease-linear ${startCurtainAnimation ? 'opacity-0' : 'opacity-100'}`}>
               <div className="flex justify-between items-center">
-                  <div className="text-boring-dark font-bold text-2xl uppercase">
+                  <div className="text-boring-offwhite font-bold text-2xl uppercase">
                     THE BORING DEV
                   </div>
               </div>
             </header>
 
             <div className="flex-grow flex flex-col justify-end">
-              <div className="text-boring-dark font-bold text-[25vw] leading-none select-none text-left">
+              <div className="text-boring-offwhite font-bold text-[25vw] leading-none select-none text-left">
                 {loadingProgress}
               </div>
             </div>
@@ -223,9 +228,16 @@ const LandingPage = () => {
               <SloganGenerator />
 
               <h1
-                className="text-boring-dark font-bold text-[22vw] md:text-[22vw] lg:text-[25vw] leading-none select-none text-left"
+                className="text-boring-dark font-bold text-[22vw] md:text-[22vw] lg:text-[25vw] leading-none select-none text-left overflow-hidden"
               >
-                BORING
+                <span 
+                  className={`inline-block transition-transform duration-700 ease-out ${
+                    isHeroRevealed ? 'translate-y-0' : 'translate-y-full' 
+                  }`}
+                  style={{ transitionDelay: '100ms' }}
+                >
+                  BORING
+                </span>
               </h1>
             </div>
           </section>

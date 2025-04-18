@@ -13,6 +13,7 @@ module.exports = {
           slate: '#79818C',
           offwhite: '#F2F2F0',
           dark: '#0D0D0D',
+          'hero-bg': '#F8F7F3',
         },
       },
       keyframes: {
