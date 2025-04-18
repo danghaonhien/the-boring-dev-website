@@ -172,7 +172,7 @@ const LandingPage = () => {
           ></div>
 
           <div 
-            className={`absolute inset-0 p-12 flex flex-col justify-between h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible ${
+            className={`absolute inset-0 p-6 md:p-12 flex flex-col justify-between pb-16 h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible ${
               !isLoading ? 'invisible' : ''
             }`}
           >
@@ -192,9 +192,9 @@ const LandingPage = () => {
           </div>
         </div>
 
-        <div className="p-12 relative z-10 min-h-screen">
+        <div className="p-6 md:p-12 relative z-10 min-h-screen">
           <section 
-            className={`relative h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible pb-12 flex flex-col justify-between transition-opacity duration-500 ${
+            className={`relative h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible pb-16 md:pb-12 flex flex-col justify-between transition-opacity duration-500 ${
               isHeroRevealed ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
           >
@@ -223,7 +223,7 @@ const LandingPage = () => {
               <SloganGenerator />
 
               <h1
-                className="text-boring-dark font-bold text-[20vw] md:text-[22vw] lg:text-[25vw] leading-none select-none text-left"
+                className="text-boring-dark font-bold text-[22vw] md:text-[22vw] lg:text-[25vw] leading-none select-none text-left"
               >
                 BORING
               </h1>
