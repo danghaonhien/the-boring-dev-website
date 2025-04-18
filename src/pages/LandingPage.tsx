@@ -10,21 +10,25 @@ import {
 import { AnimatedGradientText } from '../components/InteractiveElements';
 import PageTransition from '../components/PageTransition';
 import ProductsSection from '../components/ProductsSection';
+import SloganGenerator from '../components/SloganGenerator';
+// import boringSvg from '../assets/images/homepage/BORING.svg'; // Removed SVG import
 
-// Define the total number of products (based on ProductsSection.tsx)
-const productCount = 3; 
+// Array of slogans
+// const slogans = [...];
 
 const LandingPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isHeroRevealed, setIsHeroRevealed] = useState(false);
   const [startCurtainAnimation, setStartCurtainAnimation] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // Track mobile state (md breakpoint)
   const productRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [displayCount, setDisplayCount] = useState(0);
+  // const [currentSlogan, setCurrentSlogan] = useState("..."); // REMOVED slogan state
 
   // Simulate loading progress
   useEffect(() => {
@@ -85,31 +89,6 @@ const LandingPage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
-  // Counter animation effect
-  useEffect(() => {
-    if (isHeroRevealed) {
-      let start = 0;
-      const end = productCount;
-      if (start === end) return;
-
-      const duration = 1000;
-      const startTime = performance.now();
-
-      const animateCount = (currentTime: number) => {
-        const elapsedTime = currentTime - startTime;
-        const progress = Math.min(elapsedTime / duration, 1);
-        const currentCount = Math.floor(progress * end);
-        setDisplayCount(currentCount);
-
-        if (progress < 1) {
-          requestAnimationFrame(animateCount);
-        }
-      };
-
-      requestAnimationFrame(animateCount);
-    }
-  }, [isHeroRevealed]);
-
   // Calculate parallax factor for smooth scrolling
   const getParallaxStyle = (speed: number = 0.2) => {
     return {
@@ -127,6 +106,53 @@ const LandingPage = () => {
       });
     }
   };
+
+  // Toggle Menu Function
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  // Effect to track screen size for conditional menu behavior
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth < 768); // Tailwind's default md breakpoint
+    };
+    window.addEventListener('resize', checkScreenSize);
+    // Initial check in case the initial state was wrong (e.g., SSR)
+    checkScreenSize(); 
+    // Cleanup listener on unmount
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  // Effect to prevent body scroll ONLY on mobile when menu is open
+  // and handle scrollbar shift
+  useEffect(() => {
+    // Only apply scroll lock if menu is open AND on mobile
+    if (isMenuOpen && isMobile) {
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Reset styles if menu is closed OR if screen is not mobile
+      document.body.style.paddingRight = '';
+      // Only reset overflow if not loading (initial load state)
+      if (!isLoading) {
+        document.body.style.overflow = '';
+      }
+    }
+    
+    // Cleanup function ensures reset if component unmounts while menu is open on mobile
+    return () => {
+      // Check if we NEEDED to clean up (menu was open on mobile when unmounting)
+      if (isMobile) { 
+        document.body.style.paddingRight = '';
+        if (!isLoading) {
+          document.body.style.overflow = ''; 
+        }
+      }
+    };
+  // Depend on isMenuOpen, isMobile, and isLoading
+  }, [isMenuOpen, isMobile, isLoading]);
 
   return (
     <PageTransition>
@@ -175,15 +201,15 @@ const LandingPage = () => {
           </div>
         </div>
 
-        {/* Main Content Wrapper - Adjusted padding */}
-        <div className="p-12  relative z-10">
+        {/* Main Content Wrapper */}
+        <div className="p-12 relative z-10 min-h-screen"> {/* Ensure wrapper has min-height for positioning */} 
           {/* Hero Section */}
           <section 
-            className={`relative min-h-screen pb-12 flex flex-col justify-between transition-opacity duration-500 ${
-              isHeroRevealed ? 'opacity-100' : 'opacity-0'
+            className={`relative min-h-screen pb-12 flex flex-col justify-between transition-opacity duration-500 ${ // Removed extra padding potentially? Check original
+              isHeroRevealed ? 'opacity-100' : 'opacity-0 pointer-events-none' // Hide hero until revealed
             }`}
           >
-            {/* Header with Site Name and Plus - Added pl-12 */}
+            {/* Header with Site Name and Menu Toggle Button */} 
             <header 
               className={`w-full transition-all duration-1000 transform  ${
                 isHeroRevealed ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0' 
@@ -195,33 +221,91 @@ const LandingPage = () => {
                   THE BORING DEV
                 </div>
                 
-                {/* Static Plus Sign/Button */}
-                <button className="text-boring-dark text-4xl font-bold">
-                  +
+                {/* Menu Toggle Button (+/X) */}
+                <button 
+                  className="text-boring-dark text-4xl font-bold z-30 relative" // Increased z-index
+                  onClick={toggleMenu}
+                  aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                  disabled={!isHeroRevealed}
+                >
+                  {isMenuOpen ? '\u00D7' : '+'} {/* Unicode multiplication sign for X */}
                 </button>
               </div>
             </header>
             
-            {/* Content Area: Counter above BORING text - Removed invalid w=full */}
-            <div className="flex-grow flex flex-col justify-end  "> 
-              {/* Project Counter with Hover Effect - Removed pl-12 */}
-              <div className="group flex items-end z-10 relative"> 
-                <div className="text-boring-dark font-medium text-9xl tracking-tighter">
-                  {String(displayCount).padStart(2, '0')}
-                </div>
-                <span className="text-boring-dark font-medium text-2xl ml-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  projects
-                </span>
-              </div>
+            {/* Content Area: Slogan generator above BORING text */}
+            <div className="flex-grow flex flex-col justify-end">
+              {/* Slogan Generator Component */}
+              <SloganGenerator />
 
-              {/* Large BORING Text at the bottom - Removed width/margin */}
-              <h1 
-                className="text-boring-dark font-bold text-[25vw] leading-none select-none text-left"
+              {/* Large BORING Text at the bottom - Use responsive font sizes */}
+              <h1
+                className="text-boring-dark font-bold text-[20vw] md:text-[22vw] lg:text-[25vw] leading-none select-none text-left"
               >
                 BORING
               </h1>
             </div>
           </section>
+
+          {/* Navigation Menu - Full screen overlay on mobile, absolute on desktop */}
+          <nav 
+            className={`
+              fixed inset-0 p-12 bg-white z-40 flex flex-col 
+              md:absolute md:top-28 md:right-12 md:inset-auto md:p-0 md:bg-transparent md:z-20 md:block
+              transition-all duration-300 ease-in-out
+              ${
+                isMenuOpen 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 -translate-y-4 pointer-events-none md:translate-y-0' // Keep desktop position stable when closed
+              }`}
+          >
+            {/* Menu Header (Mobile Only) */}
+            <header className="w-full md:hidden"> {/* Hide on md and up */} 
+              <div className="flex justify-between items-center">
+                <div className="text-boring-dark font-bold text-2xl uppercase">
+                  THE BORING DEV
+                </div>
+                <button 
+                  className="text-boring-dark text-4xl font-bold" 
+                  onClick={toggleMenu}
+                  aria-label="Close menu"
+                >
+                  &times; {/* Close icon */}
+                </button>
+              </div>
+            </header>
+
+            {/* Links Container */}
+            <ul className="space-y-4 text-right mt-20 md:mt-0">
+              <li>
+                <Link 
+                  to="/products" 
+                  className="text-boring-dark hover:text-boring-main text-4xl md:text-3xl font-medium uppercase transition-colors duration-200"
+                  onClick={toggleMenu} // Close menu on link click
+                >
+                  Products
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/about" 
+                  className="text-boring-dark hover:text-boring-main text-4xl md:text-3xl font-medium uppercase transition-colors duration-200"
+                  onClick={toggleMenu} // Close menu on link click
+                >
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/contact" 
+                  className="text-boring-dark hover:text-boring-main text-4xl md:text-3xl font-medium uppercase transition-colors duration-200"
+                  onClick={toggleMenu} // Close menu on link click
+                >
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </nav>
 
           {/* Products Section */}
           <div ref={productRef}>
