@@ -164,7 +164,7 @@ const SloganGenerator = () => {
 
   return (
     <div className="group flex flex-col md:flex-row md:items-center mb-4 z-10 relative min-h-[10em] md:min-h-[4em] lg:min-h-[7em]">
-      <p className={`text-boring-dark font-medium text-3xl md:text-xl lg:text-[3rem] flex-grow md:mr-4 transition-opacity duration-200 min-h-[6em] md:min-h-0 leading-tight ${isAnimating ? ' overflow-hidden md:overflow-visible' : ''}`}>
+      <p className={`text-boring-dark font-medium text-4xl md:text-xl lg:text-[3rem] flex-grow md:mr-4 transition-opacity duration-200 min-h-[4em] md:min-h-0 leading-tight ${isAnimating ? ' overflow-hidden md:overflow-visible' : ''}`}>
         {/* Render text directly, font style is now always the same */}
         {displayText}
       </p>
