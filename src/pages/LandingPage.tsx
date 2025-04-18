@@ -234,7 +234,7 @@ const LandingPage = () => {
             
               <ScrollReveal>
                 <p className="text-left text-4xl md:text-5xl lg:text-8xl font-medium text-boring-dark  leading-tight">
-                <span className="inline-block pl-48">We're a community of devs,</span> designers, {' '}
+                <span className="inline-block pl-42">We're a community of devs,</span> designers, {' '}
                   <WordCycle 
                     words={["daydreamers", "rulebreakers", "wanderers"]} 
                     interval={5000}
