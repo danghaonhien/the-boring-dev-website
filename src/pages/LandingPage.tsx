@@ -172,7 +172,7 @@ const LandingPage = () => {
           ></div>
 
           <div 
-            className={`absolute inset-0 p-6 md:p-12 flex flex-col justify-between pb-16 h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible ${
+            className={`absolute inset-0 p-6 md:p-12 flex flex-col justify-between pb-20 h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible ${
               !isLoading ? 'invisible' : ''
             }`}
           >
@@ -194,7 +194,7 @@ const LandingPage = () => {
 
         <div className="p-6 md:p-12 relative z-10 min-h-screen">
           <section 
-            className={`relative h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible pb-16 md:pb-12 flex flex-col justify-between transition-opacity duration-500 ${
+            className={`relative h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible pb-20 md:pb-12 flex flex-col justify-between transition-opacity duration-500 ${
               isHeroRevealed ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
           >
