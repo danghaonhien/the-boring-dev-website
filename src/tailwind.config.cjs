@@ -6,6 +6,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'fhd': '1920px', // Add this line
+        // ... other custom screens or keep empty if none
+      },
       colors: {
         boring: {
           main: '#00010D',

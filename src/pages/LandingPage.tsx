@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ScrollReveal, 
   AnimatedGradientBlob, 
@@ -18,6 +19,9 @@ import CustomCursor from '../components/CustomCursor';
 // Array of slogans
 // const slogans = [...];
 
+// Define neon colors outside the component or at the top level if preferred
+const neonColors = ['#5A58A6', '#F2B705', '#204C73', '#F2AB9B','#F26D3D', '#D9D9D9']; // Updated colors from image
+
 const LandingPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
@@ -30,6 +34,7 @@ const LandingPage = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [hoverColor, setHoverColor] = useState<string | null>(null); // State for hover color
   // const [currentSlogan, setCurrentSlogan] = useState("..."); // REMOVED slogan state
 
   // Simulate loading progress
@@ -156,6 +161,11 @@ const LandingPage = () => {
   // Depend on isMenuOpen, isMobile, and isLoading
   }, [isMenuOpen, isMobile, isLoading]);
 
+  // Function to get a random neon color
+  const getRandomNeonColor = () => {
+    return neonColors[Math.floor(Math.random() * neonColors.length)];
+  };
+
   return (
     <PageTransition>
       <div 
@@ -227,18 +237,68 @@ const LandingPage = () => {
             <div className="flex-grow flex flex-col justify-end">
               <SloganGenerator />
 
-              <h1
-                className="text-boring-dark font-bold text-[22vw] md:text-[22vw] lg:text-[25vw] leading-none select-none text-left overflow-hidden"
+              <motion.h1
+                className="text-boring-dark font-bold text-[22vw]  md:text-[22vw] lg:text-[24.5vw] fhd:text-[25vw] leading-none select-none text-left overflow-hidden flex"
+                initial="rest"
+                whileHover="hover"
+                animate="rest"
+                onHoverStart={() => {
+                  setHoverColor(getRandomNeonColor());
+                }}
+                onHoverEnd={() => {
+                  setHoverColor(null); // Reset color on hover end
+                }}
               >
-                <span 
-                  className={`inline-block transition-transform duration-700 ease-out ${
-                    isHeroRevealed ? 'translate-y-0' : 'translate-y-full' 
-                  }`}
-                  style={{ transitionDelay: '100ms' }}
-                >
-                  BORING
-                </span>
-              </h1>
+                {'BORING'.split('').map((char, index) => {
+                  const isRevealedClass = isHeroRevealed ? 'translate-y-0' : 'translate-y-full';
+                  const delay = 100 + index * 50;
+                  
+                  // Define neon colors // MOVED OUTSIDE
+                  // const neonColors = ['#39FF14', '#FF073A', '#00FFFF', '#FFD700', '#FF00FF']; 
+
+                  const variants = {
+                    rest: { 
+                      y: 0, 
+                      x: 0, 
+                      opacity: 1, 
+                      scale: 1, 
+                      rotate: 0,
+                      color: '#1F2937', // Keep initial dark color
+                      transition: { 
+                        type: 'spring', 
+                        stiffness: 100, 
+                        damping: 15,
+                        delay: index * 0.05
+                      } 
+                    },
+                    hover: {
+                      y: -15,
+                      x: 0,
+                      opacity: 1,
+                      scale: 1,
+                      rotate: 0,
+                      // Use the state hoverColor, fallback to initial dark if null
+                      color: hoverColor || '#1F2937', 
+                      transition: { 
+                        duration: 0.3,
+                        ease: 'easeOut',
+                        delay: index * 0.04
+                      }
+                    }
+                  };
+
+                  return (
+                    <motion.span
+                      key={index}
+                      className={`inline-block transition-transform duration-700 ease-out ${isRevealedClass}`}
+                      style={{ transitionDelay: `${delay}ms`, willChange: 'transform, color' }}
+                      variants={variants}
+                    >
+                      {char}
+                    </motion.span>
+                  );
+                })}
+              </motion.h1>
             </div>
           </section>
 
