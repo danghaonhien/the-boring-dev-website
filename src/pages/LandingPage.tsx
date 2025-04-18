@@ -291,7 +291,11 @@ const LandingPage = () => {
                     <motion.span
                       key={index}
                       className={`inline-block transition-transform duration-700 ease-out ${isRevealedClass}`}
-                      style={{ transitionDelay: `${delay}ms`, willChange: 'transform, color' }}
+                      style={{ 
+                        transitionDelay: `${delay}ms`, 
+                        willChange: 'transform, color',
+                        color: '#1F2937' // Explicitly set initial color here
+                      }}
                       variants={variants}
                     >
                       {char}
