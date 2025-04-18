@@ -9,9 +9,19 @@ import frame2 from '../assets/images/meme/frame2.png';
 import frame3 from '../assets/images/meme/frame3.png';
 import frame4 from '../assets/images/meme/frame4.png';
 import frame5 from '../assets/images/meme/frame5.png';
+import frame6 from '../assets/images/meme/frame6.png';
+import frame7 from '../assets/images/meme/frame7.png';
+import frame8 from '../assets/images/meme/frame8.png';
+import frame9 from '../assets/images/meme/frame9.png';
+import frame10 from '../assets/images/meme/frame10.png';
+import frame11 from '../assets/images/meme/frame11.png';
+import frame12 from '../assets/images/meme/frame12.png';
 
 // Array of available meme frames
-const memeFrames = [frame0, frame1, frame2, frame3, frame4, frame5];
+const memeFrames = [
+  frame0, frame1, frame2, frame3, frame4, frame5,
+  frame6, frame7, frame8, frame9, frame10, frame11, frame12
+];
 
 const MemeGenerator: React.FC = () => {
   const [showMeme, setShowMeme] = useState(false);
