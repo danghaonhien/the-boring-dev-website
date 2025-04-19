@@ -89,7 +89,7 @@ const MemeGenerator: React.FC = () => {
     <div className="flex flex-col items-center justify-center relative py-24 pb-96  bg-boring-lightgray  shadow-inner overflow-hidden">
       {/* Section Title */}
       <h2 className="text-3xl md:text-4xl font-bold text-boring-dark mb-8 text-center px-4">
-        Need a Break? Generate a Meme!
+      Break Time = Meme Time
       </h2>
 
       {/* Instructional text */}

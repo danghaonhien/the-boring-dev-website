@@ -331,7 +331,7 @@ const TechRoadmapDiagram: React.FC = () => {
         // Added glow-container class and relative
       >
         <h2 className="relative z-10 text-3xl font-bold mb-10 md:mb-16 text-center text-boring-offwhite px-4">
-          The Hilariously Real "Boring" Tech Roadmap
+        The Real Boring Roadmap for Devs, Designers & Daydreamers
         </h2>
         
         <div className="relative z-10 w-full"> 
