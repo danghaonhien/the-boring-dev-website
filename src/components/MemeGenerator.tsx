@@ -28,12 +28,25 @@ import frame21 from '../assets/images/meme/frame21.png';
 import frame22 from '../assets/images/meme/frame22.png';
 import frame23 from '../assets/images/meme/frame23.png';
 import frame24 from '../assets/images/meme/frame24.png';
+import frame25 from '../assets/images/meme/frame25.png';
+import frame26 from '../assets/images/meme/frame26.png';
+import frame27 from '../assets/images/meme/frame27.png';
+import frame28 from '../assets/images/meme/frame28.png';
+import frame29 from '../assets/images/meme/frame29.png';
+import frame30 from '../assets/images/meme/frame30.png';
+import frame31 from '../assets/images/meme/frame31.png';
+import frame32 from '../assets/images/meme/frame32.png';
+import frame33 from '../assets/images/meme/frame33.png';
+import frame34 from '../assets/images/meme/frame34.png';
+import frame35 from '../assets/images/meme/frame35.png';
+import frame36 from '../assets/images/meme/frame36.png';
+import frame37 from '../assets/images/meme/frame37.png';
 
 
 // Array of available meme frames
 const memeFrames = [
   frame0, frame1, frame2, frame3, frame4, frame5,
-  frame6, frame7, frame8, frame9, frame10, frame11, frame12, frame13, frame14, frame15, frame16, frame17, frame18, frame19, frame20, frame21, frame22, frame23, frame24
+  frame6, frame7, frame8, frame9, frame10, frame11, frame12, frame13, frame14, frame15, frame16, frame17, frame18, frame19, frame20, frame21, frame22, frame23, frame24, frame25, frame26, frame27, frame28, frame29, frame30, frame31, frame32, frame33, frame34, frame35, frame36, frame37
 ];
 
 const MemeGenerator: React.FC = () => {
@@ -100,9 +113,9 @@ const MemeGenerator: React.FC = () => {
           {isFlashing && (
             <motion.div
               key="flash"
-              className="absolute top-[5.5%] left-[32%] w-[35%] h-[11%] bg-white rounded-lg z-20 pointer-events-none"
+              className="absolute top-[5.5%] left-[32%] w-[35%] h-[11%] bg-white rounded-lg z-20 pointer-events-none blur-md"
               initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: [0, 1, 0], scale: 1, transition: { duration: 0.15, times: [0, 0.5, 1] } }} 
+              animate={{ opacity: [0, 0.8, 0], scale: 1, transition: { duration: 0.15, times: [0, 0.5, 1] } }}
               exit={{ opacity: 0 }}
             >
             </motion.div>
