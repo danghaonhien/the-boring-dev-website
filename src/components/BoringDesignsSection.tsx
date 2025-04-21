@@ -28,14 +28,18 @@ const PlaceholderGraphic: React.FC<{ className?: string; text?: string }> = ({ c
 );
 
 const SlideIntroSlide: React.FC = () => (
-  <div className="bg-white p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
+  <div className="bg-white dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
     <div>
-      <h3 className="text-2xl font-bold text-black">Slide</h3>
-      <p className="text-gray-400 text-2xl">Template</p>
+      <h3 className="text-5xl font-bold text-black dark:text-white">Slide - 01</h3>
+      <p className="text-gray-400 dark:text-gray-500 text-2xl">Template</p>
     </div>
-    <div className="flex justify-between items-end">
-      <p className="text-xs text-gray-500 max-w-[50%]">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-      <div className="w-16 h-32 bg-gray-200 rounded-lg border border-gray-300 flex items-center justify-center text-gray-400 text-xs">[Phone]</div>
+    <div className="mt-auto pt-4 text-right">
+      <p className="text-6xl font-semibold text-black dark:text-white mb-6">
+          Low Effort,<br/> High Impact
+      </p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 ml-auto max-w-[60%]">
+      Minimal slides, maximum vibes.
+      </p>
     </div>
   </div>
 );
@@ -234,7 +238,7 @@ const boringDesignsData: Category[] = [
       {
         id: 'slide-proj-1',
         title: 'Slide - 01',
-        description: "A versatile presentation template focused on clarity and structure, suitable for slides, reports, and internal communication.",
+        description: "This is where we act like we tried really hard. A quick setup of what this is, who it's for, and why it might just accidentally be useful. Minimal slides, maximum vibes. Let's go.",
         slideComponent1: <CollageSlideshow />,
         slideComponent2: <SlideIntroSlide />,
         tags: ['Presentation', 'Template', 'Slide Deck', 'Business'],
@@ -247,7 +251,7 @@ const boringDesignsData: Category[] = [
         slideComponent1: <PlaceholderGraphic text="[Slide 1]"/>, 
         slideComponent2: <CompetitorSlide />,
         tags: ['Template', 'Internal'],
-        caseStudyLink: '#',
+        caseStudyLink: '/projects/slide-02',
       },
     ],
   },
@@ -341,9 +345,9 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
                                 </Link>
                             )}
                             {project.caseStudyLink === '#' && (
-                                <span className="text-gray-400 font-medium text-sm uppercase tracking-wider cursor-not-allowed">
-                                Read Full Case Study (Coming Soon)
-                                </span>
+                                   <Link to={project.caseStudyLink} className="text-boring-main hover:underline font-medium text-sm uppercase tracking-wider">
+                                   Read Full Case Study
+                                   </Link>
                             )}
                         </div>
                        <div className="text-left md:text-right flex flex-wrap gap-2 justify-start md:justify-end">
