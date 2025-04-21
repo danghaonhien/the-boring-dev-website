@@ -69,14 +69,13 @@ interface SlideCollageProps {
 
 const SlideCollage: React.FC<SlideCollageProps> = ({ cards, layout }) => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 not-prose">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 not-prose">
       {cards.map((CardComponent, index) => {
         const span = layout[index % layout.length] ?? 1; // Use modulo for safety if cards > layout length
-        const gridColumnClass = `md:col-span-${span}`; // Apply span only on medium screens and up
-        const gridColumnClassBase = `col-span-1`; // Default to col-span-1 on small screens
+        const gridColumnClass = `md:col-span-${span}`;
 
         return (
-          <div key={index} className={`${gridColumnClassBase} ${gridColumnClass}`}>
+          <div key={index} className={`${gridColumnClass}`}>
             {CardComponent}
           </div>
         );

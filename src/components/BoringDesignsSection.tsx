@@ -43,6 +43,67 @@ const SlideIntroSlide: React.FC = () => (
     </div>
   </div>
 );
+const SlideIntroSlide2: React.FC = () => (
+  <div className="bg-white dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
+    <div>
+      <h3 className="text-5xl font-bold text-black dark:text-white">Slide - 02</h3>
+      <p className="text-gray-400 dark:text-gray-500 text-2xl">Template</p>
+    </div>
+    <div className="mt-auto pt-4 text-right">
+      <p className="text-6xl font-semibold text-black dark:text-white mb-6">
+          Low Effort,<br/> High Impact
+      </p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 ml-auto max-w-[60%]">
+      Minimal slides, maximum vibes.
+      </p>
+    </div>
+  </div>
+);
+
+// --- Slide 02 Preview Components (Based on Slide02ProjectPage) ---
+
+const GraphStatsPreview: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => (
+  <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full ${isDark ? 'bg-gray-950 text-white' : 'bg-white text-black border border-gray-200'}`}>
+    <div className={`font-semibold mb-2 ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Performance</div>
+    <div className="flex-grow flex items-end justify-center space-x-1 h-16 px-1">
+      {[30, 60, 45, 75, 50].map((value, index) => (
+        <div key={index} className={`w-1/6 rounded-t bg-gradient-to-t ${index === 2 ? 'from-blue-500 to-blue-600' : (isDark ? 'from-gray-600 to-gray-700' : 'from-gray-300 to-gray-400')}`} style={{ height: `${value}%` }}></div>
+      ))}
+    </div>
+    <div className={`mt-1 text-center text-[10px] ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>KPIs</div>
+  </div>
+);
+
+const PhasesTimelinePreview: React.FC<{ isDark?: boolean }> = ({ isDark = true }) => (
+  <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full ${isDark ? 'bg-black text-white' : 'bg-white text-black border border-gray-200'}`}>
+    <div className={`font-semibold mb-1 ${isDark ? 'text-white' : 'text-black'}`}>Phases</div>
+    <div className={`text-[10px] ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-2`}>High-Level Stages</div>
+    {/* Simplified timeline */}
+    <div className="relative w-full h-4 my-2">
+      <div className={`absolute left-0 right-0 top-1/2 h-px ${isDark ? 'bg-gray-700' : 'bg-gray-300'} -translate-y-1/2`}></div>
+      <div className="relative flex justify-between h-full">
+        {[...Array(5)].map((_, index) => (
+          <div key={`marker-${index}`} className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full border ${isDark ? 'bg-black border-gray-500' : 'bg-white border-gray-500'}`} style={{ left: `${(index / 4) * 100}%` }}></div>
+        ))}
+      </div>
+    </div>
+    <div className={`grid grid-cols-4 gap-1 text-[9px] mt-1 ${isDark ? 'text-gray-500' : 'text-gray-600'}`}>
+      <div>Disc.</div> <div>Design</div> <div>Dev.</div> <div>Launch</div>
+    </div>
+  </div>
+);
+
+const QuarterlyGridPreview: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => (
+   <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full ${isDark ? 'bg-gray-950 text-white' : 'bg-gray-100 text-black border border-gray-200'}`}>
+    <div className={`font-semibold mb-2 ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Quarterly Plan</div>
+    <div className="grid grid-cols-2 gap-1 flex-grow text-[10px]">
+      <div className={`${isDark ? 'bg-gray-800' : 'bg-gray-200'} p-1 rounded`}><strong>Q1:</strong> Init, Plan</div>
+      <div className={`${isDark ? 'bg-gray-800' : 'bg-gray-200'} p-1 rounded`}><strong>Q2:</strong> Dev, Alpha</div>
+      <div className={`${isDark ? 'bg-gray-800' : 'bg-gray-200'} p-1 rounded`}><strong>Q3:</strong> Refine, Beta</div>
+      <div className={`${isDark ? 'bg-gray-800' : 'bg-gray-200'} p-1 rounded`}><strong>Q4:</strong> Launch, Next</div>
+    </div>
+  </div>
+);
 
 const CompetitorSlide: React.FC = () => (
   <div className="bg-black p-6 rounded-lg shadow-md h-full text-white flex space-x-4">
@@ -229,6 +290,49 @@ const CollageSlideshow: React.FC = () => {
   );
 };
 
+// --- NEW Slide 02 Slideshow Component ---
+const Slide02Slideshow: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Use the specific preview components for Slide 02
+  const slidePreviews = [
+    <GraphStatsPreview isDark={false} />,
+    <PhasesTimelinePreview isDark />,
+    <QuarterlyGridPreview isDark={false} />,
+    // Add more previews if desired, perhaps dark versions?
+     <GraphStatsPreview isDark />,
+     <QuarterlyGridPreview isDark />,
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % slidePreviews.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, [slidePreviews.length]);
+
+  // Reuse structure from CollageSlideshow but with scale adjustment if needed
+  return (
+    <div className="relative h-full w-full overflow-hidden bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg">
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={currentIndex}
+          initial={{ opacity: 0, scale: 0.95, x: 20 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          exit={{ opacity: 0, scale: 0.95, x: -20 }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          className="absolute inset-0 flex items-center justify-center p-4" // Add padding back
+        >
+          {/* Apply scaling to fit the small preview components well */}
+          <div className="transform scale-125 w-[60%]">
+            {slidePreviews[currentIndex]}
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+};
+
 // --- DUMMY DATA (Using the Components defined above) ---
 const boringDesignsData: Category[] = [
   {
@@ -246,11 +350,11 @@ const boringDesignsData: Category[] = [
       },
       {
         id: 'slide-proj-2',
-        title: 'Another Slide Deck',
-        description: 'Description for another deck.',
-        slideComponent1: <PlaceholderGraphic text="[Slide 1]"/>, 
-        slideComponent2: <CompetitorSlide />,
-        tags: ['Template', 'Internal'],
+        title: 'Slide - 02',
+        description: 'A structured approach to project planning and execution.',
+        slideComponent1: <SlideIntroSlide2 />,
+        slideComponent2: <Slide02Slideshow />,
+        tags: ['Template', 'Planning', 'Roadmap'],
         caseStudyLink: '/projects/slide-02',
       },
     ],

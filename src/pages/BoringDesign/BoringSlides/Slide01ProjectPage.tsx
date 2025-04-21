@@ -79,16 +79,12 @@ const CardPreview: React.FC<{ children: React.ReactNode; className?: string; isD
 const SlideCollage: React.FC<SlideCollageProps> = ({ cards, layout }) => {
   // No longer needs variant or internal card definitions/logic
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 not-prose">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 not-prose">
       {/* Render the passed-in cards with dynamic column spans */}
       {cards.map((CardComponent, index) => {
-        const span = layout[index] ?? 1; // Get span from layout array, default to 1
-        const gridColumnClass = `col-span-${span}`;
-        // Ensure col-span doesn't exceed grid columns on medium screens (md:grid-cols-3)
-        // Tailwind generates col-span-1, col-span-2, col-span-3 etc.
-        // If the grid is grid-cols-2, col-span-3 might behave unexpectedly or just take full width.
-        // For simplicity, we'll rely on the layout array being designed for a 3-column grid.
-        // A more robust solution might involve conditional classes based on breakpoints.
+        const span = layout[index % layout.length] ?? 1; // Use modulo for safety if cards > layout length
+        const gridColumnClass = `md:col-span-${span}`; 
+        // Base class will default to col-span-1 (full width) on mobile (grid-cols-1)
 
         return (
           <div key={index} className={`${gridColumnClass}`}>
@@ -407,10 +403,10 @@ const Pitch01ProjectPage: React.FC = () => {
                >
                  <span className="relative block overflow-hidden">
                     <span className="block transition-transform duration-300 ease-in-out group-hover:-translate-y-full">
-                      Shuffle Layouts
+                      Shuffle
                     </span>
                     <span className="absolute inset-0 block translate-y-full transition-transform duration-300 ease-in-out group-hover:translate-y-0">
-                      Shuffle Layouts
+                      Shuffle
                     </span>
                   </span>
                </button>
