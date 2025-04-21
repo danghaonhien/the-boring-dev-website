@@ -16,6 +16,7 @@ import WordCycle from '../components/WordCycle';
 import CustomCursor from '../components/CustomCursor';
 import TechRoadmapDiagram from '../components/TechRoadmapDiagram';
 import MemeGenerator from '../components/MemeGenerator';
+import BoringDesignsSection from '../components/BoringDesignsSection';
 // import boringSvg from '../assets/images/homepage/BORING.svg'; // Removed SVG import
 
 // Array of slogans
@@ -351,6 +352,11 @@ const LandingPage = () => {
               <MemeGenerator />
             </ScrollReveal>
           </section>
+
+          {/* Boring Designs Section */}
+          <ScrollReveal delay={300}>
+            <BoringDesignsSection />
+          </ScrollReveal>
 
     {/* Large Text Section */}
 
