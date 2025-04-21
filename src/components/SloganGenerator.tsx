@@ -106,7 +106,46 @@ const slogans = [
   "\"Logged in, tuned out, still typing.\"",
   "\"Quarterly planning, emotional damage included.\"",
   "\"Corporate synergy, but make it cry.\"",
-  "\"Backlog deep, patience deeper, barely.\""
+  "\"Backlog deep, patience deeper, barely.\"",
+  "\"We plan in sprints, we cry in loops.\"",
+
+  "\"From wireframes to existential dread.\"",
+
+  "\"Where ‘final_v2’ is never final.\"",
+
+  "\"Your career is a roadmap… kind of.\"",
+
+  "\"Debugging life one commit at a time.\"",
+
+  "\"Design, dev, deploy, doubt.\"",
+
+  "\"This roadmap has no ETA. Just vibes.\"",
+
+  "\"When in doubt, push to prod.\"",
+
+  "\"Too junior for this. Too senior to care.\"",
+
+  "\"It’s not burnout. It’s feature creep.\"",
+
+  "\"Navigating chaos with sticky notes and sass.\"",
+
+  "\"Think less, design more. Or the opposite.”",
+
+  "\"From bootcamp to breakdown—here we go.\"",
+
+  "\"Aligning pixels and personal goals (barely).\"",
+
+  "\"Just following the roadmap... into the void.\"",
+
+  "\"Devs dream in bugs. Designers dream in grids.\"",
+
+  "\"Every detour is a new feature.\"",
+
+  "\"We ship code and cope creatively.\"",
+
+  "\"This is a safe space for Ctrl+Z.\"",
+
+  "\"Let’s build things and slowly unravel.\"",
 ];
 
 const defaultSlogan = "\"Low-key building, high-key tired.\""; // Default with quotes

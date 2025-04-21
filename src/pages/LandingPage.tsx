@@ -307,7 +307,7 @@ const LandingPage = () => {
               </motion.h1>
             </div>
           </section>
-
+   {/* Large Text Section */}
           <section className="py-20 md:py-32">
             
               <div className="text-left text-4xl md:text-5xl lg:text-8xl font-medium text-boring-dark leading-tight">
@@ -351,6 +351,39 @@ const LandingPage = () => {
               <MemeGenerator />
             </ScrollReveal>
           </section>
+
+    {/* Large Text Section */}
+
+          <section className="py-20 md:py-32">
+            
+              <div className="text-right text-4xl md:text-5xl lg:text-8xl font-medium text-boring-dark leading-tight">
+                <ScrollReveal>
+                  <span className="reveal-text-line inline-block pl-42">We're a community of devs,</span>
+                </ScrollReveal>{' '}
+                <ScrollReveal delay={50}>
+                  <span className="reveal-text-line inline-block">designers, {' '}</span>
+                </ScrollReveal>
+                <ScrollReveal delay={100}>
+                  <WordCycle 
+                    words={["daydreamers", "rulebreakers", "wanderers"]} 
+                    interval={3000}
+                    className="inline-block reveal-text-line" 
+                  />
+                </ScrollReveal>
+                {' '}
+                <ScrollReveal delay={150}>
+                  <span className="reveal-text-line inline-block">who take breaks more</span>
+                </ScrollReveal>{' '}
+                <ScrollReveal delay={200}>
+                  <span className="reveal-text-line inline-block">seriously than deadlines.</span>
+                </ScrollReveal>{' '}
+                <ScrollReveal delay={250}>
+                  <span className="reveal-text-line inline-block">Come vibe with us.</span>
+                </ScrollReveal> 
+              </div>
+          
+          </section>
+
 
           <nav 
             className={`

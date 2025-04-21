@@ -41,12 +41,32 @@ import frame34 from '../assets/images/meme/frame34.png';
 import frame35 from '../assets/images/meme/frame35.png';
 import frame36 from '../assets/images/meme/frame36.png';
 import frame37 from '../assets/images/meme/frame37.png';
+import frame38 from '../assets/images/meme/frame38.png';
+import frame39 from '../assets/images/meme/frame39.png';
+import frame40 from '../assets/images/meme/frame40.png';
+import frame41 from '../assets/images/meme/frame41.png';
+import frame42 from '../assets/images/meme/frame42.png';
+import frame43 from '../assets/images/meme/frame43.png';
+import frame44 from '../assets/images/meme/frame44.png';
+import frame45 from '../assets/images/meme/frame45.png';
+import frame46 from '../assets/images/meme/frame46.png';
+import frame47 from '../assets/images/meme/frame47.png';
+import frame48 from '../assets/images/meme/frame48.png';
+import frame49 from '../assets/images/meme/frame49.png';
+import frame50 from '../assets/images/meme/frame50.png';
+import frame51 from '../assets/images/meme/frame51.png';
+import frame52 from '../assets/images/meme/frame52.png';
+import frame53 from '../assets/images/meme/frame53.png';
+import frame54 from '../assets/images/meme/frame54.png';
+
+
+
 
 
 // Array of available meme frames
 const memeFrames = [
   frame0, frame1, frame2, frame3, frame4, frame5,
-  frame6, frame7, frame8, frame9, frame10, frame11, frame12, frame13, frame14, frame15, frame16, frame17, frame18, frame19, frame20, frame21, frame22, frame23, frame24, frame25, frame26, frame27, frame28, frame29, frame30, frame31, frame32, frame33, frame34, frame35, frame36, frame37
+  frame6, frame7, frame8, frame9, frame10, frame11, frame12, frame13, frame14, frame15, frame16, frame17, frame18, frame19, frame20, frame21, frame22, frame23, frame24, frame25, frame26, frame27, frame28, frame29, frame30, frame31, frame32, frame33, frame34, frame35, frame36, frame37, frame38, frame39, frame40, frame41, frame42, frame43, frame44, frame45, frame46, frame47, frame48, frame49, frame50, frame51, frame52, frame53, frame54
 ];
 
 const MemeGenerator: React.FC = () => {
