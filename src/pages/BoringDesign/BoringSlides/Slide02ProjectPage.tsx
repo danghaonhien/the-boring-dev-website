@@ -13,7 +13,7 @@ interface SlideProps {
 }
 
 const Slide: React.FC<SlideProps> = ({ label, title, children, className = "" }) => (
-  <section className={` py-16 md:py-24 flex items-center ${className}`}>
+  <section className={` py-12 md:py-12 flex items-center ${className}`}>
     <div className="px-12 w-full">
       <ScrollReveal>
         {label && (
@@ -173,7 +173,7 @@ const Pitch02ProjectPage: React.FC = () => { // Renamed component
              </div>
 
              {/* Phase Descriptions - Aligned with markers */}
-             <div className="grid grid-cols-4 gap-4 text-xs">
+             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
                  {phases.map((phase, n) => (
                     <div key={n} className={`${isDark ? 'text-gray-400' : 'text-gray-600'} text-left pl-1`}>
                         <div className={`font-semibold mb-1 ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>{`0${n + 1} ${phase.title}`}</div>
@@ -201,7 +201,7 @@ const Pitch02ProjectPage: React.FC = () => { // Renamed component
              <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-4`}>Key Objectives & Focus</p>
              <p className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-700'} mb-8 max-w-md`}>A breakdown of the year's primary goals and activities, distributed across quarters to ensure steady progress and alignment.</p>
 
-             <div className="grid grid-cols-4 gap-y-4 gap-x-6">
+             <div className="grid grid-cols-2 md:grid-cols-4 gap-y-4 gap-x-6">
                 {Object.entries(quarters).map(([q, items]) => (
                   <div key={q}>
                      <div className={`text-xs font-semibold ${isDark ? 'text-gray-400' : 'text-gray-500'} mb-3 uppercase`}>{q}</div>
@@ -228,12 +228,12 @@ const Pitch02ProjectPage: React.FC = () => { // Renamed component
             <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-4`}>Key Milestones & Timeline</p>
             <p className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-700'} mb-10 max-w-md`}>This timeline highlights significant milestones, showing the projected path and key delivery points over the coming weeks.</p>
 
-            <div className="relative w-full h-20 flex items-center">
+            <div className="relative w-full h-auto overflow-x-auto py-4 whitespace-nowrap">
                 <div className={`absolute left-4 right-4 h-0.5 ${isDark ? 'bg-gray-700' : 'bg-gray-300'}`} style={{top: 'calc(50% - 1px)'}}></div>
-                <div className="relative flex justify-between w-full px-2 md:px-4">
+                <div className="relative flex justify-between w-full px-2 md:px-4 min-w-[400px] md:min-w-full">
                     {/* Example milestones */}
                     {[{label: 'Week 1', tasks: []}, {label: 'Today', tasks: ['Kick-off Meeting', 'Requirements Finalized'] }, {label: 'Week 3', tasks: []}, {label: 'Week 4', tasks: []}, {label: 'Week 5', tasks: []}].map(({label, tasks}) => (
-                         <div key={label} className="flex flex-col items-center z-10">
+                         <div key={label} className="flex flex-col items-center z-10 mx-4 md:mx-0">
                             <div className={`w-3 h-3 rounded-full border-2 ${isDark ? 'bg-black border-gray-400' : 'bg-white border-gray-600'}`}></div>
                              <div className={`mt-3 text-xs font-medium px-2 py-0.5 rounded ${label === 'Today' ? (isDark ? 'bg-gray-600 text-white' : 'bg-gray-300 text-black') : (isDark ? 'text-gray-400' : 'text-gray-500')}`}>{label}</div>
                              {label === 'Today' && tasks.length > 0 && (
@@ -322,11 +322,11 @@ const Pitch02ProjectPage: React.FC = () => { // Renamed component
         </header>
 
         {/* --- Slide 1: Introduction --- */}
-        <div className="pt-24 md:pt-32">
+        <div className="pt-24  md:pt-32 ">
            <Slide
              label="Planning & Strategy" // Updated Label
              title="Slide 02 - Visualizing the Plan" // Updated Title
-             className="bg-gradient-to-b from-gray-100 dark:from-gray-900 to-transparent pt-0 mt-0"
+             className="bg-gradient-to-b from-gray-100 dark:from-gray-900 to-transparent pt-12 mt-0"
            >
               <div className="max-w-3xl text-left">
                  <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 text-left">
