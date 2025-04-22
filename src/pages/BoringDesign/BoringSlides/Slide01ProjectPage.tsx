@@ -17,14 +17,14 @@ const Slide: React.FC<SlideProps> = ({ label, title, children, className = "" })
     <div className="px-12 w-full">
       <ScrollReveal>
         {label && (
-          <p className="text-sm font-medium text-gray-500 mb-2 uppercase tracking-wider">
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">
             {label}
           </p>
         )}
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8 md:mb-12">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-8 md:mb-12">
           {title}
         </h2>
-        <div className="prose prose-lg max-w-none">
+        <div className="prose prose-lg dark:prose-invert max-w-none">
           {/* Applying prose for basic styling, but children can override */}
           {children}
         </div>
@@ -38,8 +38,8 @@ const Slide: React.FC<SlideProps> = ({ label, title, children, className = "" })
 const ColorSwatch: React.FC<{ color: string; name: string; hex: string; className?: string }> = ({ color, name, hex, className }) => (
   <div className={`flex flex-col items-center ${className}`}>
     <div className={`w-16 h-16 md:w-24 md:h-24 rounded-full mb-2 shadow-inner ${color}`}></div>
-    <p className="font-medium text-sm text-gray-800">{name}</p>
-    <p className="text-xs text-gray-500">{hex}</p>
+    <p className="font-medium text-sm dark:text-gray-300">{name}</p>
+    <p className="text-xs text-gray-500 dark:text-gray-400">{hex}</p>
   </div>
 );
 
@@ -47,18 +47,18 @@ const ColorSwatch: React.FC<{ color: string; name: string; hex: string; classNam
 const FontDisplay: React.FC<{ name: string; className: string; weights: string[] }> = ({ name, className, weights }) => (
   // Removed prose class from here as Slide component applies it
   <div>
-    <h4 className={`text-2xl mb-2 ${className} text-gray-900`}>{name}</h4>
-    <p className={`${className} text-lg mb-2 text-gray-800`}>ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
-    <p className={`${className} text-lg mb-4 text-gray-800`}>abcdefghijklmnopqrstuvwxyz 0123456789</p>
-    <p className="text-sm text-gray-600">Weights: {weights.join(', ')}</p>
+    <h4 className={`text-2xl mb-2 ${className} dark:text-gray-200`}>{name}</h4>
+    <p className={`${className} text-lg mb-2 dark:text-gray-300`}>ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+    <p className={`${className} text-lg mb-4 dark:text-gray-300`}>abcdefghijklmnopqrstuvwxyz 0123456789</p>
+    <p className="text-sm text-gray-600 dark:text-gray-400">Weights: {weights.join(', ')}</p>
   </div>
 );
 
 // Placeholder for graph/card examples
 const PlaceholderComponent: React.FC<{ title: string; className?: string; isDark?: boolean }> = ({ title, className, isDark }) => (
-  <div className={`border rounded-lg p-4 bg-white border-gray-200 ${className}`}>
-    <h5 className={`font-medium mb-2 text-black`}>{title}</h5>
-    <div className={`h-20 rounded bg-gray-100 flex items-center justify-center text-xs text-gray-500`}>[Content Area]</div>
+  <div className={`border rounded-lg p-4 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} ${className}`}>
+    <h5 className={`font-medium mb-2 ${isDark ? 'text-white' : 'text-black'}`}>{title}</h5>
+    <div className={`h-20 rounded ${isDark ? 'bg-gray-700' : 'bg-gray-100'} flex items-center justify-center text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>[Content Area]</div>
   </div>
 );
 
@@ -71,7 +71,7 @@ interface SlideCollageProps {
 // Helper function for basic card structure (can remain outside or be moved if preferred)
 const CardPreview: React.FC<{ children: React.ReactNode; className?: string; isDark?: boolean }> =
     ({ children, className = "", isDark = false }) => (
-    <div className={`rounded-lg shadow-md overflow-hidden p-4 text-xs min-h-[180px] flex flex-col bg-white text-black border border-gray-200 ${className}`}>
+    <div className={`rounded-lg shadow-md overflow-hidden p-4 text-xs min-h-[180px] flex flex-col ${isDark ? 'bg-black text-white' : 'bg-white text-black border border-gray-200'} ${className}`}>
       {children}
     </div>
 );
@@ -109,23 +109,23 @@ const Pitch01ProjectPage: React.FC = () => {
     // For simplicity here, defining them directly, but useCallback ensures stable references if needed.
 
     const PhasesCard = (
-        <CardPreview className="col-span-1 bg-gray-200 p-4 space-y-2">
-          <div className="text-xxs font-medium text-gray-500">Phases</div>
+        <CardPreview isDark={variant === 3} className={`col-span-1 ${variant === 3 ? '' : 'bg-gray-200 dark:bg-gray-800'} p-4 space-y-2`}>
+          <div className="text-xxs font-medium text-gray-500 dark:text-gray-400">Phases</div>
           {variant === 2 ? (
-             <ul className="space-y-1 text-xxs text-gray-700">
+             <ul className="space-y-1 text-xxs text-gray-700 dark:text-gray-300">
                 <li>✓ Phase 1: Research</li>
                 <li>✓ Phase 2: Ideation</li>
                 <li>✓ Phase 3: Proposal</li>
               </ul>
           ) : (
-              <ul className="list-disc list-inside text-xxs text-gray-700 pl-1">
+              <ul className="list-disc list-inside text-xxs text-gray-700 dark:text-gray-300 pl-1">
                 <li>Phase 1: Research</li>
                 <li>Phase 2: Ideation</li>
                 <li>Phase 3: Proposal</li>
               </ul>
           )}
-           <div className="text-xxs font-medium text-gray-500 pt-2">Deliverables</div>
-           <ul className="list-disc list-inside text-xxs text-gray-700 pl-1">
+           <div className="text-xxs font-medium text-gray-500 dark:text-gray-400 pt-2">Deliverables</div>
+           <ul className="list-disc list-inside text-xxs text-gray-700 dark:text-gray-300 pl-1">
             <li>Deliverable 1</li>
             <li>Deliverable 2</li>
             <li>Deliverable 3</li>
@@ -134,21 +134,21 @@ const Pitch01ProjectPage: React.FC = () => {
       );
 
       const TocCard = (
-        <CardPreview className={`col-span-1 bg-gray-200 p-4 ${variant === 2 ? 'text-center' : ''}`}>
-           <div className="text-gray-400 text-4xl font-bold space-y-0 leading-none">
-              <div><span className="text-gray-400">03</span> Process</div>
-              <div><span className="text-gray-400">04</span> Concept</div>
-              <div><span className="text-gray-400">05</span> Results</div>
+        <CardPreview isDark={variant === 1} className={`col-span-1 ${variant === 1 ? '' : 'bg-gray-200 dark:bg-gray-800'} p-4 ${variant === 2 ? 'text-center' : ''}`}>
+           <div className="text-gray-400 dark:text-gray-500 text-4xl font-bold space-y-0 leading-none">
+              <div><span className="text-gray-400 dark:text-gray-600">03</span> Process</div>
+              <div><span className="text-gray-400 dark:text-gray-600">04</span> Concept</div>
+              <div><span className="text-gray-400 dark:text-gray-600">05</span> Results</div>
            </div>
-           <div className="text-xxs text-gray-500 mt-4">Client / Project</div>
+           <div className="text-xxs text-gray-500 dark:text-gray-400 mt-4">Client / Project</div>
         </CardPreview>
       );
 
       const StatsCard = (
-        <CardPreview className="col-span-1 bg-gray-200 p-4 space-y-3">
-           <div className="bg-white p-3 rounded text-center flex-grow flex flex-col justify-center relative overflow-hidden">
-              <div className="text-xxs text-gray-500 mb-1">Customers</div>
-              <div className="text-2xl font-medium text-black">▲ 20%</div>
+        <CardPreview isDark={variant === 2} className={`col-span-1 ${variant === 2 ? '' : 'bg-gray-200 dark:bg-gray-800'} p-4 space-y-3`}>
+           <div className="bg-white dark:bg-gray-700 p-3 rounded text-center flex-grow flex flex-col justify-center relative overflow-hidden">
+              <div className="text-xxs text-gray-500 dark:text-gray-400 mb-1">Customers</div>
+              <div className="text-2xl font-medium text-black dark:text-white">▲ 20%</div>
               {variant === 3 && (
                 <div className="absolute bottom-0 left-0 w-full h-4 opacity-20">
                   <svg viewBox="0 0 100 10" preserveAspectRatio="none" className="absolute bottom-0 left-0 w-full h-full">
@@ -157,9 +157,9 @@ const Pitch01ProjectPage: React.FC = () => {
                 </div>
               )}
            </div>
-            <div className="bg-white p-3 rounded text-center flex-grow flex flex-col justify-center relative overflow-hidden">
-              <div className="text-xxs text-gray-500 mb-1">Downloads</div>
-              <div className="text-2xl font-medium text-black">▲ 587</div>
+            <div className="bg-white dark:bg-gray-700 p-3 rounded text-center flex-grow flex flex-col justify-center relative overflow-hidden">
+              <div className="text-xxs text-gray-500 dark:text-gray-400 mb-1">Downloads</div>
+              <div className="text-2xl font-medium text-black dark:text-white">▲ 587</div>
               {variant === 3 && (
                 <div className="absolute bottom-0 left-0 w-full h-4 opacity-20">
                   <svg viewBox="0 0 100 10" preserveAspectRatio="none" className="absolute bottom-0 left-0 w-full h-full">
@@ -172,7 +172,7 @@ const Pitch01ProjectPage: React.FC = () => {
       );
 
        const CaseStudyCard = (
-         <CardPreview isDark={false} className="col-span-1 flex space-x-2 p-0 overflow-hidden bg-black text-white">
+         <CardPreview isDark className="col-span-1 flex space-x-2 p-0 overflow-hidden">
             <div className="w-1/3 bg-black p-3">
               <div className="font-semibold text-sm">Case study</div>
               <div className="text-gray-400">Title here</div>
@@ -183,7 +183,7 @@ const Pitch01ProjectPage: React.FC = () => {
       );
 
       const ProcessCard = (
-         <CardPreview isDark={false} className="col-span-1 p-3 bg-black text-white">
+         <CardPreview isDark className="col-span-1 p-3">
            <div className="text-xxs text-gray-400">Process</div>
            <div className="font-medium mb-3 text-sm">Highlight the project stages.</div>
            {variant === 1 && (
@@ -219,7 +219,7 @@ const Pitch01ProjectPage: React.FC = () => {
       );
 
       const ConceptCard = (
-         <CardPreview isDark={false} className="col-span-1 p-3 bg-black text-white">
+         <CardPreview isDark className="col-span-1 p-3">
             <div className="text-xxs text-gray-400">Concept</div>
             <div className="font-medium mb-2 text-sm">Articulate the main concepts...</div>
             <ul className={`space-y-1 text-xs ${variant === 3 ? 'list-decimal list-inside' : ''}`}>
@@ -231,7 +231,7 @@ const Pitch01ProjectPage: React.FC = () => {
       );
 
       const RecognitionCard = (
-         <CardPreview className="col-span-1 p-3 space-y-2">
+         <CardPreview isDark={variant === 1} className="col-span-1 p-3 space-y-2">
            <div className="font-medium text-sm">Any recognition?</div>
            <div className="text-xxs text-gray-500">Features in industry press...</div>
            <div className={`mt-2 ${variant === 2 ? 'space-y-1' : 'grid grid-cols-2 gap-2'}`}>
@@ -246,13 +246,13 @@ const Pitch01ProjectPage: React.FC = () => {
       );
 
       const BriefCard = (
-         <CardPreview className={`col-span-1 p-3 ${variant === 3 ? 'bg-gray-200' : ''}`}>
+         <CardPreview isDark={variant === 2} className={`col-span-1 p-3 ${variant === 3 ? 'bg-gray-200 dark:bg-gray-800' : ''}`}>
             <div className="text-xxs text-gray-500">Brief</div>
             <div className="font-medium mb-2 text-sm">Provide an overview...</div>
             <div className={`${variant === 3 ? 'space-y-2' : 'grid grid-cols-3 gap-2'}`}>
-               <div className="bg-gray-200 rounded h-16 flex items-center justify-center text-gray-400 text-xxs">{variant === 3 ? 'Client' : ''}</div>
-               <div className="bg-gray-200 rounded h-16 flex items-center justify-center text-gray-400 text-xxs">{variant === 3 ? 'Problem' : ''}</div>
-               <div className="bg-gray-200 rounded h-16 flex items-center justify-center text-gray-400 text-xxs">{variant === 3 ? 'Opportunity' : ''}</div>
+               <div className="bg-gray-200 dark:bg-gray-700 rounded h-16 flex items-center justify-center text-gray-400 text-xxs">{variant === 3 ? 'Client' : ''}</div>
+               <div className="bg-gray-200 dark:bg-gray-700 rounded h-16 flex items-center justify-center text-gray-400 text-xxs">{variant === 3 ? 'Problem' : ''}</div>
+               <div className="bg-gray-200 dark:bg-gray-700 rounded h-16 flex items-center justify-center text-gray-400 text-xxs">{variant === 3 ? 'Opportunity' : ''}</div>
                {variant !== 3 && <div className="text-xxs text-gray-500 mt-1">Who's the client?</div>}
                {variant !== 3 && <div className="text-xxs text-gray-500 mt-1">Client's problem?</div>}
                {variant !== 3 && <div className="text-xxs text-gray-500 mt-1">Opportunities?</div>}
@@ -261,10 +261,10 @@ const Pitch01ProjectPage: React.FC = () => {
       );
 
       const ResultsCard = (
-         <CardPreview className="col-span-1 p-3">
+         <CardPreview isDark={variant === 3} className="col-span-1 p-3">
             <div className="text-xxs text-gray-500">Results</div>
             <div className="font-medium mb-2 text-sm">What achievements can you share?</div>
-            <div className={`bg-black rounded h-24 border border-gray-700/50 p-2 flex items-end ${variant === 2 ? 'justify-around' : 'space-x-1'}`}>
+            <div className={`bg-black dark:bg-gray-800/50 rounded h-24 border border-gray-700/50 p-2 flex items-end ${variant === 2 ? 'justify-around' : 'space-x-1'}`}>
                {variant === 3 ? (
                  <div className="flex justify-around w-full h-full items-end">
                     <div className="flex items-end h-full space-x-px">
@@ -358,13 +358,13 @@ const Pitch01ProjectPage: React.FC = () => {
 
   return (
     <PageTransition>
-      <div className="bg-gray-50 text-gray-800 transition-colors duration-300 relative">
+      <div className="bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-200 transition-colors duration-300 relative">
         {/* Add LandingPage Header structure (without menu button functionality) */}
         <header className="p-6 md:p-12 w-full absolute top-0 left-0 z-20">
             <div className="flex justify-between items-center">
                 {/* Link the title back to homepage */}
                 <Link to="/">
-                  <div className="text-gray-900 font-bold text-2xl uppercase">
+                  <div className="text-gray-900 dark:text-gray-100 font-bold text-2xl uppercase">
                     THE BORING DEV
                   </div>
                 </Link>
@@ -379,10 +379,10 @@ const Pitch01ProjectPage: React.FC = () => {
              label="Overview" 
              title="Slide 01 - Low Effort, High Impact"
              // Remove top padding from first slide as wrapper adds it
-             className="bg-gradient-to-b from-gray-100 to-transparent pt-0 mt-0"
+             className="bg-gradient-to-b from-gray-100 dark:from-gray-900 to-transparent pt-0 mt-0"
            >
               <div className="max-w-3xl  text-left"> 
-                 <p className="text-lg md:text-xl text-gray-600 text-left">
+                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 text-left">
                  This is where we act like we tried really hard. A quick setup of what this is, who it's for, and why it might just accidentally be useful. Minimal slides, maximum vibes. Let's go.
                  </p>
                </div>
@@ -398,7 +398,7 @@ const Pitch01ProjectPage: React.FC = () => {
               {/* Update Shuffle button style and structure */}
               <button
                  onClick={shuffleAllLayouts}
-                 className="ml-4 relative overflow-hidden group flex justify-center items-center text-gray-700 border border-gray-400 rounded-full px-4 py-1 text-sm transition-colors duration-300 ease-in-out whitespace-nowrap hover:bg-gray-900 hover:text-white hover:border-gray-900"
+                 className="ml-4 relative overflow-hidden group flex justify-center items-center text-gray-700 dark:text-gray-300 border border-gray-400 dark:border-gray-600 rounded-full px-4 py-1 text-sm transition-colors duration-300 ease-in-out whitespace-nowrap hover:bg-gray-900 dark:hover:bg-gray-100 hover:text-white dark:hover:text-black hover:border-gray-900 dark:hover:border-gray-100"
                  aria-label="Shuffle card layouts"
                >
                  <span className="relative block overflow-hidden">

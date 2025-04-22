@@ -547,8 +547,18 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
             animate="open"
             exit="collapsed"
             variants={{
-              open: { opacity: 1, height: 'auto', marginTop: '1rem', marginBottom: '2rem' },
-              collapsed: { opacity: 0, height: 0, marginTop: 0, marginBottom: 0 }
+              open: { 
+                opacity: 1, 
+                maxHeight: '3000px',
+                marginTop: '1rem', 
+                marginBottom: '2rem' 
+              },
+              collapsed: { 
+                opacity: 0, 
+                maxHeight: 0, 
+                marginTop: 0, 
+                marginBottom: 0 
+              }
             }}
             transition={{ duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] }}
             className="overflow-hidden"
