@@ -23,11 +23,11 @@ const Slide: React.FC<SlideProps> = ({ label, title, children, className = "", i
     <div className="px-12 w-full"> {/* Use container for centering */}
       <ScrollReveal>
         {label && (
-          <p className="text-sm font-medium text-indigo-600  mb-2 uppercase tracking-wider">
+          <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-2 uppercase tracking-wider"> {/* Restored dark:text-indigo-400 */}
             {label}
           </p>
         )}
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900  mb-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8"> {/* Restored dark:text-white */}
           {title}
         </h2>
         {/* Removed prose class wrapper, apply styling within children if needed */}
@@ -87,7 +87,7 @@ const HoverTabsWithRegret: React.FC = () => {
             key={tab}
             onMouseEnter={() => handleMouseEnter(tab)}
             onMouseLeave={handleMouseLeave}
-            className={`px-4 py-2 -mb-px border-b-2 text-sm font-medium transition-colors duration-150 ease-in-out \\${activeTab === tab ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'} \\${pendingTab === tab ? 'bg-gray-100 dark:bg-gray-700' : ''}`}
+            className={`px-4 py-2 -mb-px border-b-2 text-sm font-medium transition-colors duration-150 ease-in-out \${activeTab === tab ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'} \${pendingTab === tab ? 'bg-gray-100 ' : ''}`} // Restored dark:text-indigo-400 and dark:text-gray-400
           >
             {tab} {pendingTab === tab ? '(thinking...)' : ''}
           </button>
@@ -99,7 +99,7 @@ const HoverTabsWithRegret: React.FC = () => {
          {activeTab === 'Tab 2' && <p className="text-gray-700 dark:text-gray-300">Content for Tab 2. Or maybe this one?</p>}
          {activeTab === 'Tab 3' && <p className="text-gray-700 dark:text-gray-300">Content for Tab 3. Definitely this one... unless?</p>}
       </div>
-       <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-2">Hover over a tab. It waits {REGRET_DELAY}ms before committing, just like you.</p>
+       <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-2">Hover over a tab. It waits {REGRET_DELAY}ms before committing, just like you.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -128,7 +128,7 @@ const StickyHeaderDetached: React.FC = () => {
   return (
     <DemoWrapper className="items-stretch justify-start overflow-hidden"> {/* Allow internal scroll */}
         <div className="h-full flex flex-col">
-            <div className="sticky top-0 bg-gray-200 dark:bg-gray-700 p-2 z-10 border-b border-gray-300 dark:border-gray-600">
+            <div className="sticky top-0 bg-gray-200  p-2 z-10 border-b border-gray-300 dark:border-gray-600">
                 <p className="text-sm font-medium text-center text-gray-700 dark:text-gray-300">I'm always here. Watching.</p>
             </div>
             <div className="p-4 flex-grow overflow-y-auto">
@@ -138,7 +138,7 @@ const StickyHeaderDetached: React.FC = () => {
                 </div>
                  <p className="text-sm mt-2">The header above remains visible within this box, uncaringly.</p>
             </div>
-             <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-2 px-4 pb-2">Simulated sticky header within this container.</p>
+             <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-2 px-4 pb-2">Simulated sticky header within this container.</p> {/* Restored dark:text-gray-400 */}
         </div>
     </DemoWrapper>
   );
@@ -167,7 +167,7 @@ const LoopingBreadcrumbs: React.FC = () => {
               )}
               <button
                 onClick={() => handleClick(index)}
-                className={`font-medium ${index === path.length - 1 ? 'text-gray-700 dark:text-gray-200 cursor-default' : 'text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-200'}`}
+                className={`font-medium ${index === path.length - 1 ? 'text-gray-700 dark:text-gray-200 cursor-default' : 'text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-200'}`} // Restored dark:text-gray-200 and dark:text-indigo-400
                 aria-current={index === path.length - 1 ? 'page' : undefined}
                 disabled={index === path.length - 1} // Disable last item visually
               >
@@ -177,7 +177,7 @@ const LoopingBreadcrumbs: React.FC = () => {
           ))}
         </ol>
       </nav>
-       <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Click any link (except the last). Notice a theme?</p>
+       <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Click any link (except the last). Notice a theme?</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -206,7 +206,7 @@ const SlowBackToTop: React.FC = () => {
       >
         {isScrolling ? 'Scrolling... glacially...' : 'Back to Top (Emotionally)'}
       </button>
-       <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">Takes its sweet time. Like finishing that side project.</p>
+       <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">Takes its sweet time. Like finishing that side project.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -215,10 +215,10 @@ const SlowBackToTop: React.FC = () => {
 const GhostButtonImposter: React.FC = () => {
   return (
      <DemoWrapper>
-        <button className="px-5 py-2 border border-indigo-500 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400 rounded opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity duration-300 ease-in-out">
+        <button className="px-5 py-2 border border-indigo-500 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400 rounded opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity duration-300 ease-in-out"> {/* Restored dark:text-indigo-400 */}
             Sorry, were you looking for me?
         </button>
-         <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">Barely there until you need it. Then, apologetic.</p>
+         <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">Barely there until you need it. Then, apologetic.</p> {/* Restored dark:text-gray-400 */}
      </DemoWrapper>
   );
 };
@@ -230,9 +230,9 @@ const ExcuseInput: React.FC = () => {
       <input
         type="text"
         placeholder="Didn't finish it because..."
-        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white  text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
       />
-       <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">Prefilled with the universal dev excuse.</p>
+       <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">Prefilled with the universal dev excuse.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -266,11 +266,11 @@ const ShakyCheckbox: React.FC = () => {
           type="checkbox"
           checked={isChecked}
           onChange={handleChange}
-          className="h-5 w-5 rounded text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:checked:bg-indigo-500"
+          className="h-5 w-5 rounded text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600  dark:checked:bg-indigo-500"
         />
         <span className="text-gray-800 dark:text-gray-200">Important Task (Don't skip me)</span>
       </motion.label>
-       <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">Try unchecking it. It gets a little anxious.</p>
+       <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">Try unchecking it. It gets a little anxious.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -311,7 +311,7 @@ const LoopingMultiStepForm: React.FC = () => {
         {step === 3 && <p>Finally, your deepest fears...</p>}
       </div>
       <div className="p-4 flex justify-between border-t dark:border-gray-700">
-        <button onClick={handlePrev} className="text-sm text-gray-600 dark:text-gray-400 hover:underline">Previous</button>
+        <button onClick={handlePrev} className="text-sm text-gray-600 dark:text-gray-400 hover:underline">Previous</button> {/* Restored dark:text-gray-400 */}
         <button
           onClick={handleNext}
           className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded"
@@ -319,7 +319,7 @@ const LoopingMultiStepForm: React.FC = () => {
           {step === totalSteps ? 'Finish (Loop Back)' : 'Next'}
         </button>
       </div>
-       <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 px-4 text-center">Completing it just brings you back. Just like Monday.</p>
+       <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 px-4 text-center">Completing it just brings you back. Just like Monday.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -358,7 +358,7 @@ const NeverSavingDraftButton: React.FC = () => {
                     </motion.p>
                 )}
              </AnimatePresence>
-             <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Provides the *illusion* of saving. Essential for coping.</p>
+             <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Provides the *illusion* of saving. Essential for coping.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -402,7 +402,7 @@ const AlwaysReopeningDropdown: React.FC = () => {
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={handleToggle}
-          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-left flex justify-between items-center"
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white  text-left flex justify-between items-center"
         >
           <span>{selectedOption || 'Select an option...'}</span>
           <svg className={`w-4 h-4 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -413,7 +413,7 @@ const AlwaysReopeningDropdown: React.FC = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="absolute z-10 mt-1 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-lg"
+              className="absolute z-10 mt-1 w-full bg-white  border border-gray-300 dark:border-gray-600 rounded shadow-lg"
             >
               <ul>
                 {options.map(option => (
@@ -431,7 +431,7 @@ const AlwaysReopeningDropdown: React.FC = () => {
           )}
         </AnimatePresence>
       </div>
-      <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">It just wants to be helpful. Maybe too helpful.</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">It just wants to be helpful. Maybe too helpful.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -453,7 +453,7 @@ const UnlabeledSlider: React.FC = () => {
                 className="w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer"
             />
              <p className="text-sm mt-3">Current Value: <span className="font-mono">{value}</span></p>
-             <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">It changes... something. Good luck.</p>
+             <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">It changes... something. Good luck.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -494,7 +494,7 @@ const SighingToast: React.FC = () => {
                         <div className="flex border-l border-gray-700"> {/* Button container */} 
                             <button
                             onClick={handleDismiss}
-                            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-500 hover:text-indigo-400 dark:text-indigo-400 dark:hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" // Adjusted dark mode text/hover colors
+                            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-500 hover:text-indigo-400 dark:text-indigo-400 dark:hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" // Confirmed dark:text-indigo-400 is present
                             >
                             Dismiss
                             </button>
@@ -502,7 +502,7 @@ const SighingToast: React.FC = () => {
                     </motion.div>
                 )}
              </AnimatePresence>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Click dismiss. Feel the subtle disapproval.</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Click dismiss. Feel the subtle disapproval.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -511,7 +511,7 @@ const SighingToast: React.FC = () => {
 const PatientLoadingSpinner: React.FC = () => {
     return (
          <DemoWrapper>
-            <svg className="animate-spin h-8 w-8 text-indigo-600 dark:text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <svg className="animate-spin h-8 w-8 text-indigo-600 dark:text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"> {/* Restored dark:text-indigo-400 */}
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
@@ -559,7 +559,7 @@ const ShrinkingSubmitButton: React.FC = () => {
              >
                 Submit (If you must)
             </motion.button>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Visibly recoils from commitment on hover.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Visibly recoils from commitment on hover.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -569,9 +569,9 @@ const Existential404Demo: React.FC = () => {
     return (
          <DemoWrapper className="items-stretch text-center">
              <h2 className="text-6xl font-thin text-gray-400 dark:text-gray-600">404</h2>
-             <p className="mt-4 text-gray-600 dark:text-gray-400">Well, this is awkward.</p>
+             <p className="mt-4 text-gray-600 dark:text-gray-400">Well, this is awkward.</p> {/* Restored dark:text-gray-400 */}
              <p className="mt-2 text-sm text-gray-500 dark:text-gray-500">No links. No suggestions. Just... this.</p>
-             <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Comforting, in a bleak sort of way.</p>
+             <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Comforting, in a bleak sort of way.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -581,7 +581,7 @@ const HoverPunishTooltip: React.FC = () => {
     return (
          <DemoWrapper>
             <div className="relative group">
-                <span className="inline-block bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded cursor-default">
+                <span className="inline-block bg-gray-200  px-3 py-1 rounded cursor-default">
                     Hover Here
                 </span>
                 <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max px-3 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
@@ -589,7 +589,7 @@ const HoverPunishTooltip: React.FC = () => {
                      <svg className="absolute text-gray-900 h-2 w-full left-0 top-full" x="0px" y="0px" viewBox="0 0 255 255" xmlSpace="preserve"><polygon className="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
                 </div>
             </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Questions your every move.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Questions your every move.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -615,7 +615,7 @@ const ExistentialDropdown: React.FC = () => {
       <select
         value={selectedOption}
         onChange={handleSelect}
-        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700"
+        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white "
       >
         <option value="" disabled>Select your role...</option>
         {options.map(option => (
@@ -636,7 +636,7 @@ const ExistentialDropdown: React.FC = () => {
            </motion.div>
         )}
       </AnimatePresence>
-      <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Selecting "Other" triggers a brief identity crisis.</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Selecting "Other" triggers a brief identity crisis.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -651,7 +651,7 @@ const OversharingBottomSheet: React.FC = () => {
         <DemoWrapper className="items-stretch justify-end w-full relative overflow-hidden">
             <button
                 onClick={() => setIsOpen(true)}
-                className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded absolute top-4 left-1/2 transform -translate-x-1/2"
+                className="px-4 py-2 bg-gray-200  rounded absolute top-4 left-1/2 transform -translate-x-1/2"
             >
                 Show Bottom Sheet
             </button>
@@ -663,10 +663,10 @@ const OversharingBottomSheet: React.FC = () => {
                         animate={{ y: "0%" }}
                         exit={{ y: "100%" }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className="absolute bottom-0 left-0 right-0 h-auto bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 rounded-t-lg shadow-xl p-5 flex flex-col"
+                        className="absolute bottom-0 left-0 right-0 h-auto bg-white  border-t border-gray-200 dark:border-gray-700 rounded-t-lg shadow-xl p-5 flex flex-col"
                     >
                         <h5 className="text-lg font-semibold mb-1 text-gray-900 dark:text-white">Here's too much info.</h5>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">We're all figuring it out. Like, did you know this component uses absolute positioning and framer-motion? It's trying its best.</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">We're all figuring it out. Like, did you know this component uses absolute positioning and framer-motion? It's trying its best.</p> {/* Restored dark:text-gray-400 */}
                         <button
                             onClick={() => setIsOpen(false)}
                             className="mt-auto ml-auto px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded"
@@ -676,7 +676,7 @@ const OversharingBottomSheet: React.FC = () => {
                     </motion.div>
                 )}
              </AnimatePresence>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 absolute bottom-2 left-1/2 transform -translate-x-1/2">Simulates a bottom sheet appearing.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 absolute bottom-2 left-1/2 transform -translate-x-1/2">Simulates a bottom sheet appearing.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -726,7 +726,7 @@ const HesitantSwipeToDelete: React.FC = () => {
                         animate={{ x: itemState === 'confirming' ? '-50%' : (itemState === 'gone' ? '-100%' : 0) }}
                         exit={{ x: '-100%' }}
                         transition={{ type: "spring", stiffness: 200, damping: 25 }}
-                        className="relative w-full bg-gray-100 dark:bg-gray-700 p-4 rounded shadow flex justify-between items-center cursor-pointer"
+                        className="relative w-full bg-gray-100  p-4 rounded shadow flex justify-between items-center cursor-pointer"
                         onClick={handleSwipe} // Simulate swipe start on click for demo
                     >
                         <span className="text-gray-800 dark:text-gray-200">Swipe Me (Click Here)</span>
@@ -738,9 +738,9 @@ const HesitantSwipeToDelete: React.FC = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-             {itemState === 'idle' && <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Click the item to simulate swiping.</p>}
+             {itemState === 'idle' && <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Click the item to simulate swiping.</p>} {/* Restored dark:text-gray-400 */}
              {itemState === 'confirming' && <p className="text-xs text-red-500 dark:text-red-400 mt-auto pt-4">Really sure? Click Delete again.</p>}
-             {itemState === 'gone' && !showItem && <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">It's gone. Hope that was the right choice.</p>}
+             {itemState === 'gone' && !showItem && <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">It's gone. Hope that was the right choice.</p>} {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -781,7 +781,7 @@ const RethinkingAccordion: React.FC = () => {
         <DemoWrapper className="items-stretch justify-start w-full">
             <button
                 onClick={handleClick}
-                className="w-full flex justify-between items-center p-3 bg-gray-100 dark:bg-gray-700 rounded-t border-b border-gray-200 dark:border-gray-600"
+                className="w-full flex justify-between items-center p-3 bg-gray-100  rounded-t border-b border-gray-200 dark:border-gray-600"
                 aria-expanded={isOpen}
             >
                 <span className="font-medium">Important Section</span>
@@ -801,14 +801,14 @@ const RethinkingAccordion: React.FC = () => {
                             collapsed: { opacity: 0, height: 0 }
                         }}
                         transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
-                        className="p-4 bg-white dark:bg-gray-800 rounded-b overflow-hidden"
+                        className="p-4 bg-white  rounded-b overflow-hidden"
                     >
                         This is the content. It seems important, but closing it might trigger second thoughts.
-                        {isRethinking && <p className="text-xs italic text-gray-500 dark:text-gray-400 mt-2">Hmm, maybe keep this open?</p>}
+                        {isRethinking && <p className="text-xs italic text-gray-500 dark:text-gray-400 mt-2">Hmm, maybe keep this open?</p>} {/* Restored dark:text-gray-400 */}
                     </motion.div>
                 )}
             </AnimatePresence>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">Collapsing it causes brief existential doubt.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">Collapsing it causes brief existential doubt.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -836,9 +836,11 @@ const ConfusedTabHighlighting: React.FC = () => {
           <button
             key={tab}
             className={`px-4 py-2 text-sm font-medium transition-all duration-300 ease-in-out border-b-2 border-transparent
-              ${highlightedIndex === index
-                ? 'bg-yellow-100 dark:bg-yellow-800 border-yellow-500 text-yellow-700 dark:text-yellow-300'
-                : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}
+              ${
+                highlightedIndex === index
+                  ? 'bg-yellow-100 dark:bg-yellow-800 border-yellow-500 text-yellow-700 dark:text-yellow-300'
+                  : 'text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200' // Restored dark:text-gray-400
+              }
             `}
           >
             {tab}
@@ -848,7 +850,7 @@ const ConfusedTabHighlighting: React.FC = () => {
       <div className="p-4 flex-grow">
          <p>Content area. Did you see the highlight? Just random ✨energy✨.</p>
       </div>
-      <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-2">Highlights a random tab on load for no reason.</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-2">Highlights a random tab on load for no reason.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -864,7 +866,7 @@ const LifeAdviceBreadcrumbs: React.FC = () => {
         <ol className="flex items-center space-x-2 text-sm flex-wrap">
           {path.map((item, index) => (
             <li key={item} className="flex items-center">
-              <a href="#" className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-200">{item}</a>
+              <a href="#" className="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-200">{item}</a> {/* Restored dark:text-indigo-400 */}
                <svg className="flex-shrink-0 h-5 w-5 text-gray-400 dark:text-gray-500 mx-1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                   <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
                 </svg>
@@ -875,7 +877,7 @@ const LifeAdviceBreadcrumbs: React.FC = () => {
            </li>
         </ol>
       </nav>
-       <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">The path ends with unsolicited, but probably correct, advice.</p>
+       <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">The path ends with unsolicited, but probably correct, advice.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -886,7 +888,7 @@ const ShrinkingSideNav: React.FC = () => {
     // Remove max-w-xs from DemoWrapper
     <DemoWrapper className="items-stretch justify-start relative h-[200px]">
       <motion.div
-        className="bg-gray-100 dark:bg-gray-700 p-3 rounded h-full absolute left-0 top-0 origin-left overflow-hidden"
+        className="bg-gray-100  p-3 rounded h-full absolute left-0 top-0 origin-left overflow-hidden"
         initial={{ width: '120px' }}
         whileHover={{ width: '80px' }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
@@ -900,7 +902,7 @@ const ShrinkingSideNav: React.FC = () => {
           </ul>
         </nav>
       </motion.div>
-      <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 absolute bottom-2 right-2">Introvert UI: Hover the nav, it gets smaller.</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 absolute bottom-2 right-2">Introvert UI: Hover the nav, it gets smaller.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -914,17 +916,17 @@ const RegretfulDropdown: React.FC = () => {
     // Remove max-w-xs from DemoWrapper
     <DemoWrapper className="items-stretch justify-start relative min-h-[150px]">
       <div className="relative">
-        <button className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-left" onClick={() => level < 1 && setLevel(1)} disabled={level >= 1}>
+        <button className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white  text-left" onClick={() => level < 1 && setLevel(1)} disabled={level >= 1}>
           Level 1 Menu...
         </button>
         {level >= 1 && (
-          <div className="absolute z-10 mt-1 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-lg p-2">
+          <div className="absolute z-10 mt-1 w-full bg-white  border border-gray-300 dark:border-gray-600 rounded shadow-lg p-2">
             <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setLevel(2)} disabled={level >= 2}>Level 2...</button>
             <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={reset}>Cancel</button>
           </div>
         )}
         {level >= 2 && (
-           <div className="absolute z-20 mt-10 ml-4 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-lg p-2">
+           <div className="absolute z-20 mt-10 ml-4 w-full bg-white  border border-gray-300 dark:border-gray-600 rounded shadow-lg p-2">
             <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setLevel(3)} disabled={level >= 3}>Level 3...</button>
             <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={reset}>Cancel</button>
           </div>
@@ -932,11 +934,11 @@ const RegretfulDropdown: React.FC = () => {
          {level >= 3 && (
            <div className="absolute z-30 mt-20 ml-8 w-full bg-red-100 dark:bg-red-900 border border-red-300 dark:border-red-600 rounded shadow-lg p-3 text-center">
              <p className="text-red-700 dark:text-red-200">You've gone too far.</p>
-             <button className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline mt-1" onClick={reset}>Go back</button>
+             <button className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline mt-1" onClick={reset}>Go back</button> {/* Restored dark:text-indigo-400 */}
           </div>
         )}
       </div>
-       <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">Dig too deep and find only regret.</p>
+       <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">Dig too deep and find only regret.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -973,7 +975,7 @@ const AreYouSureSureButton: React.FC = () => {
             >
                 {messages[clicks]}
             </button>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Escalates confirmation, then gives up.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Escalates confirmation, then gives up.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -1012,7 +1014,7 @@ const MovingCTA: React.FC = () => {
       >
         Click Me If You Can
       </motion.button>
-      <p className="text-xs text-gray-500 dark:text-gray-400 absolute bottom-2 left-1/2 transform -translate-x-1/2 w-full text-center">Playfully avoids commitment. Literally.</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 absolute bottom-2 left-1/2 transform -translate-x-1/2 w-full text-center">Playfully avoids commitment. Literally.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -1037,7 +1039,7 @@ const ChangingLabelButton: React.FC = () => {
              >
                 {labels[clicks]}
             </button>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Expresses increasing exasperation with each click.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Expresses increasing exasperation with each click.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -1070,7 +1072,7 @@ const GaslightingGhostButton: React.FC = () => {
                  )}
                  </AnimatePresence>
              </div>
-             <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Hover it, then it denies its own existence.</p>
+             <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Hover it, then it denies its own existence.</p> {/* Restored dark:text-gray-400 */}
          </DemoWrapper>
     );
 };
@@ -1083,7 +1085,7 @@ const ExistentialAccordion: React.FC = () => {
         <DemoWrapper className="items-stretch justify-start w-full">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex justify-between items-center p-3 bg-gray-100 dark:bg-gray-700 rounded-t border-b border-gray-200 dark:border-gray-600"
+                className="w-full flex justify-between items-center p-3 bg-gray-100  rounded-t border-b border-gray-200 dark:border-gray-600"
                 aria-expanded={isOpen}
             >
                 <span className="font-medium">Expand for Answers</span>
@@ -1103,14 +1105,14 @@ const ExistentialAccordion: React.FC = () => {
                             collapsed: { opacity: 0, height: 0 }
                         }}
                         transition={{ duration: 0.4, ease: "easeInOut" }}
-                        className="p-4 bg-white dark:bg-gray-800 rounded-b overflow-hidden text-center"
+                        className="p-4 bg-white  rounded-b overflow-hidden text-center"
                     >
                        <p className="font-semibold mb-1">Why did you open this?</p>
                        <p className="text-sm">What are you <span className="italic">really</span> looking for in life?</p>
                     </motion.div>
                 )}
             </AnimatePresence>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">Promised answers, delivered questions.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">Promised answers, delivered questions.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -1132,7 +1134,7 @@ const SlowModal: React.FC = () => {
 
     return (
         <DemoWrapper className="w-full">
-            <button onClick={() => setIsOpen(true)} className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded">
+            <button onClick={() => setIsOpen(true)} className="px-4 py-2 bg-gray-200  rounded">
                 Open Slow Modal
             </button>
             <AnimatePresence>
@@ -1152,7 +1154,7 @@ const SlowModal: React.FC = () => {
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.8, opacity: 0 }}
                             transition={{ duration: 2.0, delay: 0.5 }} // Even slower content appearance
-                            className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-sm w-full relative"
+                            className="bg-white  rounded-lg shadow-xl p-6 max-w-sm w-full relative"
                             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking content
                         >
                             <h3 className="text-lg font-medium mb-3">Important Announcement</h3>
@@ -1168,7 +1170,7 @@ const SlowModal: React.FC = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Builds suspense. Delivers disappointment.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Builds suspense. Delivers disappointment.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -1192,7 +1194,7 @@ const PassiveAggressiveCarousel: React.FC = () => {
 
     return (
         <DemoWrapper className="w-full items-stretch justify-between">
-            <div className="relative flex-grow flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded p-4 min-h-[100px]">
+            <div className="relative flex-grow flex items-center justify-center bg-gray-100  rounded p-4 min-h-[100px]">
                  <AnimatePresence mode="wait">
                      <motion.div
                          key={index}
@@ -1210,12 +1212,12 @@ const PassiveAggressiveCarousel: React.FC = () => {
                 <button onClick={handlePrev} className="p-2 text-gray-500 hover:text-gray-800 dark:hover:text-gray-200">
                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7"></path></svg>
                 </button>
-                 <span className="text-xs text-gray-500 dark:text-gray-400 h-4">{feedback}</span>
+                 <span className="text-xs text-gray-500 dark:text-gray-400 h-4">{feedback}</span> {/* Restored dark:text-gray-400 */}
                 <button onClick={handleNext} className="p-2 text-gray-500 hover:text-gray-800 dark:hover:text-gray-200">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
                 </button>
             </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-2 text-center">The navigation arrows seem a little judgmental.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-2 text-center">The navigation arrows seem a little judgmental.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -1255,7 +1257,7 @@ const UnfinishingProgressBar: React.FC = () => {
                     {Math.round(progress)}%
                  </span>
             </div>
-             <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Forever stuck at 99%. Just like that side project.</p>
+             <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Forever stuck at 99%. Just like that side project.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -1296,7 +1298,7 @@ const DelayedReactionToast: React.FC = () => {
              <button
                  onClick={handleClick}
                  disabled={isLoading}
-                 className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded disabled:opacity-50"
+                 className="px-4 py-2 bg-gray-200  rounded disabled:opacity-50"
              >
                  {isLoading ? 'Thinking...' : 'Do Something'}
             </button>
@@ -1314,7 +1316,7 @@ const DelayedReactionToast: React.FC = () => {
                     )}
                  </AnimatePresence>
             </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400 absolute bottom-2 left-1/2 transform -translate-x-1/2 w-full text-center">Click button. Wait 4 seconds for confirmation.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 absolute bottom-2 left-1/2 transform -translate-x-1/2 w-full text-center">Click button. Wait 4 seconds for confirmation.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -1341,7 +1343,7 @@ const CryingLoadingDots: React.FC = () => {
         />
          <span className="ml-2 text-xl">😔</span>
       </div>
-      <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Standard loading dots, plus despair.</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Standard loading dots, plus despair.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -1431,9 +1433,9 @@ const SnoozeSwipeNotification: React.FC = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-             {itemState === 'idle' && <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Click the notification to simulate swiping to snooze.</p>}
+             {itemState === 'idle' && <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Click the notification to simulate swiping to snooze.</p>} {/* Restored dark:text-gray-400 */}
              {itemState === 'snoozing' && <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-auto pt-4">Delay the inevitable? Click Snooze again.</p>}
-             {itemState === 'gone' && !showItem && <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Snoozed. It'll be back.</p>}
+             {itemState === 'gone' && !showItem && <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Snoozed. It'll be back.</p>} {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -1442,10 +1444,10 @@ const SnoozeSwipeNotification: React.FC = () => {
 const PlaceboPinchZoom: React.FC = () => {
   return (
     <DemoWrapper className="items-center justify-center text-center">
-      <div className="w-32 h-32 bg-gray-200 dark:bg-gray-700 rounded flex items-center justify-center text-sm border border-dashed border-gray-400 select-none touch-none">
+      <div className="w-32 h-32 bg-gray-200  rounded flex items-center justify-center text-sm border border-dashed border-gray-400 select-none touch-none">
         Try Pinching Here (Visually)
       </div>
-      <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">That interaction was for you, not the UI.</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">That interaction was for you, not the UI.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
   );
 };
@@ -1468,7 +1470,7 @@ const HaikuBottomSheet: React.FC = () => {
         <DemoWrapper className="items-stretch justify-end w-full relative overflow-hidden">
             <button
                 onClick={() => setIsOpen(true)}
-                className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded absolute top-4 left-1/2 transform -translate-x-1/2"
+                className="px-4 py-2 bg-gray-200  rounded absolute top-4 left-1/2 transform -translate-x-1/2"
             >
                 Read Haiku
             </button>
@@ -1488,7 +1490,7 @@ const HaikuBottomSheet: React.FC = () => {
                             animate={{ y: "0%" }}
                             exit={{ y: "100%" }}
                             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                            className="w-full h-auto bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 rounded-t-lg shadow-xl p-5 flex flex-col text-center"
+                            className="w-full h-auto bg-white  border-t border-gray-200 dark:border-gray-700 rounded-t-lg shadow-xl p-5 flex flex-col text-center"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <p className="text-base leading-relaxed text-gray-700 dark:text-gray-300 mb-3 font-serif italic">
@@ -1506,7 +1508,7 @@ const HaikuBottomSheet: React.FC = () => {
                     </motion.div>
                 )}
              </AnimatePresence>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 absolute bottom-2 left-1/2 transform -translate-x-1/2 w-full text-center">Opens a bottom sheet containing only a haiku.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 absolute bottom-2 left-1/2 transform -translate-x-1/2 w-full text-center">Opens a bottom sheet containing only a haiku.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -1577,10 +1579,10 @@ const Interaction01ProjectPage: React.FC = () => {
             <section className="text-left pb-16 md:pb-20 px-6 md:px-8 lg:px-12"> {/* Added horizontal padding */}
                <ScrollReveal>
                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-4">
-                     Interaction Library <span className="text-indigo-600 dark:text-indigo-400">for Boring Devs</span>
+                     Interaction Library <span className="text-indigo-600 ">for Boring Devs</span>
                    </h1>
                    {/* Note: Removed extra px-12 from here as padding is now on the parent section */}
-                   <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl ">
+                   <p className="text-lg md:text-xl text-gray-600  max-w-2xl ">
                      Quirky, practical, low-effort UI/UX patterns that do just enough (with a side of existential dread).
                    </p> {/* Fix potential extra closing tag here? Let's ensure it's closed properly */} 
                </ScrollReveal>
@@ -2062,7 +2064,7 @@ const ChangingMindSubmitButton: React.FC = () => {
                 </AnimatePresence>
 
             </motion.button>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Click -&gt; Spins -&gt; "Wait..." -&gt; "Okay fine."</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Click -&gt; Spins -&gt; "Wait..." -&gt; "Okay fine."</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -2093,7 +2095,7 @@ const DoNotPressButton: React.FC = () => {
             >
                 {isClicked ? "You did this." : (isHovering ? "Seriously." : "Do Not Press")}
             </button>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Hover: "Seriously." Click: "You did this."</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Hover: "Seriously." Click: "You did this."</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -2137,7 +2139,7 @@ const CooldownCTAButton: React.FC = () => {
                     </motion.span>
                  </AnimatePresence>
             </button>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">After click, label becomes: "Brb recharging..."</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">After click, label becomes: "Brb recharging..."</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -2171,7 +2173,7 @@ const MoodToggleButton: React.FC = () => {
                      </motion.span>
                  </AnimatePresence>
             </button>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Each hover changes the text mood.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Each hover changes the text mood.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -2222,7 +2224,7 @@ const ShyCard: React.FC = () => {
             >
                 Give me space.
             </motion.div>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Tilts away from your cursor. It's shy.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Tilts away from your cursor. It's shy.</p> {/* Restored dark:text-gray-400 */}
             {/* Add CSS for perspective and transform-style if not globally defined */}
             <style>{`.perspective { perspective: 1000px; } .transform-style-3d { transform-style: preserve-3d; }`}</style>
         </DemoWrapper>
@@ -2234,7 +2236,7 @@ const UnhelpfulHoverReveal: React.FC = () => {
     return (
          <DemoWrapper>
             <div className="relative group">
-                <span className="inline-block bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded cursor-help">
+                <span className="inline-block bg-gray-200  px-4 py-2 rounded cursor-help">
                     Hover for info
                 </span>
                 <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max px-3 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
@@ -2242,7 +2244,7 @@ const UnhelpfulHoverReveal: React.FC = () => {
                      <svg className="absolute text-gray-900 h-2 w-full left-0 top-full" x="0px" y="0px" viewBox="0 0 255 255" xmlSpace="preserve"><polygon className="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
                 </div>
             </div>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Reveals absolutely nothing useful on hover.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Reveals absolutely nothing useful on hover.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
@@ -2274,7 +2276,7 @@ const PassiveAggressiveFlipCard: React.FC = () => {
                     Was that worth the click?
                 </motion.div>
             </motion.div>
-             <p className="text-xs text-gray-500 dark:text-gray-400 absolute bottom-2 left-1/2 transform -translate-x-1/2 w-full text-center">Flips over to question your choices.</p>
+             <p className="text-xs text-gray-500 dark:text-gray-400 absolute bottom-2 left-1/2 transform -translate-x-1/2 w-full text-center">Flips over to question your choices.</p> {/* Restored dark:text-gray-400 */}
              {/* Add CSS for perspective, transform-style, backface-visibility */}
              <style>{`
                 .perspective { perspective: 1000px; }
@@ -2328,7 +2330,7 @@ const OverwhelmedExpandableCard: React.FC = () => {
         <DemoWrapper className="items-stretch justify-start w-full">
             <button
                 onClick={handleClick}
-                className="w-full flex justify-between items-center p-3 bg-gray-100 dark:bg-gray-700 rounded-t border-b border-gray-200 dark:border-gray-600"
+                className="w-full flex justify-between items-center p-3 bg-gray-100  rounded-t border-b border-gray-200 dark:border-gray-600"
                 aria-expanded={isOpen}
                 disabled={isOpen || isOverwhelmed}
             >
@@ -2349,7 +2351,7 @@ const OverwhelmedExpandableCard: React.FC = () => {
                             collapsed: { opacity: 0, height: 0 }
                         }}
                         transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="p-4 bg-white dark:bg-gray-800 rounded-b overflow-hidden text-center"
+                        className="p-4 bg-white  rounded-b overflow-hidden text-center"
                     >
                         <AnimatePresence mode="wait">
                            {isOverwhelmed ? (
@@ -2359,7 +2361,7 @@ const OverwhelmedExpandableCard: React.FC = () => {
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
                                     transition={{ duration: 0.2 }}
-                                    className="text-red-600 dark:text-red-400 font-semibold"
+                                    className="text-red-600 dark:text-red-400 font-semibold" // Restored dark:text-red-400
                                 >
                                     Too much. Collapsing now.
                                 </motion.p>
@@ -2378,7 +2380,7 @@ const OverwhelmedExpandableCard: React.FC = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">Expands, gets overwhelmed, collapses.</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">Expands, gets overwhelmed, collapses.</p> {/* Restored dark:text-gray-400 */}
         </DemoWrapper>
     );
 };
