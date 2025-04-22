@@ -10,6 +10,7 @@ import Slide01ProjectPage from './pages/BoringDesign/BoringSlides/Slide01Project
 import Slide02ProjectPage from './pages/BoringDesign/BoringSlides/Slide02ProjectPage';
 import Slide03ProjectPage from './pages/BoringDesign/BoringSlides/Slide03ProjectPage';
 import DesignSystem01ProjectPage from './pages/BoringDesign/BoringDesignSystem/DesignSystem01ProjectPage';
+import Interaction01ProjectPage from './pages/BoringDesign/BoringInteractions/Interaction01ProjectPage';
 import './App.css';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/projects/slide-02" element={<Slide02ProjectPage />} />
         <Route path="/projects/slide-03" element={<Slide03ProjectPage />} />
         <Route path="/projects/design-system-01" element={<DesignSystem01ProjectPage />} />
+        <Route path="/projects/interaction-01" element={<Interaction01ProjectPage />} />
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route 

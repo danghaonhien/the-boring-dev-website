@@ -80,6 +80,20 @@ const slogans = [
   "\"Less hustle, more hover states.\"",
   "\"If you're lost, you're home.\"",
   "\"We don't ship fast. We ship eventually.\"",
+  "\"Because sometimes beige is bold.\"",
+  "\"Minimal effort. Maximum reuse.\"",
+  "\"No gradients. No problems.\"",
+  "\"The system that says, 'meh, it works.'\"",
+  "\"It's a system. It's boring. It's beautiful.\"",
+  "\"We're not lazy. We're just efficient.\"",
+  "\"Designed for vibes, not validation.\"",
+  "\"One button. Three variants. Infinite apathy.\"",
+  "\"Not perfect. But it ships.\"",
+  "\"Designed for vibes, not validation.\"",
+
+
+
+
 
   // More slogans added
   "\"Scaling slowly. Panicking quietly.\"",

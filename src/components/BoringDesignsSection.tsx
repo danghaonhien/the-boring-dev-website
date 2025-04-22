@@ -11,7 +11,7 @@ interface Project {
   title: string;
   description: string;
   slideComponent1: React.ReactNode;
-  slideComponent2: React.ReactNode;
+  slideComponent2: React.ReactNode | null; // Allow null for interactions
   tags: string[];
   caseStudyLink?: string;
 }
@@ -217,6 +217,15 @@ const FinancialsSlide: React.FC = () => (
             <div className="w-16 h-8 bg-gray-700 rounded text-xs flex items-center justify-center">SOM</div>
         </div>
     </div>
+  </div>
+);
+
+// --- NEW Interaction Card Component ---
+const InteractionCard: React.FC<{ title: string; description: string }> = ({ title, description }) => (
+  <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md h-full flex flex-col border border-gray-200 dark:border-gray-700">
+    <h5 className="text-md font-semibold text-boring-dark dark:text-white mb-2">{title}</h5>
+    <p className="text-sm text-boring-dark/80 dark:text-gray-300 flex-grow">{description}</p>
+     <div className="mt-3 h-1 bg-boring-main/20 rounded-full w-1/2 group-hover:w-full transition-all duration-300"></div>
   </div>
 );
 
@@ -448,6 +457,21 @@ const Slide03Slideshow: React.FC = () => {
 
 // --- DUMMY DATA (Using the Components defined above) ---
 const boringDesignsData: Category[] = [
+    {
+        id: 'design-systems',
+        title: 'Boring Design Systems',
+        projects: [
+          {
+            id: 'design-system-01',
+            title: 'The Boring Design System',
+            description: 'A system so simple, it kinda works. Just enough structure to stop chaos, not enough to start a fight.',
+            slideComponent1: <DSIntroSlide1 />,
+            slideComponent2: <ComponentCollageHero />,
+            tags: ['Design System', 'UI Kit', 'Tokens', 'React'],
+            caseStudyLink: '/projects/design-system-01',
+          },
+        ],
+      },
   {
     id: 'boring-slides',
     title: 'Boring Slides',
@@ -481,32 +505,45 @@ const boringDesignsData: Category[] = [
       },
     ],
   },
-  {
-    id: 'design-systems',
-    title: 'Boring Design Systems',
-    projects: [
-      {
-        id: 'design-system-01',
-        title: 'The Boring Design System',
-        description: 'A system so simple, it kinda works. Just enough structure to stop chaos, not enough to start a fight.',
-        slideComponent1: <DSIntroSlide1 />,
-        slideComponent2: <ComponentCollageHero />,
-        tags: ['Design System', 'UI Kit', 'Tokens', 'React'],
-        caseStudyLink: '/projects/design-system-01',
-      },
-    ],
-  },
+  
    {
     id: 'interactions',
     title: 'Boring Interactions',
     projects: [
        {
-        id: 'interaction-proj-1',
-        title: 'Interactive Demo 1',
-        description: 'Exploring subtle animations and user feedback mechanisms.',
-        slideComponent1: <PlaceholderGraphic text="Interaction 1" className="bg-gray-200 dark:bg-gray-800"/>,
-        slideComponent2: <PlaceholderGraphic text="Interaction 2" className="bg-gray-200 dark:bg-gray-800"/>,
-        tags: ['Microinteractions', 'Animation', 'UX'],
+        id: 'interaction-hover-effect',
+        title: 'Subtle Hover',
+        description: 'A gentle scale and shadow lift on hover.',
+        slideComponent1: <InteractionCard title="Subtle Hover" description="A gentle scale and shadow lift on hover." />,
+        slideComponent2: null, // Keep structure consistent, render nothing
+        tags: ['Hover', 'CSS', 'Animation'],
+        caseStudyLink: '#', // Link to specific interaction page later
+      },
+      {
+        id: 'interaction-button-feedback',
+        title: 'Button Press',
+        description: 'Visual feedback when a button is clicked.',
+        slideComponent1: <InteractionCard title="Button Press" description="Visual feedback when a button is clicked." />,
+        slideComponent2: null,
+        tags: ['Button', 'Feedback', 'UX'],
+        caseStudyLink: '#',
+      },
+      {
+        id: 'interaction-loading-state',
+        title: 'Loading Spin',
+        description: 'A simple loading indicator animation.',
+        slideComponent1: <InteractionCard title="Loading Spin" description="A simple loading indicator animation." />,
+        slideComponent2: null,
+        tags: ['Loading', 'Animation', 'SVG'],
+        caseStudyLink: '#',
+      },
+      {
+        id: 'interaction-focus-outline',
+        title: 'Focus Ring',
+        description: 'Clear visual outline for keyboard navigation focus.',
+        slideComponent1: <InteractionCard title="Focus Ring" description="Clear visual outline for keyboard navigation focus." />,
+        slideComponent2: null,
+        tags: ['Accessibility', 'Focus', 'CSS'],
         caseStudyLink: '#',
       },
     ],
@@ -519,20 +556,30 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
     <div className="border-b border-boring-slate/20 last:border-b-0">
       <button
         onClick={onToggle}
-        className="group relative flex justify-between items-center w-full px-4 py-6 text-left text-2xl md:text-3xl font-medium text-boring-dark transition-colors duration-200 overflow-hidden"
+        className={`
+          group relative flex justify-between items-center w-full px-4 py-6
+          text-left text-2xl md:text-3xl font-medium
+          transition-colors duration-300 ease-out overflow-hidden
+          ${isOpen
+            ? 'bg-boring-dark text-white' // Open state: Dark bg, white text
+            : 'bg-transparent text-boring-dark hover:text-white' // Added hover:text-white here
+          }
+        `}
         aria-expanded={isOpen}
         aria-controls={`content-${category.id}`}
       >
-        <div className="absolute inset-0 w-full h-full bg-boring-dark transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-in-out origin-left z-0"></div>
+        {!isOpen && (
+          <div className="absolute inset-0 w-full h-full bg-boring-dark transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out origin-bottom z-0"></div>
+        )}
 
-        <div className="relative z-10 flex justify-between items-center w-full transition-transform duration-300 ease-out group-hover:-translate-y-1">
-          <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+        <div className={`relative z-10 flex justify-between items-center w-full`}>
+          <span className={`relative z-10 transition-colors duration-150 ${isOpen ? '' : ''}`}> 
             {category.title}
           </span>
           <motion.span
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.3 }}
-            className="relative z-10 text-3xl transition-colors duration-300 group-hover:text-white"
+            className={`relative z-10 text-3xl transition-colors duration-150`}
           >
             {isOpen ? '-' : '+'}
           </motion.span>
@@ -566,42 +613,71 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
             aria-labelledby={`button-${category.id}`}
           >
             {category.projects.length > 0 ? (
-              <div className="space-y-16 md:space-y-24">
-                {category.projects.map((project: Project, index: number) => (
-                  <ScrollReveal key={project.id} delay={index * 100}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch"> 
-                      <div className="h-72 md:h-[440px]"> 
-                         {project.slideComponent1} 
-                      </div>
-                       <div className="h-72 md:h-[440px]"> 
-                         {project.slideComponent2}
-                      </div>
+              <div className="pb-8 md:pb-12"> {/* Added padding bottom */}
+                {/* Conditionally render layout based on category */}
+                {category.id === 'interactions' ? (
+                  <>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                      {category.projects.map((project: Project, index: number) => (
+                        <ScrollReveal key={project.id} delay={index * 50}>
+                          <div className="h-full group">
+                             <div className="h-56">
+                              {project.slideComponent1}
+                            </div>
+                          </div>
+                        </ScrollReveal>
+                      ))}
                     </div>
-                    <div className="mt-6 flex flex-col md:flex-row justify-between md:items-end">
-                        <div className="mb-4 md:mb-0">
-                            <h4 className="text-xl font-semibold text-boring-dark mb-1">{project.title}</h4>
-                            <p className="text-boring-dark/80 mb-3 max-w-md">{project.description}</p>
-                             {project.caseStudyLink && project.caseStudyLink !== '#' && ( 
-                                <Link to={project.caseStudyLink} className="text-boring-main hover:underline font-medium text-sm uppercase tracking-wider">
-                                Read Full Case Study
-                                </Link>
-                            )}
-                            {project.caseStudyLink === '#' && (
-                                   <Link to={project.caseStudyLink} className="text-boring-main hover:underline font-medium text-sm uppercase tracking-wider">
-                                   Read Full Case Study
-                                   </Link>
-                            )}
-                        </div>
-                       <div className="text-left md:text-right flex flex-wrap gap-2 justify-start md:justify-end">
-                            {project.tags.map((tag: string) => (
-                            <span key={tag} className="bg-boring-main/10 text-boring-main px-3 py-1 rounded-full text-xs font-medium">
-                                {tag}
-                            </span>
-                            ))}
-                        </div>
+                    {/* "View All" Link for Interactions */}
+                    <div className="mt-12 text-center">
+                       <Link to="/projects/interaction-01" className="inline-block bg-boring-main text-white px-6 py-3 rounded-md hover:bg-boring-dark transition-colors font-medium text-sm uppercase tracking-wider shadow-md hover:shadow-lg">
+                        View All Interactions
+                       </Link>
                     </div>
-                  </ScrollReveal>
-                ))}
+                  </>
+                ) : (
+                  /* Original layout for other categories */
+                  <div className="space-y-16 md:space-y-24">
+                    {category.projects.map((project: Project, index: number) => (
+                      <ScrollReveal key={project.id} delay={index * 100}>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                          <div className="h-72 md:h-[440px]">
+                           {project.slideComponent1}
+                          </div>
+                           {project.slideComponent2 && ( /* Only render if slideComponent2 exists */
+                             <div className="h-72 md:h-[440px]">
+                               {project.slideComponent2}
+                            </div>
+                          )}
+                        </div>
+                        {/* Keep the title/desc/tags section for non-interaction projects */}
+                        <div className="mt-6 flex flex-col md:flex-row justify-between md:items-end">
+                            <div className="mb-4 md:mb-0">
+                                <h4 className="text-xl font-semibold text-boring-dark mb-1">{project.title}</h4>
+                                <p className="text-boring-dark/80 mb-3 max-w-md">{project.description}</p>
+                                 {project.caseStudyLink && project.caseStudyLink !== '#' && (
+                                    <Link to={project.caseStudyLink} className="text-boring-main hover:underline font-medium text-sm uppercase tracking-wider">
+                                    Read Full Case Study
+                                    </Link>
+                                )}
+                                {project.caseStudyLink === '#' && category.id !== 'interactions' && ( // Hide placeholder link for interactions
+                                       <span className="text-gray-400 font-medium text-sm uppercase tracking-wider"> {/* Ensure this is span */} 
+                                       Case Study Coming Soon
+                                       </span>
+                                )}
+                            </div>
+                           <div className="text-left md:text-right flex flex-wrap gap-2 justify-start md:justify-end">
+                                {project.tags.map((tag: string) => (
+                                <span key={tag} className="bg-boring-main/10 text-boring-main px-3 py-1 rounded-full text-xs font-medium">
+                                    {tag}
+                                </span>
+                                ))}
+                            </div>
+                        </div>
+                      </ScrollReveal>
+                    ))}
+                  </div>
+                )}
               </div>
             ) : (
               <p className="text-boring-dark/70 py-4">No projects yet in this category.</p>
@@ -615,10 +691,15 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
 
 // --- Main BoringDesignsSection Component ---
 const BoringDesignsSection: React.FC = () => {
-  const [openCategoryId, setOpenCategoryId] = useState<string | null>(boringDesignsData[0]?.id || null);
+  // State to hold an array of open category IDs
+  const [openCategoryIds, setOpenCategoryIds] = useState<string[]>([boringDesignsData[0]?.id || ' '].filter(id => id !== ' ')); // Default open first item if it exists
 
   const handleToggle = (id: string) => {
-    setOpenCategoryId(openCategoryId === id ? null : id);
+    setOpenCategoryIds(prevOpenIds => 
+      prevOpenIds.includes(id)
+        ? prevOpenIds.filter(openId => openId !== id) // Remove id if present
+        : [...prevOpenIds, id] // Add id if not present
+    );
   };
 
   return (
@@ -631,7 +712,7 @@ const BoringDesignsSection: React.FC = () => {
              <AccordionItem
                key={category.id}
                category={category}
-               isOpen={openCategoryId === category.id}
+               isOpen={openCategoryIds.includes(category.id)} // Check if ID is in the array
                onToggle={() => handleToggle(category.id)}
              />
            ))}

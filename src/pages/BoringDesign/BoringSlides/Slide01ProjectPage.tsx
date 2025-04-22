@@ -360,7 +360,7 @@ const Pitch01ProjectPage: React.FC = () => {
     <PageTransition>
       <div className="bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-200 transition-colors duration-300 relative">
         {/* Add LandingPage Header structure (without menu button functionality) */}
-        <header className="p-6 md:p-12 w-full absolute top-0 left-0 z-20">
+        <header className="p-12 md:p-12 w-full absolute top-0 left-0 z-20">
             <div className="flex justify-between items-center">
                 {/* Link the title back to homepage */}
                 <Link to="/">
