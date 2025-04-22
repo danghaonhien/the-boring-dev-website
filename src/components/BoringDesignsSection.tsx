@@ -32,11 +32,11 @@ const PlaceholderGraphic: React.FC<{ className?: string; text?: string }> = ({ c
 const SlideIntroSlide: React.FC = () => (
   <div className="bg-white dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
     <div>
-      <h3 className="text-5xl font-bold text-black dark:text-white">Slide - 01</h3>
+      <h3 className="text-4xl lg:text-5xl font-bold text-black dark:text-white">Slide - 01</h3>
       <p className="text-gray-400 dark:text-gray-500 text-2xl">Template</p>
     </div>
     <div className="mt-auto pt-4 text-right">
-      <p className="text-6xl font-semibold text-black dark:text-white mb-6">
+      <p className="text-3xl lg:text-6xl font-semibold text-black dark:text-white mb-6">
           Low Effort,<br/> High Impact
       </p>
       <p className="text-xs text-gray-500 dark:text-gray-400 ml-auto max-w-[60%]">
@@ -48,11 +48,11 @@ const SlideIntroSlide: React.FC = () => (
 const SlideIntroSlide2: React.FC = () => (
   <div className="bg-white dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
     <div>
-      <h3 className="text-5xl font-bold text-black dark:text-white">Slide - 02</h3>
+      <h3 className="text-4xl lg:text-5xl font-bold text-black dark:text-white">Slide - 02</h3>
       <p className="text-gray-400 dark:text-gray-500 text-2xl">Template</p>
     </div>
     <div className="mt-auto pt-4 text-right">
-      <p className="text-6xl font-semibold text-black dark:text-white mb-6">
+      <p className="text-3xl lg:text-6xl font-semibold text-black dark:text-white mb-6">
       Roadmap to<br/> Somewhere (Probably)
       </p>
       <p className="text-xs text-gray-500 dark:text-gray-400 ml-auto max-w-[60%]">
@@ -64,11 +64,11 @@ const SlideIntroSlide2: React.FC = () => (
 const SlideIntroSlide3: React.FC = () => (
   <div className="bg-white dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
     <div>
-      <h3 className="text-5xl font-bold text-black dark:text-white">Slide - 03</h3>
+      <h3 className="text-4xl lg:text-5xl font-bold text-black dark:text-white">Slide - 03</h3>
       <p className="text-gray-400 dark:text-gray-500 text-2xl">Template</p>
     </div>
     <div className="mt-auto pt-4 text-right">
-      <p className="text-6xl font-semibold text-black dark:text-white mb-6">
+      <p className="text-3xl lg:text-6xl font-semibold text-black dark:text-white mb-6">
           Typography vs<br/> Impostor Syndrome
       </p>
       <p className="text-xs text-gray-500 dark:text-gray-400 ml-auto max-w-[60%]">
@@ -80,11 +80,11 @@ const SlideIntroSlide3: React.FC = () => (
 const DSIntroSlide1: React.FC = () => (
   <div className="bg-white dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
     <div>
-      <h3 className="text-5xl font-bold text-black dark:text-white">Slide - 03</h3>
+      <h3 className="text-4xl lg:text-5xl font-bold text-black dark:text-white">Slide - 03</h3>
       <p className="text-gray-400 dark:text-gray-500 text-2xl">Template</p>
     </div>
     <div className="mt-auto pt-4 text-right">
-      <p className="text-6xl font-semibold text-black dark:text-white mb-6">
+      <p className="text-3xl lg:text-6xl font-semibold text-black dark:text-white mb-6">
           Typography vs<br/> Impostor Syndrome
       </p>
       <p className="text-xs text-gray-500 dark:text-gray-400 ml-auto max-w-[60%]">
@@ -437,7 +437,7 @@ const Slide03Slideshow: React.FC = () => {
           className="absolute inset-0 flex items-center justify-center p-4"
         >
           {/* Scale the preview slightly to fit better */}
-          <div className="transform scale-150 w-[25%]">
+          <div className="transform scale-150 w-[50%] lg:w-[25%]">
             {slidePreviews[currentIndex]}
           </div>
         </motion.div>
