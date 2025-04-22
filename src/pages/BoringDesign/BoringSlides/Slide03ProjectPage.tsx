@@ -16,14 +16,14 @@ const Slide: React.FC<SlideProps> = ({ label, title, children, className = "" })
     <div className="px-12 w-full">
       <ScrollReveal>
         {label && (
-          <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">
+          <p className="text-sm font-medium text-gray-500 mb-2 uppercase tracking-wider">
             {label}
           </p>
         )}
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-8 md:mb-12">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8 md:mb-12">
           {title}
         </h2>
-        <div className="prose prose-lg dark:prose-invert max-w-none">
+        <div className="prose prose-lg max-w-none">
           {children}
         </div>
       </ScrollReveal>
@@ -34,7 +34,7 @@ const Slide: React.FC<SlideProps> = ({ label, title, children, className = "" })
 // --- Helper component for basic card structure (Copied from Slide02) ---
 const CardPreview: React.FC<{ children: React.ReactNode; className?: string; isDark?: boolean }> =
     ({ children, className = "", isDark = false }) => (
-    <div className={`h-full rounded-lg shadow-md overflow-hidden flex flex-col ${isDark ? 'bg-gray-950 text-white border border-gray-800' : 'bg-white text-black border border-gray-200'} ${className}`}>
+    <div className={`h-full rounded-lg shadow-md overflow-hidden flex flex-col bg-white text-black border border-gray-200 ${className}`}>
       {children}
     </div>
 );
@@ -103,33 +103,33 @@ const FontDisplayCard: React.FC<FontDisplayCardProps> = ({
     }, [] as { name: string; weight: number }[]);
 
     return (
-        <CardPreview isDark={isDark} className="p-5 flex flex-col">
+        <CardPreview isDark={false} className="p-5 flex flex-col">
             <div>
-                <h3 style={{ fontFamily, fontWeight: 600 }} className={`text-xl font-bold mb-3 ${isDark ? 'text-white' : 'text-black'}`}>{fontName}</h3>
-                <div style={{ fontFamily }} className={`mb-3 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                <h3 style={{ fontFamily, fontWeight: 600 }} className={`text-xl font-bold mb-3 text-black`}>{fontName}</h3>
+                <div style={{ fontFamily }} className={`mb-3 text-gray-700`}>
                     {uniqueDisplayWeights.map(weight => (
                         <p key={weight.name} style={{ fontWeight: weight.weight }} className="text-lg">
                           {weight.name} (Aa Bb Cc)
                         </p>
                     ))}
                 </div>
-                <p style={{fontFamily}} className={`text-sm mb-3 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>1234567890</p>
+                <p style={{fontFamily}} className={`text-sm mb-3 text-gray-600`}>1234567890</p>
             </div>
 
             <div className="flex-grow space-y-3">
                 <div className="mb-3">
-                    <h4 className={`text-xs font-semibold uppercase tracking-wider mb-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Sizes</h4>
+                    <h4 className={`text-xs font-semibold uppercase tracking-wider mb-1 text-gray-500`}>Sizes</h4>
                     <div className="flex flex-wrap gap-x-3 gap-y-1">
                         {sizes.map(size => (
-                            <span key={size.label} style={{ fontFamily }} className={`${size.class} ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{size.label}</span>
+                            <span key={size.label} style={{ fontFamily }} className={`${size.class} text-gray-700`}>{size.label}</span>
                         ))}
                     </div>
                 </div>
             </div>
 
             <div className="mt-auto pt-3">
-                <h4 className={`text-xs font-semibold uppercase tracking-wider mb-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Use Cases</h4>
-                <p className={`text-xs ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{useCases.join(', ')}</p>
+                <h4 className={`text-xs font-semibold uppercase tracking-wider mb-1 text-gray-500`}>Use Cases</h4>
+                <p className={`text-xs text-gray-600`}>{useCases.join(', ')}</p>
             </div>
         </CardPreview>
     );
@@ -229,7 +229,7 @@ const Slide03ProjectPage: React.FC = () => {
 
   // Create card components from data
   const fontCards = fontsData.map((font, index) => (
-    <FontDisplayCard key={font.fontName} {...font} isDark={index % 2 !== 0} />
+    <FontDisplayCard key={font.fontName} {...font} isDark={false} />
   ));
 
   // Define a simple layout (e.g., 3 columns)
@@ -237,12 +237,12 @@ const Slide03ProjectPage: React.FC = () => {
 
   return (
     <PageTransition>
-      <div className="bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-200 transition-colors duration-300 relative">
+      <div className="bg-gray-50 text-gray-800 transition-colors duration-300 relative">
         {/* Header */}
         <header className="p-6 md:p-12 w-full absolute top-0 left-0 z-20">
             <div className="flex justify-between items-center">
                 <Link to="/">
-                  <div className="text-gray-900 dark:text-gray-100 font-bold text-2xl uppercase">
+                  <div className="text-gray-900 font-bold text-2xl uppercase">
                     THE BORING DEV
                   </div>
                 </Link>
@@ -255,11 +255,11 @@ const Slide03ProjectPage: React.FC = () => {
            <Slide
              label="Typography Showcase" // Updated Label
              title="Slide 03 - Typography vs. Impostor Syndrome" // Updated Title
-             className="bg-gradient-to-b from-gray-100 dark:from-gray-900 to-transparent pt-12 mt-0"
+             className="bg-gradient-to-b from-gray-100 to-transparent pt-12 mt-0"
            >
               <div className="max-w-3xl text-left">
-                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 text-left">
-                  A deep dive into font choices that say “I’m a professional” even when we feel like Comic Sans inside.
+                 <p className="text-lg md:text-xl text-gray-600 text-left">
+                  A deep dive into font choices that say "I'm a professional" even when we feel like Comic Sans inside.
                  </p>
                </div>
            </Slide>
