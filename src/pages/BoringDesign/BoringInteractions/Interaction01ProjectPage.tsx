@@ -23,11 +23,11 @@ const Slide: React.FC<SlideProps> = ({ label, title, children, className = "", i
     <div className="px-12 w-full"> {/* Use container for centering */}
       <ScrollReveal>
         {label && (
-          <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-2 uppercase tracking-wider">
+          <p className="text-sm font-medium text-indigo-600  mb-2 uppercase tracking-wider">
             {label}
           </p>
         )}
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900  mb-8">
           {title}
         </h2>
         {/* Removed prose class wrapper, apply styling within children if needed */}
