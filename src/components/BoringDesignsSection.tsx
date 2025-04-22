@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ScrollReveal } from './EnhancedInteractiveElements';
 import { Link } from 'react-router-dom';
+import BoringDesignsHeader from './BoringDesignsHeader';
+import { ComponentCollageHero } from './ComponentCollageHero';
 
 // --- Interface Definitions (Define Interfaces First) ---
 interface Project {
@@ -75,6 +77,23 @@ const SlideIntroSlide3: React.FC = () => (
     </div>
   </div>
 );
+const DSIntroSlide1: React.FC = () => (
+  <div className="bg-white dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
+    <div>
+      <h3 className="text-5xl font-bold text-black dark:text-white">Slide - 03</h3>
+      <p className="text-gray-400 dark:text-gray-500 text-2xl">Template</p>
+    </div>
+    <div className="mt-auto pt-4 text-right">
+      <p className="text-6xl font-semibold text-black dark:text-white mb-6">
+          Typography vs<br/> Impostor Syndrome
+      </p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 ml-auto max-w-[60%]">
+     Good font is a choice, not a default.
+      </p>
+    </div>
+  </div>
+);
+
 
 // --- NEW Font Display Preview Component (Based on Slide03) ---
 const FontDisplayPreview: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => (
@@ -430,50 +449,50 @@ const Slide03Slideshow: React.FC = () => {
 // --- DUMMY DATA (Using the Components defined above) ---
 const boringDesignsData: Category[] = [
   {
-    id: 'cat-design-templates',
-    title: 'Design Templates',
+    id: 'boring-slides',
+    title: 'Boring Slides',
     projects: [
       {
-        id: 'proj-slide-01',
-        title: 'Slide Deck 01: The Minimalist',
-        description: 'Core slides for quick, impactful presentations. Focus on vision, problem, solution, and call to action.',
+        id: 'slide-01',
+        title: 'Slide 01: Low Effort, High Impact',
+        description: 'Minimalist presentation template focused on core messaging and clean aesthetics.',
         slideComponent1: <SlideIntroSlide />,
         slideComponent2: <CollageSlideshow />,
-        tags: ['Presentation', 'Template', 'Minimalism', 'Pitch Deck'],
-        caseStudyLink: '/design/slide-01',
+        tags: ['Presentation', 'Minimalism', 'Template'],
+        caseStudyLink: '/projects/slide-01',
       },
       {
-        id: 'proj-slide-02',
-        title: 'Slide Deck 02: The Planner',
-        description: 'Visualizing project plans, timelines, phases, and goals. Components for strategy and kickoff meetings.',
+        id: 'slide-02',
+        title: 'Slide 02: Roadmap to Somewhere',
+        description: 'Visualizing timelines and project phases without overcomplicating things.',
         slideComponent1: <SlideIntroSlide2 />,
         slideComponent2: <Slide02Slideshow />,
-        tags: ['Planning', 'Roadmap', 'Strategy', 'Template', 'Timeline'],
-         caseStudyLink: '/design/slide-02',
+        tags: ['Roadmap', 'Timeline', 'Strategy'],
+        caseStudyLink: '/projects/slide-02',
       },
       {
-        id: 'proj-slide-03',
-        title: 'Slide Deck 03: The Typographer',
-        description: 'Showcasing popular web fonts across various sizes and weights. Examples for headings, body text, and UI.',
-        slideComponent1: <Slide03Slideshow />,
-        slideComponent2: <SlideIntroSlide3 />,
-        tags: ['Typography', 'Fonts', 'Design System', 'Template', 'UI'],
-        caseStudyLink: '/design/slide-03',
+        id: 'slide-03',
+        title: 'Slide 03: Typography vs Impostor Syndrome',
+        description: 'Focusing on font choices and visual hierarchy in presentation design.',
+        slideComponent1: <SlideIntroSlide3 />,
+        slideComponent2: <Slide03Slideshow />,
+        tags: ['Typography', 'Design', 'Visual Hierarchy'],
+        caseStudyLink: '/projects/slide-03',
       },
     ],
   },
   {
-    id: 'systems',
+    id: 'design-systems',
     title: 'Boring Design Systems',
     projects: [
       {
-        id: 'system-proj-1',
-        title: 'Fingertip.com',
-        description: 'Providing Fingertip.com with a scalable, best-practice system for widget design.',
-        slideComponent1: <img src={'/src/assets/images/designs/fingertip-widget.png'} alt="Fingertip Widget" className="max-w-full max-h-full object-contain" />, 
-        slideComponent2: <img src={'/src/assets/images/designs/fingertip-app.png'} alt="Fingertip App" className="max-w-full max-h-full object-contain" />, 
-        tags: ['Design Systems', 'UI'],
-        caseStudyLink: '#',
+        id: 'design-system-01',
+        title: 'The Boring Design System',
+        description: 'A system so simple, it kinda works. Just enough structure to stop chaos, not enough to start a fight.',
+        slideComponent1: <DSIntroSlide1 />,
+        slideComponent2: <ComponentCollageHero />,
+        tags: ['Design System', 'UI Kit', 'Tokens', 'React'],
+        caseStudyLink: '/projects/design-system-01',
       },
     ],
   },
@@ -485,8 +504,8 @@ const boringDesignsData: Category[] = [
         id: 'interaction-proj-1',
         title: 'Interactive Demo 1',
         description: 'Exploring subtle animations and user feedback mechanisms.',
-        slideComponent1: <img src={'/src/assets/images/designs/interaction-placeholder-1.png'} alt="Interaction 1" className="max-w-full max-h-full object-contain" />, 
-        slideComponent2: <img src={'/src/assets/images/designs/interaction-placeholder-2.png'} alt="Interaction 2" className="max-w-full max-h-full object-contain" />, 
+        slideComponent1: <PlaceholderGraphic text="Interaction 1" className="bg-gray-200 dark:bg-gray-800"/>,
+        slideComponent2: <PlaceholderGraphic text="Interaction 2" className="bg-gray-200 dark:bg-gray-800"/>,
         tags: ['Microinteractions', 'Animation', 'UX'],
         caseStudyLink: '#',
       },
@@ -500,18 +519,24 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
     <div className="border-b border-boring-slate/20 last:border-b-0">
       <button
         onClick={onToggle}
-        className="flex justify-between items-center w-full py-6 text-left text-2xl md:text-3xl font-medium text-boring-dark hover:text-boring-main transition-colors duration-200"
+        className="group relative flex justify-between items-center w-full px-4 py-6 text-left text-2xl md:text-3xl font-medium text-boring-dark transition-colors duration-200 overflow-hidden"
         aria-expanded={isOpen}
         aria-controls={`content-${category.id}`}
       >
-        <span>{category.title}</span>
-        <motion.span
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="text-3xl"
-        >
-          {isOpen ? '-' : '+'}
-        </motion.span>
+        <div className="absolute inset-0 w-full h-full bg-boring-dark transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-in-out origin-left z-0"></div>
+
+        <div className="relative z-10 flex justify-between items-center w-full transition-transform duration-300 ease-out group-hover:-translate-y-1">
+          <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
+            {category.title}
+          </span>
+          <motion.span
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.3 }}
+            className="relative z-10 text-3xl transition-colors duration-300 group-hover:text-white"
+          >
+            {isOpen ? '-' : '+'}
+          </motion.span>
+        </div>
       </button>
       <AnimatePresence initial={false}>
         {isOpen && (
@@ -588,14 +613,10 @@ const BoringDesignsSection: React.FC = () => {
 
   return (
     <section className="py-20 md:py-32 relative">
-       <div className="relative z-10 "> 
-         <ScrollReveal>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-12 md:mb-16 text-boring-dark text-center">
-                Boring Designs
-            </h2>
-          </ScrollReveal>
+       <div className="relative z-10 ">
+         <BoringDesignsHeader categories={boringDesignsData} title="Boring Designs" />
 
-         <div className=""> 
+         <div className="">
            {boringDesignsData.map((category: Category) => (
              <AccordionItem
                key={category.id}

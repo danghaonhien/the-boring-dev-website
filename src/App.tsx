@@ -9,6 +9,7 @@ import ProtectedAdminRoute from './components/ProtectedAdminRoute';
 import Slide01ProjectPage from './pages/BoringDesign/BoringSlides/Slide01ProjectPage';
 import Slide02ProjectPage from './pages/BoringDesign/BoringSlides/Slide02ProjectPage';
 import Slide03ProjectPage from './pages/BoringDesign/BoringSlides/Slide03ProjectPage';
+import DesignSystem01ProjectPage from './pages/BoringDesign/BoringDesignSystem/DesignSystem01ProjectPage';
 import './App.css';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/projects/slide-01" element={<Slide01ProjectPage />} />
         <Route path="/projects/slide-02" element={<Slide02ProjectPage />} />
         <Route path="/projects/slide-03" element={<Slide03ProjectPage />} />
+        <Route path="/projects/design-system-01" element={<DesignSystem01ProjectPage />} />
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route 
