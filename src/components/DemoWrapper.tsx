@@ -6,7 +6,7 @@ interface DemoWrapperProps {
 }
 
 export const DemoWrapper: React.FC<DemoWrapperProps> = ({ children, className = "" }) => (
-  <div className={`relative flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-850 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm w-full min-h-[200px] ${className}`}>
+  <div className={`relative flex flex-col items-center justify-center p-4 sm:p-6 bg-white dark:bg-gray-850 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm w-full min-h-[200px] ${className}`}>
     {children}
   </div>
 );

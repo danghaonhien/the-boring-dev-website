@@ -136,7 +136,7 @@ export const DemoShowcase: React.FC<DemoShowcaseProps> = ({
 
       {/* Component Demo Area - Rendered if not in code view */}
        {!isCodeVisible && (
-         <div className="p-4 flex justify-center bg-gray-50 dark:bg-gray-900 h-90 flex-grow overflow-y-auto">
+         <div className="p-4 flex justify-center bg-gray-50 dark:bg-gray-900 flex-grow overflow-y-auto">
            {children}
          </div>
        )}

@@ -486,15 +486,15 @@ const SighingToast: React.FC = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9 }}
-                        className="max-w-sm w-full bg-gray-800 text-white shadow-lg rounded-lg pointer-events-auto p-4"
+                        className="max-w-sm w-full bg-gray-800 text-white shadow-lg rounded-lg pointer-events-auto flex" // Use flex here
                     >
-                        <div className="flex-1 w-0 p-4">
+                        <div className="flex-1 w-0 p-4"> {/* Content padding */} 
                             <p className="text-sm font-medium">{message}</p>
                         </div>
-                        <div className="flex border-l border-gray-700">
+                        <div className="flex border-l border-gray-700"> {/* Button container */} 
                             <button
                             onClick={handleDismiss}
-                            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-500 dark:text-indigo-700 hover:text-indigo-400 dark:hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-500 hover:text-indigo-400 dark:text-indigo-400 dark:hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500" // Adjusted dark mode text/hover colors
                             >
                             Dismiss
                             </button>
@@ -525,7 +525,7 @@ const QuestionableSuccessNotification: React.FC = () => {
     return (
          <DemoWrapper className="bg-green-50 dark:bg-green-900 border-green-200 dark:border-green-700">
              <div className="flex items-center">
-                 <svg className="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                 <svg className="h-6 w-6 text-green-500 dark:text-green-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 <p className="text-lg font-medium text-green-800 dark:text-green-200">Success!?</p>
              </div>
              <p className="text-xs text-green-700 dark:text-green-300 mt-auto pt-4">Celebrates achievement with a healthy dose of uncertainty.</p>
@@ -538,7 +538,7 @@ const ApologeticErrorMessage: React.FC = () => {
     return (
          <DemoWrapper className="bg-red-50 dark:bg-red-900 border-red-200 dark:border-red-700">
              <div className="flex items-center">
-                 <svg className="h-6 w-6 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                 <svg className="h-6 w-6 text-red-500 dark:text-red-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                  <p className="text-lg font-medium text-red-800 dark:text-red-200">Sorry, we messed up. Again.</p>
              </div>
               <p className="text-xs text-red-700 dark:text-red-300 mt-auto pt-4">Takes responsibility before you can even assign blame.</p>
@@ -1351,7 +1351,7 @@ const UnderminingSuccessToast: React.FC = () => {
     return (
          <DemoWrapper className="bg-green-50 dark:bg-green-900 border-green-200 dark:border-green-700">
              <div className="flex items-center">
-                 <svg className="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                 <svg className="h-6 w-6 text-green-500 dark:text-green-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 <p className="text-lg font-medium text-green-800 dark:text-green-200">Success (probably).</p>
              </div>
              <p className="text-xs text-green-700 dark:text-green-300 mt-auto pt-4">Just enough doubt to keep you grounded.</p>
@@ -1365,7 +1365,7 @@ const ComfortingErrorAlert: React.FC = () => {
          <DemoWrapper className="bg-red-50 dark:bg-red-900 border-red-200 dark:border-red-700">
              <div className="text-center">
                  <div className="flex justify-center items-center mb-2">
-                     <svg className="h-6 w-6 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                     <svg className="h-6 w-6 text-red-500 dark:text-red-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                      <p className="text-lg font-medium text-red-800 dark:text-red-200">Something broke...</p>
                  </div>
                 <p className="text-sm text-red-700 dark:text-red-300">...but you didn't. You're doing great.</p>
@@ -1588,7 +1588,7 @@ const Interaction01ProjectPage: React.FC = () => {
 
             {/* Navigation Patterns Section - Add ID */}
             <Slide id={sections[0].id} label="🧭 Navigation Patterns" title="Finding things without getting lost (too much)">
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12"> {/* Adjusted grid for potentially less horizontal space */}
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-12"> {/* Adjusted grid gap */}
                <DemoShowcase
                  title="Hover Tabs with Regret Delay"
                  description="Adds a 200ms delay for indecisive users. Mentally realistic."
@@ -1650,7 +1650,7 @@ const Interaction01ProjectPage: React.FC = () => {
 
           {/* Component Interactions Section - Add ID */}
           <Slide id={sections[1].id} label="🧩 Component Interactions" title="Buttons, inputs, and components that don't try too hard">
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12"> {/* Adjusted grid */}
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-12"> {/* Adjusted grid gap */}
                <DemoShowcase
                  title="Primary Button That's Never Sure"
                  description={`Label: "Maybe Continue" / Hover: "Okay, fine."`}
@@ -1798,7 +1798,7 @@ const Interaction01ProjectPage: React.FC = () => {
 
            {/* Form Patterns Section - Add ID */}
            <Slide id={sections[2].id} label="🎛️ Form Patterns" title="Collecting input you probably won't read">
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12"> {/* Adjusted grid */}
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-12"> {/* Adjusted grid gap */}
                <DemoShowcase
                  title="Multi-Step Form That Loops Back"
                  description="Because self-discovery is never linear."
@@ -1837,7 +1837,7 @@ const Interaction01ProjectPage: React.FC = () => {
 
            {/* Feedback & System Responses Section - Add ID */}
            <Slide id={sections[3].id} label="🔔 Feedback & System Responses" title="Toasts, alerts, and confirmations that feel... human">
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12"> {/* Adjusted grid */}
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-12"> {/* Adjusted grid gap */}
                <DemoShowcase
                  title="Toasts That Sigh When Dismissed"
                  description="You closed it. It closed you."
@@ -1899,7 +1899,7 @@ const Interaction01ProjectPage: React.FC = () => {
 
            {/* Microinteractions & Easter Eggs Section - Add ID */}
            <Slide id={sections[4].id} label="💬 Microinteractions & Easter Eggs" title="For small animations and delightful sadness">
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12"> {/* Adjusted grid */}
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-12"> {/* Adjusted grid gap */}
                <DemoShowcase
                  title="Form Submit Button That Shrinks on Hover"
                  description={`"I don\'t want this responsibility."`}
@@ -1938,7 +1938,7 @@ const Interaction01ProjectPage: React.FC = () => {
 
            {/* Mobile Patterns Section - Add ID */}
            <Slide id={sections[5].id} label="📱 Mobile Patterns" title="For when users scroll through their feelings">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12"> {/* Adjusted grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-12"> {/* Adjusted grid gap */}
                 <DemoShowcase
                   title="Bottom Sheet That Overshares"
                   description={`Title: "Here\'s too much info." / Subtext: "We\'re all figuring it out."`}
