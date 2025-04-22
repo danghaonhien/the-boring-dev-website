@@ -6,17 +6,20 @@ import { ScrollReveal } from '../../../components/EnhancedInteractiveElements';
 import { DemoShowcase } from '../../../components/DemoShowcase'; // Corrected path
 import { DemoWrapper } from '../../../components/DemoWrapper'; // Corrected path
 import codeSnippets from '../../../data/interactionSnippets'; // Corrected path
+import SideNav from '../../../components/SideNav'; // Import SideNav
 
-// --- Reusable Slide Component (Copied from Slide01ProjectPage) ---
+// --- Reusable Slide Component (MODIFIED TO ACCEPT ID) ---
 interface SlideProps {
   label?: string;
   title: React.ReactNode;
   children: React.ReactNode;
   className?: string; // Allow custom styling for the section if needed
+  id?: string; // Add id prop
 }
 
-const Slide: React.FC<SlideProps> = ({ label, title, children, className = "" }) => (
-  <section className={` py-12 md:py-16 flex items-center ${className}`}> {/* Adjusted padding slightly */}
+const Slide: React.FC<SlideProps> = ({ label, title, children, className = "", id }) => (
+  // Add id and scroll-mt-24 (adjust value if header height changes)
+  <section id={id} className={`py-12 md:py-16 flex items-center scroll-mt-24 ${className}`}>
     <div className="px-12 w-full"> {/* Use container for centering */}
       <ScrollReveal>
         {label && (
@@ -1513,28 +1516,80 @@ const HaikuBottomSheet: React.FC = () => {
 // --- NEW COMPONENTS END HERE ---
 
 
+// --- Section Data for SideNav ---
+const sections = [
+  { id: 'navigation-patterns', title: 'Navigation Patterns' },
+  { id: 'component-interactions', title: 'Component Interactions' },
+  { id: 'form-patterns', title: 'Form Patterns' },
+  { id: 'feedback-responses', title: 'Feedback & Responses' },
+  { id: 'microinteractions-easter-eggs', title: 'Microinteractions & Eggs' }, // Corrected typo
+  { id: 'mobile-patterns', title: 'Mobile Patterns' },
+];
+
 // --- Main Page Component ---
 const Interaction01ProjectPage: React.FC = () => {
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false); // State for mobile nav
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-gray-50 dark:bg-black">
-        <main>
-          {/* Title Slide */}
-          <section className="text-center py-16 md:py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-black">
-             <ScrollReveal>
-                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-4">
-                   Interaction Library <span className="text-indigo-600 dark:text-indigo-400">for Boring Devs</span>
-                 </h1>
-                 <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                   Quirky, practical, low-effort UI/UX patterns that do just enough (with a side of existential dread).
-                 </p>
-             </ScrollReveal>
-          </section>
+      {/* Add overflow-x-hidden to prevent horizontal scroll when mobile nav is out */}
+      {/* Temporarily removing overflow-x-hidden to test sticky positioning */}
+      <div className="min-h-screen bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-200 transition-colors duration-300 relative">
+        {/* Header remains absolute */}
+        <header className="p-6 md:p-8 lg:p-12 w-full absolute top-0 left-0 z-30 bg-gray-50/80 dark:bg-black/80 backdrop-blur-sm"> {/* Adjusted padding and added z-index + background */}
+            <div className="flex justify-between items-center">
+                <Link to="/" onClick={() => setIsMobileNavOpen(false)}> {/* Close nav on logo click */}
+                  <div className="text-gray-900 dark:text-gray-100 font-bold text-xl md:text-2xl uppercase">
+                    THE BORING DEV
+                  </div>
+                </Link>
+                {/* Hamburger Menu Button - visible only below lg breakpoint */}
+                <button
+                  className="lg:hidden text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 focus:outline-none z-40" // Ensure button is on top
+                  onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
+                  aria-label="Toggle menu"
+                >
+                  {isMobileNavOpen ? (
+                    // Close Icon (X)
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                  ) : (
+                    // Hamburger Icon
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                  )}
+                </button>
+            </div>
+        </header>
 
-          {/* Navigation Patterns Section - Using imported DemoShowcase */}
-          <Slide label="🧭 Navigation Patterns" title="Finding things without getting lost (too much)">
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+        {/* Flex container for SideNav and Main Content */}
+        {/* Adjust top padding to match header height + desired space */}
+        <div className="flex pt-24 md:pt-28 lg:pt-32">
+          {/* Side Navigation - Pass state and handler */}
+          <SideNav
+             sections={sections}
+             isOpen={isMobileNavOpen}
+             onClose={() => setIsMobileNavOpen(false)}
+           />
+
+          {/* Main Content Area takes remaining space */}
+          {/* Add lg:pl-8 back if needed, depending on SideNav mobile styling */}
+          <main className="flex-grow min-w-0"> {/* Added min-w-0 to prevent overflow issues */}
+
+            {/* Title Slide - No ID needed, adjust padding */}
+            <section className="text-left pb-16 md:pb-20 px-6 md:px-8 lg:px-12"> {/* Added horizontal padding */}
+               <ScrollReveal>
+                   <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-4">
+                     Interaction Library <span className="text-indigo-600 dark:text-indigo-400">for Boring Devs</span>
+                   </h1>
+                   {/* Note: Removed extra px-12 from here as padding is now on the parent section */}
+                   <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl ">
+                     Quirky, practical, low-effort UI/UX patterns that do just enough (with a side of existential dread).
+                   </p> {/* Fix potential extra closing tag here? Let's ensure it's closed properly */} 
+               </ScrollReveal>
+            </section>
+
+            {/* Navigation Patterns Section - Add ID */}
+            <Slide id={sections[0].id} label="🧭 Navigation Patterns" title="Finding things without getting lost (too much)">
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12"> {/* Adjusted grid for potentially less horizontal space */}
                <DemoShowcase
                  title="Hover Tabs with Regret Delay"
                  description="Adds a 200ms delay for indecisive users. Mentally realistic."
@@ -1594,9 +1649,9 @@ const Interaction01ProjectPage: React.FC = () => {
              </div>
           </Slide>
 
-          {/* Component Interactions Section - Using imported DemoShowcase */}
-          <Slide label="🧩 Component Interactions" title="Buttons, inputs, and components that don't try too hard" className="bg-gray-100 dark:bg-gray-900">
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+          {/* Component Interactions Section - Add ID */}
+          <Slide id={sections[1].id} label="🧩 Component Interactions" title="Buttons, inputs, and components that don't try too hard">
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12"> {/* Adjusted grid */}
                <DemoShowcase
                  title="Primary Button That's Never Sure"
                  description={`Label: "Maybe Continue" / Hover: "Okay, fine."`}
@@ -1684,9 +1739,9 @@ const Interaction01ProjectPage: React.FC = () => {
              </div>
            </Slide>
 
-           {/* Form Patterns Section - Using imported DemoShowcase */}
-           <Slide label="🎛️ Form Patterns" title="Collecting input you probably won't read">
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+           {/* Form Patterns Section - Add ID */}
+           <Slide id={sections[2].id} label="🎛️ Form Patterns" title="Collecting input you probably won't read">
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12"> {/* Adjusted grid */}
                <DemoShowcase
                  title="Multi-Step Form That Loops Back"
                  description="Because self-discovery is never linear."
@@ -1723,9 +1778,9 @@ const Interaction01ProjectPage: React.FC = () => {
              </div>
            </Slide>
 
-           {/* Feedback & System Responses Section */}
-           <Slide label="🔔 Feedback & System Responses" title="Toasts, alerts, and confirmations that feel... human" className="bg-gray-100 dark:bg-gray-900">
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+           {/* Feedback & System Responses Section - Add ID */}
+           <Slide id={sections[3].id} label="🔔 Feedback & System Responses" title="Toasts, alerts, and confirmations that feel... human">
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12"> {/* Adjusted grid */}
                <DemoShowcase
                  title="Toasts That Sigh When Dismissed"
                  description="You closed it. It closed you."
@@ -1785,9 +1840,9 @@ const Interaction01ProjectPage: React.FC = () => {
              </div>
            </Slide>
 
-           {/* Microinteractions & Easter Eggs Section */}
-           <Slide label="💬 Microinteractions & Easter Eggs" title="For small animations and delightful sadness">
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+           {/* Microinteractions & Easter Eggs Section - Add ID */}
+           <Slide id={sections[4].id} label="💬 Microinteractions & Easter Eggs" title="For small animations and delightful sadness">
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12"> {/* Adjusted grid */}
                <DemoShowcase
                  title="Form Submit Button That Shrinks on Hover"
                  description={`"I don\'t want this responsibility."`}
@@ -1824,9 +1879,9 @@ const Interaction01ProjectPage: React.FC = () => {
              </div>
            </Slide>
 
-           {/* Mobile Patterns Section */}
-           <Slide label="📱 Mobile Patterns" title="For when users scroll through their feelings" className="bg-gray-100 dark:bg-gray-900">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+           {/* Mobile Patterns Section - Add ID */}
+           <Slide id={sections[5].id} label="📱 Mobile Patterns" title="For when users scroll through their feelings">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-12"> {/* Adjusted grid */}
                 <DemoShowcase
                   title="Bottom Sheet That Overshares"
                   description={`Title: "Here\'s too much info." / Subtext: "We\'re all figuring it out."`}
@@ -1874,18 +1929,12 @@ const Interaction01ProjectPage: React.FC = () => {
               </div>
            </Slide>
 
-           {/* Link back */}
-           <div className="text-center py-16">
-                <Link
-                  to="/boring-design"
-                  className="inline-block px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                >
-                  Back to Boring Design Overview
-                </Link>
-           </div>
+
         </main>
-      </div>
-    </PageTransition>
+      </div> {/* End Flex container */}
+
+    </div>
+    </PageTransition> // Add the missing closing tag here
   );
 };
 

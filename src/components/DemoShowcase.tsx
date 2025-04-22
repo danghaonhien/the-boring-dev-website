@@ -99,20 +99,20 @@ export const DemoShowcase: React.FC<DemoShowcaseProps> = ({
             <div className="flex space-x-1 flex-shrink-0 ml-4">
                  <button
                      onClick={() => setIsCodeVisible(false)}
-                     className={`px-3 py-1 rounded text-xs font-medium ${
+                     className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
                      !isCodeVisible
-                         ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300'
-                         : 'text-gray-500 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700'
+                         ? 'border border-gray-500 text-gray-700 bg-transparent dark:text-gray-300 dark:border-gray-600'
+                         : 'text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700'
                      }`}
                  >
                      Preview
                  </button>
                  <button
                      onClick={() => setIsCodeVisible(true)}
-                     className={`px-3 py-1 rounded text-xs font-medium ${
+                     className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
                      isCodeVisible
-                         ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300'
-                         : 'text-gray-500 hover:bg-gray-200 dark:text-gray-400 dark:hover:bg-gray-700'
+                         ? 'border border-gray-500 text-gray-700 bg-transparent dark:text-gray-300 dark:border-gray-600'
+                         : 'text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700'
                      }`}
                  >
                      Dev
@@ -133,7 +133,7 @@ export const DemoShowcase: React.FC<DemoShowcaseProps> = ({
 
       {/* Component Demo Area - Rendered if not in code view */}
        {!isCodeVisible && (
-         <div className="p-6 flex items-center justify-center bg-gray-50 dark:bg-gray-900 h-100 flex-grow overflow-hidden">
+         <div className="p-4 flex justify-center bg-gray-50 dark:bg-gray-900 h-90 flex-grow overflow-y-auto">
            {children}
          </div>
        )}
@@ -141,7 +141,7 @@ export const DemoShowcase: React.FC<DemoShowcaseProps> = ({
 
       {/* Code Snippet Area - Rendered if in code view */}
       {isCodeVisible && (
-        <div className="bg-gray-100 dark:bg-gray-950 h-100 overflow-y-auto flex-grow h-80">
+        <div className="bg-gray-100 dark:bg-gray-950 overflow-y-scroll flex-grow h-80">
           <pre className="language-tsx !m-0 !p-4 !text-sm !leading-relaxed !whitespace-pre-wrap !break-words h-full">
               <code className="language-tsx">
                   {codeSnippet.trim()}
