@@ -51,11 +51,43 @@ const SlideIntroSlide2: React.FC = () => (
     </div>
     <div className="mt-auto pt-4 text-right">
       <p className="text-6xl font-semibold text-black dark:text-white mb-6">
-          Low Effort,<br/> High Impact
+      Roadmap to<br/> Somewhere (Probably)
       </p>
       <p className="text-xs text-gray-500 dark:text-gray-400 ml-auto max-w-[60%]">
-      Minimal slides, maximum vibes.
+      Timelines are flexible. Vibes are not.
       </p>
+    </div>
+  </div>
+);
+const SlideIntroSlide3: React.FC = () => (
+  <div className="bg-white dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
+    <div>
+      <h3 className="text-5xl font-bold text-black dark:text-white">Slide - 03</h3>
+      <p className="text-gray-400 dark:text-gray-500 text-2xl">Template</p>
+    </div>
+    <div className="mt-auto pt-4 text-right">
+      <p className="text-6xl font-semibold text-black dark:text-white mb-6">
+          Typography vs<br/> Impostor Syndrome
+      </p>
+      <p className="text-xs text-gray-500 dark:text-gray-400 ml-auto max-w-[60%]">
+     Good font is a choice, not a default.
+      </p>
+    </div>
+  </div>
+);
+
+// --- NEW Font Display Preview Component (Based on Slide03) ---
+const FontDisplayPreview: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => (
+  <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full ${isDark ? 'bg-black text-white' : 'bg-white text-black border border-gray-200'}`}>
+    <div className={`font-semibold mb-1 ${isDark ? 'text-white' : 'text-black'}`}>Inter</div>
+    <div style={{ fontFamily: "'Inter', sans-serif" }} className={`mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+      <p style={{ fontWeight: 300 }} className="text-[10px] leading-tight">Light (Aa)</p>
+      <p style={{ fontWeight: 400 }} className="text-[10px] leading-tight">Regular (Bb)</p>
+      <p style={{ fontWeight: 500 }} className="text-[10px] leading-tight">Medium (Cc)</p>
+    </div>
+    <div className={`text-[9px] mt-auto pt-1 ${isDark ? 'text-gray-500' : 'text-gray-600'}`}>
+      Sizes: 14px, 18px, 30px<br/>
+      Use: UI, Body, Headings
     </div>
   </div>
 );
@@ -333,29 +365,100 @@ const Slide02Slideshow: React.FC = () => {
   );
 };
 
+// --- NEW Slide 03 Slideshow Component ---
+const Slide03Slideshow: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Create a few different font previews for the slideshow
+  const slidePreviews = [
+    <FontDisplayPreview isDark={false} />, // Inter light
+    <FontDisplayPreview isDark={true} />,  // Inter dark
+    // Add previews for other fonts if desired, e.g.:
+     <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full bg-white text-black border border-gray-200`}> {/* Roboto Light */} 
+      <div className={`font-semibold mb-1 text-black`}>Roboto</div>
+      <div style={{ fontFamily: "'Roboto', sans-serif" }} className={`mb-2 text-gray-700`}>
+        <p style={{ fontWeight: 300 }} className="text-[10px] leading-tight">Light (Aa)</p>
+        <p style={{ fontWeight: 400 }} className="text-[10px] leading-tight">Regular (Bb)</p>
+        <p style={{ fontWeight: 500 }} className="text-[10px] leading-tight">Medium (Cc)</p>
+      </div>
+      <div className={`text-[9px] mt-auto pt-1 text-gray-600`}>
+        Sizes: 16px, 24px, 36px<br/> Use: UI, Android, Body
+      </div>
+    </div>,
+     <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full bg-black text-white`}> {/* Playfair Dark */} 
+      <div className={`font-semibold mb-1 text-white`}>Playfair Display</div>
+      <div style={{ fontFamily: "'Playfair Display', serif" }} className={`mb-2 text-gray-300`}>
+        <p style={{ fontWeight: 400 }} className="text-[10px] leading-tight">Regular (Aa)</p>
+        <p style={{ fontWeight: 700 }} className="text-[10px] leading-tight">Bold (Bb)</p>
+        <p style={{ fontWeight: 900 }} className="text-[10px] leading-tight">Black (Cc)</p>
+      </div>
+      <div className={`text-[9px] mt-auto pt-1 text-gray-500`}>
+        Sizes: 3xl, 5xl, 6xl<br/> Use: Headlines, Luxury
+      </div>
+    </div>,
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % slidePreviews.length);
+    }, 2500); // Cycle every 2.5 seconds
+    return () => clearInterval(interval);
+  }, [slidePreviews.length]);
+
+  // Reusing the animation structure from Slide02Slideshow
+  return (
+    <div className="relative h-full w-full overflow-hidden bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg">
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={currentIndex} // Key change triggers animation
+          initial={{ opacity: 0, scale: 0.9, y: 15 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9, y: -15 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          className="absolute inset-0 flex items-center justify-center p-4"
+        >
+          {/* Scale the preview slightly to fit better */}
+          <div className="transform scale-150 w-[25%]">
+            {slidePreviews[currentIndex]}
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+};
+
 // --- DUMMY DATA (Using the Components defined above) ---
 const boringDesignsData: Category[] = [
   {
-    id: 'slides',
-    title: 'Boring Slides',
+    id: 'cat-design-templates',
+    title: 'Design Templates',
     projects: [
       {
-        id: 'slide-proj-1',
-        title: 'Slide - 01',
-        description: "This is where we act like we tried really hard. A quick setup of what this is, who it's for, and why it might just accidentally be useful. Minimal slides, maximum vibes. Let's go.",
-        slideComponent1: <CollageSlideshow />,
-        slideComponent2: <SlideIntroSlide />,
-        tags: ['Presentation', 'Template', 'Slide Deck', 'Business'],
-        caseStudyLink: '/projects/slide-01',
+        id: 'proj-slide-01',
+        title: 'Slide Deck 01: The Minimalist',
+        description: 'Core slides for quick, impactful presentations. Focus on vision, problem, solution, and call to action.',
+        slideComponent1: <SlideIntroSlide />,
+        slideComponent2: <CollageSlideshow />,
+        tags: ['Presentation', 'Template', 'Minimalism', 'Pitch Deck'],
+        caseStudyLink: '/design/slide-01',
       },
       {
-        id: 'slide-proj-2',
-        title: 'Slide - 02',
-        description: 'A structured approach to project planning and execution.',
+        id: 'proj-slide-02',
+        title: 'Slide Deck 02: The Planner',
+        description: 'Visualizing project plans, timelines, phases, and goals. Components for strategy and kickoff meetings.',
         slideComponent1: <SlideIntroSlide2 />,
         slideComponent2: <Slide02Slideshow />,
-        tags: ['Template', 'Planning', 'Roadmap'],
-        caseStudyLink: '/projects/slide-02',
+        tags: ['Planning', 'Roadmap', 'Strategy', 'Template', 'Timeline'],
+         caseStudyLink: '/design/slide-02',
+      },
+      {
+        id: 'proj-slide-03',
+        title: 'Slide Deck 03: The Typographer',
+        description: 'Showcasing popular web fonts across various sizes and weights. Examples for headings, body text, and UI.',
+        slideComponent1: <Slide03Slideshow />,
+        slideComponent2: <SlideIntroSlide3 />,
+        tags: ['Typography', 'Fonts', 'Design System', 'Template', 'UI'],
+        caseStudyLink: '/design/slide-03',
       },
     ],
   },

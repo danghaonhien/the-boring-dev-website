@@ -349,10 +349,10 @@ const Pitch02ProjectPage: React.FC = () => { // Renamed component
                >
                  <span className="relative block overflow-hidden">
                     <span className="block transition-transform duration-300 ease-in-out group-hover:-translate-y-full">
-                      Shuffle Examples
+                      Shuffle
                     </span>
                     <span className="absolute inset-0 block translate-y-full transition-transform duration-300 ease-in-out group-hover:translate-y-0">
-                      Shuffle Examples
+                      Shuffle
                     </span>
                   </span>
                </button>

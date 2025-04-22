@@ -8,6 +8,7 @@ import WaitlistDashboard from './pages/admin/WaitlistDashboard';
 import ProtectedAdminRoute from './components/ProtectedAdminRoute';
 import Slide01ProjectPage from './pages/BoringDesign/BoringSlides/Slide01ProjectPage';
 import Slide02ProjectPage from './pages/BoringDesign/BoringSlides/Slide02ProjectPage';
+import Slide03ProjectPage from './pages/BoringDesign/BoringSlides/Slide03ProjectPage';
 import './App.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/reword-this" element={<RewordThisPage />} />
         <Route path="/projects/slide-01" element={<Slide01ProjectPage />} />
         <Route path="/projects/slide-02" element={<Slide02ProjectPage />} />
+        <Route path="/projects/slide-03" element={<Slide03ProjectPage />} />
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route 
