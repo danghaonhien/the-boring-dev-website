@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import LandingPage from './pages/LandingPage';
@@ -14,6 +14,55 @@ import Interaction01ProjectPage from './pages/BoringDesign/BoringInteractions/In
 import './App.css';
 
 function App() {
+
+  useEffect(() => {
+    const mobileBreakpoint = 768; // Tailwind's default md breakpoint
+    const htmlElement = document.documentElement;
+
+    const updateMobileTheme = () => {
+      const isMobile = window.innerWidth < mobileBreakpoint;
+
+      if (isMobile) {
+        // Force light mode on mobile by removing the dark class
+        if (htmlElement.classList.contains('dark')) {
+          htmlElement.classList.remove('dark');
+          // Optional: Set a flag to remember dark *would* have been active
+          // htmlElement.dataset.forcedLight = 'true';
+        }
+      } else {
+        // On desktop, remove the forced light flag (if used)
+        // delete htmlElement.dataset.forcedLight;
+
+        // Allow main theme logic to re-apply 'dark' if needed.
+        // This script only *removes* dark on mobile.
+        // Ensure your theme init/toggle logic correctly handles
+        // adding 'dark' back based on preference (e.g., from localStorage)
+        // when transitioning from mobile to desktop.
+      }
+    };
+
+    // Debounce resize listener
+    let resizeTimeout: NodeJS.Timeout;
+    const handleResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(updateMobileTheme, 150);
+    };
+
+    // Initial check
+    updateMobileTheme();
+
+    // Listen for resize events
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimeout);
+      // Optional: Clean up dataset flag
+      // delete htmlElement.dataset.forcedLight;
+    };
+  }, []); // Empty dependency array ensures this runs once on mount
+
   return (
     <Router>
       <Routes>
