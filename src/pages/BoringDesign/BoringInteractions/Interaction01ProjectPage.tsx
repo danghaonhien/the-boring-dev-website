@@ -1533,7 +1533,7 @@ const Interaction01ProjectPage: React.FC = () => {
     <PageTransition>
       {/* Add overflow-x-hidden to prevent horizontal scroll when mobile nav is out */}
       {/* Temporarily removing overflow-x-hidden to test sticky positioning */}
-      <div className="min-h-screen bg-gray-50 text-gray-800 dark:text-gray-200 transition-colors duration-300 relative"> {/* Removed dark:bg-black */}
+      <div className="min-h-screen bg-gray-50 text-gray-800 transition-colors duration-300 relative"> {/* Removed dark:text-gray-200 */}
         {/* Header remains absolute */}
         <header className="p-6 md:p-8 lg:p-12 w-full absolute top-0 left-0 z-30 bg-gray-50/80 dark:bg-black/80 backdrop-blur-sm"> {/* Adjusted padding and added z-index + background */}
             <div className="flex justify-between items-center">
