@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import PageTransition from '../../../components/PageTransition';
 import { motion, AnimatePresence } from 'framer-motion';
-// Add other necessary imports as we build components
 import { ScrollReveal } from '../../../components/EnhancedInteractiveElements';
+import { DemoShowcase } from '../../../components/DemoShowcase'; // Corrected path
+import { DemoWrapper } from '../../../components/DemoWrapper'; // Corrected path
+import codeSnippets from '../../../data/interactionSnippets'; // Corrected path
 
 // --- Reusable Slide Component (Copied from Slide01ProjectPage) ---
 interface SlideProps {
@@ -32,15 +34,6 @@ const Slide: React.FC<SlideProps> = ({ label, title, children, className = "" })
       </ScrollReveal>
     </div>
   </section>
-);
-
-// --- Consistent Demo Wrapper ---
-// A wrapper to give each demo area a consistent look and minimum height
-const DemoWrapper: React.FC<{ children: React.ReactNode, className?: string }> = ({ children, className = "" }) => (
-  // Add w-full here to ensure the wrapper tries to fill its grid cell
-  <div className={`not-prose p-6 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 shadow-sm min-h-[150px] flex flex-col justify-center items-center w-full ${className}`}>
-    {children}
-  </div>
 );
 
 // --- Interaction Components ---
@@ -91,11 +84,7 @@ const HoverTabsWithRegret: React.FC = () => {
             key={tab}
             onMouseEnter={() => handleMouseEnter(tab)}
             onMouseLeave={handleMouseLeave}
-            className={`px-4 py-2 -mb-px border-b-2 text-sm font-medium transition-colors duration-150 ease-in-out
-              ${activeTab === tab
-                ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400'
-                : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'}
-              ${pendingTab === tab ? 'bg-gray-100 dark:bg-gray-700' : ''} `} // Indicate pending
+            className={`px-4 py-2 -mb-px border-b-2 text-sm font-medium transition-colors duration-150 ease-in-out \\${activeTab === tab ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'} \\${pendingTab === tab ? 'bg-gray-100 dark:bg-gray-700' : ''}`}
           >
             {tab} {pendingTab === tab ? '(thinking...)' : ''}
           </button>
@@ -1529,9 +1518,8 @@ const Interaction01ProjectPage: React.FC = () => {
 
   return (
     <PageTransition>
-      <div className="min-h-screen bg-gray-50 dark:bg-black"> {/* Adjusted background */}
-        {/* Header placeholder - Add if needed */}
-        <main> {/* Removed container/padding, Slide handles it */}
+      <div className="min-h-screen bg-gray-50 dark:bg-black">
+        <main>
           {/* Title Slide */}
           <section className="text-center py-16 md:py-24 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-black">
              <ScrollReveal>
@@ -1544,285 +1532,347 @@ const Interaction01ProjectPage: React.FC = () => {
              </ScrollReveal>
           </section>
 
-          {/* Navigation Patterns Section */}
+          {/* Navigation Patterns Section - Using imported DemoShowcase */}
           <Slide label="🧭 Navigation Patterns" title="Finding things without getting lost (too much)">
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-               {/* Existing Nav Items */}
-               <div>
-                 <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Hover Tabs with Regret Delay</h3>
-                 <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Adds a 200ms delay for indecisive users. Mentally realistic.</p>
+               <DemoShowcase
+                 title="Hover Tabs with Regret Delay"
+                 description="Adds a 200ms delay for indecisive users. Mentally realistic."
+                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.hoverTabs}
+               >
                  <HoverTabsWithRegret />
-               </div>
-               <div>
-                  <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Sticky Header, Emotionally Detached</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Always visible. Never invested.</p>
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Sticky Header, Emotionally Detached"
+                  description="Always visible. Never invested."
+                  effort="Low" usefulness="Mildly Concerning" codeSnippet={codeSnippets.stickyHeader}
+               >
                   <StickyHeaderDetached />
-               </div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Breadcrumbs That Just Loop Back</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Because we all circle back eventually.</p>
-                   <LoopingBreadcrumbs />
-               </div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">"Back to Top" That Scrolls Too Slowly</h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">For devs who just need a moment.</p>
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Breadcrumbs That Just Loop Back"
+                  description="Because we all circle back eventually."
+                  effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.loopingBreadcrumbs}
+               >
+                  <LoopingBreadcrumbs />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="'Back to Top' That Scrolls Too Slowly"
+                  description={"For devs who just need a moment."}
+                  effort="Low" usefulness="Practical" codeSnippet={codeSnippets.slowBackToTop}
+               >
                   <SlowBackToTop />
-               </div>
-               {/* New Nav Items */}
-               <div>
-                 <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Confused Tab Highlighting</h3>
-                 <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Tabs highlight randomly for 1s on load. No reason.</p>
+               </DemoShowcase>
+               <DemoShowcase
+                 title="Confused Tab Highlighting"
+                 description="Tabs highlight randomly for 1s on load. No reason."
+                 effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.confusedTabs}
+               >
                  <ConfusedTabHighlighting />
-               </div>
-               <div>
-                 <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Breadcrumbs with Life Advice</h3>
-                 <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Ends with: "You Should Take a Break".</p>
+               </DemoShowcase>
+               <DemoShowcase
+                 title="Breadcrumbs with Life Advice"
+                 description={`Ends with: "You Should Take a Break".`}
+                 effort="Low" usefulness="Mildly Concerning" codeSnippet={codeSnippets.lifeAdviceBreadcrumbs}
+               >
                  <LifeAdviceBreadcrumbs />
-               </div>
-               <div>
-                 <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Side Nav That Shrinks When You Hover</h3>
-                 <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Introvert UI: It gets smaller when you approach it.</p>
+               </DemoShowcase>
+               <DemoShowcase
+                 title="Side Nav That Shrinks When You Hover"
+                 description="Introvert UI: It gets smaller when you approach it."
+                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.shrinkingNav}
+               >
                  <ShrinkingSideNav />
-               </div>
-               <div>
-                 <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Multi-Level Dropdown That Ends in Regret</h3>
-                 <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">After 3 levels it just says, "You've gone too far."</p>
+               </DemoShowcase>
+               <DemoShowcase
+                 title="Multi-Level Dropdown That Ends in Regret"
+                 description={`After 3 levels it just says, "You\'ve gone too far."`}
+                 effort="Medium" usefulness="Mildly Concerning" codeSnippet={codeSnippets.regretfulDropdown}
+               >
                  <RegretfulDropdown />
-               </div>
+               </DemoShowcase>
              </div>
           </Slide>
 
-          {/* Component Interactions Section */}
-           <Slide label="🧩 Component Interactions" title="Buttons, inputs, and components that don't try too hard" className="bg-gray-100 dark:bg-gray-900">
+          {/* Component Interactions Section - Using imported DemoShowcase */}
+          <Slide label="🧩 Component Interactions" title="Buttons, inputs, and components that don't try too hard" className="bg-gray-100 dark:bg-gray-900">
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-                 {/* Existing Comp Items */}
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Primary Button That's Never Sure</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Label: "Maybe Continue" / Hover: "Okay, fine."</p>
-                   <UnsureButton />
-                 </div>
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Ghost Button with Impostor Syndrome</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Invisible until hovered, then apologetically outlined.</p>
-                    <GhostButtonImposter />
-                 </div>
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Input That Auto-Fills with Excuses</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Placeholder: "Didn't finish it because..."</p>
-                   <ExcuseInput />
-                 </div>
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Checkbox That Shakes If You Skip It</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">But not in a judgmental way.</p>
-                   <ShakyCheckbox />
-                 </div>
-                 {/* New Button Items */}
-                 <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Are You Sure-Sure Button</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Click 1: Sure? Click 2: Sure-sure? Click 3: Never mind.</p>
-                    <AreYouSureSureButton />
-                 </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">CTA That Moves When Hovered</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Playfully avoids commitment. Literally.</p>
-                    <MovingCTA />
-                 </div>
-                 <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Button That Changes Label Each Click</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">"Click me" → "Again?" → "Still?" → "Okay stop."</p>
-                    <ChangingLabelButton />
-                 </div>
-                 <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Ghost Button That Gaslights</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Hover: "I was never here."</p>
-                    <GaslightingGhostButton />
-                 </div>
-                 {/* New Card/Component Items */}
-                 <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Accordion with Existential Questions</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Expands to: "Why did you open this?"</p>
-                    <ExistentialAccordion />
-                 </div>
-                 <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Modal That Opens Slowly</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Literally animates at 1fps. Unskippable.</p>
-                    <SlowModal />
-                 </div>
-                 <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Carousel with Passive-Aggressive Arrows</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">"Oh, you want to see more? Fine."</p>
-                    <PassiveAggressiveCarousel />
-                 </div>
-                 <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Progress Bar That Never Finishes</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Stuck at 99%. Just like your side project.</p>
-                    <UnfinishingProgressBar />
-                 </div>
+               <DemoShowcase
+                 title="Primary Button That's Never Sure"
+                 description={`Label: "Maybe Continue" / Hover: "Okay, fine."`}
+                 effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.unsureButton}
+               >
+                 <UnsureButton />
+               </DemoShowcase>
+               <DemoShowcase
+                 title="Ghost Button with Impostor Syndrome"
+                 description="Invisible until hovered, then apologetically outlined."
+                 effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.ghostButtonImposter}
+               >
+                 <GhostButtonImposter />
+               </DemoShowcase>
+               <DemoShowcase
+                 title="Input That Auto-Fills with Excuses"
+                 description={`Placeholder: "Didn\'t finish it because..."`}
+                 effort="Low" usefulness="Mildly Concerning" codeSnippet={codeSnippets.excuseInput}
+               >
+                 <ExcuseInput />
+               </DemoShowcase>
+               <DemoShowcase
+                 title="Checkbox That Shakes If You Skip It"
+                 description="But not in a judgmental way."
+                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.shakyCheckbox}
+               >
+                 <ShakyCheckbox />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Are You Sure-Sure Button"
+                  description="Click 1: Sure? Click 2: Sure-sure? Click 3: Never mind."
+                  effort="Low" usefulness="Practical" codeSnippet={codeSnippets.areYouSureSureButton}
+               >
+                  <AreYouSureSureButton />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="CTA That Moves When Hovered"
+                  description="Playfully avoids commitment. Literally."
+                  effort="High" usefulness="Conceptual" codeSnippet={codeSnippets.movingCTA}
+               >
+                  <MovingCTA />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Button That Changes Label Each Click"
+                  description={`"Click me" → "Again?" → "Still?" → "Okay stop."`}
+                  effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.changingLabelButton}
+               >
+                  <ChangingLabelButton />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Ghost Button That Gaslights"
+                  description={`Hover: "I was never here."`}
+                  effort="Medium" usefulness="Mildly Concerning" codeSnippet={codeSnippets.gaslightingGhostButton}
+               >
+                  <GaslightingGhostButton />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Accordion with Existential Questions"
+                  description={`Expands to: "Why did you open this?"`}
+                  effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.existentialAccordion}
+               >
+                  <ExistentialAccordion />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Modal That Opens Slowly"
+                  description="Literally animates at 1fps. Unskippable."
+                  effort="Medium" usefulness="Mildly Concerning" codeSnippet={codeSnippets.slowModal}
+               >
+                  <SlowModal />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Carousel with Passive-Aggressive Arrows"
+                  description={`"Oh, you want to see more? Fine."`}
+                  effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.passiveAggressiveCarousel}
+               >
+                  <PassiveAggressiveCarousel />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Progress Bar That Never Finishes"
+                  description="Stuck at 99%. Just like your side project."
+                  effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.unfinishingProgressBar}
+               >
+                  <UnfinishingProgressBar />
+               </DemoShowcase>
              </div>
            </Slide>
 
-           {/* Form Patterns Section */}
+           {/* Form Patterns Section - Using imported DemoShowcase */}
            <Slide label="🎛️ Form Patterns" title="Collecting input you probably won't read">
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-                 {/* Existing Form Items */}
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Multi-Step Form That Loops Back</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Because self-discovery is never linear.</p>
-                   <LoopingMultiStepForm />
-                 </div>
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">"Save as Draft" That Never Really Saves</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Just like your dreams.</p>
-                   <NeverSavingDraftButton />
-                 </div>
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Dropdown That Always Reopens</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">It's trying to help. It's not.</p>
-                   <AlwaysReopeningDropdown />
-                 </div>
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Slider with No Labels</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Adjusts something. Who knows what.</p>
-                   <UnlabeledSlider />
-                 </div>
-                 {/* Add 4 new form patterns placeholders/implementations here if concepts are provided */}
-                 {/* Placeholder 1 */}
-                 <div><h3 className="text-xl font-semibold mb-4 dark:text-gray-200">New Form Pattern 1</h3><p className="text-gray-600 dark:text-gray-400 mb-4 text-base">...</p><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></div>
-                 {/* Placeholder 2 */}
-                 <div><h3 className="text-xl font-semibold mb-4 dark:text-gray-200">New Form Pattern 2</h3><p className="text-gray-600 dark:text-gray-400 mb-4 text-base">...</p><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></div>
-                 {/* Placeholder 3 */}
-                 <div><h3 className="text-xl font-semibold mb-4 dark:text-gray-200">New Form Pattern 3</h3><p className="text-gray-600 dark:text-gray-400 mb-4 text-base">...</p><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></div>
-                 {/* Placeholder 4 */}
-                 <div><h3 className="text-xl font-semibold mb-4 dark:text-gray-200">New Form Pattern 4</h3><p className="text-gray-600 dark:text-gray-400 mb-4 text-base">...</p><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></div>
+               <DemoShowcase
+                 title="Multi-Step Form That Loops Back"
+                 description="Because self-discovery is never linear."
+                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.loopingForm}
+               >
+                 <LoopingMultiStepForm />
+               </DemoShowcase>
+               <DemoShowcase
+                 title={`"Save as Draft" That Never Really Saves`}
+                 description="Just like your dreams."
+                 effort="Low" usefulness="Mildly Concerning" codeSnippet={codeSnippets.neverSavingDraft}
+               >
+                 <NeverSavingDraftButton />
+               </DemoShowcase>
+               <DemoShowcase
+                 title="Dropdown That Always Reopens"
+                 description="It's trying to help. It's not."
+                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.alwaysReopeningDropdown}
+               >
+                 <AlwaysReopeningDropdown />
+               </DemoShowcase>
+               <DemoShowcase
+                 title="Slider with No Labels"
+                 description="Adjusts something. Who knows what."
+                 effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.unlabeledSlider}
+               >
+                 <UnlabeledSlider />
+               </DemoShowcase>
+               {/* Placeholder Form Patterns */}
+               <DemoShowcase title="New Form Pattern 1" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newFormPattern1}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+               <DemoShowcase title="New Form Pattern 2" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newFormPattern2}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+               <DemoShowcase title="New Form Pattern 3" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newFormPattern3}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+               <DemoShowcase title="New Form Pattern 4" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newFormPattern4}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
              </div>
            </Slide>
 
            {/* Feedback & System Responses Section */}
            <Slide label="🔔 Feedback & System Responses" title="Toasts, alerts, and confirmations that feel... human" className="bg-gray-100 dark:bg-gray-900">
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-                 {/* Existing Feedback Items */}
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Toasts That Sigh When Dismissed</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">You closed it. It closed you.</p>
-                   <SighingToast />
-                 </div>
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Loading Spinner That Asks for Patience</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Caption: "Still working on it (and myself)." </p>
-                   <PatientLoadingSpinner />
-                 </div>
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">"Success!" Notification That Ends With a Question Mark</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Because... was it?</p>
-                   <QuestionableSuccessNotification />
-                 </div>
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Error Message That Apologizes First</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">"Sorry, we messed up. Again."</p>
-                   <ApologeticErrorMessage />
-                 </div>
-                 {/* New Feedback Items */}
-                 <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Toasts with Delayed Reactions</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Click something → 4 seconds later: "Oh yeah, that worked."</p>
-                    <DelayedReactionToast />
-                 </div>
-                 <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Loading Dots That Cry</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Typing-like animation with a side of despair: "😔"</p>
-                    <CryingLoadingDots />
-                 </div>
-                 <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Success Toast That Undermines You</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">"Success (probably)." </p>
-                    <UnderminingSuccessToast />
-                 </div>
-                 <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Error Alert That Comforts You</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">..."but you didn't. You're doing great."</p>
-                    <ComfortingErrorAlert />
-                 </div>
+               <DemoShowcase
+                 title="Toasts That Sigh When Dismissed"
+                 description="You closed it. It closed you."
+                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.sighingToast}
+               >
+                 <SighingToast />
+               </DemoShowcase>
+               <DemoShowcase
+                 title="Loading Spinner That Asks for Patience"
+                 description={`Caption: "Still working on it (and myself)."`}
+                 effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.patientSpinner}
+               >
+                 <PatientLoadingSpinner />
+               </DemoShowcase>
+               <DemoShowcase
+                 title={`"Success!" Notification That Ends With a Question Mark`}
+                 description="Because... was it?"
+                 effort="Low" usefulness="Mildly Concerning" codeSnippet={codeSnippets.questionableSuccess}
+               >
+                 <QuestionableSuccessNotification />
+               </DemoShowcase>
+               <DemoShowcase
+                 title="Error Message That Apologizes First"
+                 description={`"Sorry, we messed up. Again."`}
+                 effort="Low" usefulness="Practical" codeSnippet={codeSnippets.apologeticError}
+               >
+                 <ApologeticErrorMessage />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Toasts with Delayed Reactions"
+                  description={`Click something → 4 seconds later: "Oh yeah, that worked."`}
+                  effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.delayedToast}
+               >
+                  <DelayedReactionToast />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Loading Dots That Cry"
+                  description={`Typing-like animation with a side of despair: "😔"`}
+                  effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.cryingDots}
+               >
+                  <CryingLoadingDots />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Success Toast That Undermines You"
+                  description={`"Success (probably)."`}
+                  effort="Low" usefulness="Mildly Concerning" codeSnippet={codeSnippets.underminingSuccess}
+               >
+                  <UnderminingSuccessToast />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Error Alert That Comforts You"
+                  description={`..."but you didn\'t. You\'re doing great."`}
+                  effort="Low" usefulness="Practical" codeSnippet={codeSnippets.comfortingError}
+               >
+                  <ComfortingErrorAlert />
+               </DemoShowcase>
              </div>
            </Slide>
 
            {/* Microinteractions & Easter Eggs Section */}
            <Slide label="💬 Microinteractions & Easter Eggs" title="For small animations and delightful sadness">
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-                 {/* Existing Micro Items */}
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Form Submit Button That Shrinks on Hover</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">"I don't want this responsibility."</p>
-                   <ShrinkingSubmitButton />
-                 </div>
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">404 Page That Just Sits With You</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">No links. Just vibes.</p>
-                   <Existential404Demo />
-                 </div>
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Hover Tooltip That Says 'Why are you hovering?'</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Curiosity = punished.</p>
-                   <HoverPunishTooltip />
-                 </div>
-                 <div>
-                   <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Dropdown Easter Egg</h3>
-                   <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Selecting "Other" opens an existential quiz.</p>
-                   <ExistentialDropdown />
-                 </div>
-                  {/* Add 4 new microinteraction placeholders/implementations here if concepts are provided */}
-                 {/* Placeholder 1 */}
-                 <div><h3 className="text-xl font-semibold mb-4 dark:text-gray-200">New Microinteraction 1</h3><p className="text-gray-600 dark:text-gray-400 mb-4 text-base">...</p><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></div>
-                 {/* Placeholder 2 */}
-                 <div><h3 className="text-xl font-semibold mb-4 dark:text-gray-200">New Microinteraction 2</h3><p className="text-gray-600 dark:text-gray-400 mb-4 text-base">...</p><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></div>
-                 {/* Placeholder 3 */}
-                 <div><h3 className="text-xl font-semibold mb-4 dark:text-gray-200">New Microinteraction 3</h3><p className="text-gray-600 dark:text-gray-400 mb-4 text-base">...</p><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></div>
-                 {/* Placeholder 4 */}
-                 <div><h3 className="text-xl font-semibold mb-4 dark:text-gray-200">New Microinteraction 4</h3><p className="text-gray-600 dark:text-gray-400 mb-4 text-base">...</p><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></div>
+               <DemoShowcase
+                 title="Form Submit Button That Shrinks on Hover"
+                 description={`"I don\'t want this responsibility."`}
+                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.shrinkingSubmit}
+               >
+                  <ShrinkingSubmitButton />
+               </DemoShowcase>
+               <DemoShowcase
+                 title="404 Page That Just Sits With You"
+                 description="No links. Just vibes."
+                 effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.existential404}
+               >
+                  <Existential404Demo />
+               </DemoShowcase>
+               <DemoShowcase
+                 title="Hover Tooltip That Says 'Why are you hovering?'"
+                 description="Curiosity = punished."
+                 effort="Low" usefulness="Mildly Concerning" codeSnippet={codeSnippets.hoverPunish}
+               >
+                  <HoverPunishTooltip />
+               </DemoShowcase>
+               <DemoShowcase
+                 title="Dropdown Easter Egg"
+                 description={`Selecting "Other" opens an existential quiz.`}
+                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.existentialDropdown}
+               >
+                  <ExistentialDropdown />
+               </DemoShowcase>
+               {/* Placeholder Microinteractions */}
+               <DemoShowcase title="New Microinteraction 1" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newMicrointeraction1}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+               <DemoShowcase title="New Microinteraction 2" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newMicrointeraction2}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+               <DemoShowcase title="New Microinteraction 3" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newMicrointeraction3}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+               <DemoShowcase title="New Microinteraction 4" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newMicrointeraction4}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
              </div>
            </Slide>
 
            {/* Mobile Patterns Section */}
            <Slide label="📱 Mobile Patterns" title="For when users scroll through their feelings" className="bg-gray-100 dark:bg-gray-900">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-                  {/* Existing Mobile Items */}
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Bottom Sheet That Overshares</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Title: "Here's too much info." / Subtext: "We're all figuring it out."</p>
-                    <OversharingBottomSheet />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Swipe to Delete That Hesitates</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">You sure? Really sure? Okay… (Wait—gone.)</p>
-                    <HesitantSwipeToDelete />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Tap to Expand, Collapse, Then Rethink</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Accordion with self-doubt built-in.</p>
-                    <RethinkingAccordion />
-                  </div>
-                   {/* New Mobile Items */}
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Swipe to Snooze Notification</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">Not delete — just delay the emotion for later.</p>
-                    <SnoozeSwipeNotification />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Pinch to Zoom, But Nothing Changes</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base">That was for you. Not the UI.</p>
-                    <PlaceboPinchZoom />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold mb-4 dark:text-gray-200">Bottom Sheet That's Just a Haiku</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4 text-base"> scroll down, scroll back...</p>
-                    <HaikuBottomSheet />
-                  </div>
-                  {/* Placeholder for 1 more mobile pattern */}
-                  <div><h3 className="text-xl font-semibold mb-4 dark:text-gray-200">New Mobile Pattern 4</h3><p className="text-gray-600 dark:text-gray-400 mb-4 text-base">...</p><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></div>
+                <DemoShowcase
+                  title="Bottom Sheet That Overshares"
+                  description={`Title: "Here\'s too much info." / Subtext: "We\'re all figuring it out."`}
+                  effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.oversharingSheet}
+                >
+                   <OversharingBottomSheet />
+                </DemoShowcase>
+                <DemoShowcase
+                  title="Swipe to Delete That Hesitates"
+                  description="You sure? Really sure? Okay… (Wait—gone.)"
+                  effort="Medium" usefulness="Mildly Concerning" codeSnippet={codeSnippets.hesitantSwipe}
+                >
+                   <HesitantSwipeToDelete />
+                </DemoShowcase>
+                <DemoShowcase
+                  title="Tap to Expand, Collapse, Then Rethink"
+                  description="Accordion with self-doubt built-in."
+                  effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.rethinkingAccordion}
+                >
+                   <RethinkingAccordion />
+                </DemoShowcase>
+                <DemoShowcase
+                  title="Swipe to Snooze Notification"
+                  description="Not delete — just delay the emotion for later."
+                  effort="Medium" usefulness="Practical" codeSnippet={codeSnippets.snoozeSwipe}
+                >
+                   <SnoozeSwipeNotification />
+                </DemoShowcase>
+                <DemoShowcase
+                  title="Pinch to Zoom, But Nothing Changes"
+                  description="That was for you. Not the UI."
+                  effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.placeboZoom}
+                >
+                   <PlaceboPinchZoom />
+                </DemoShowcase>
+                <DemoShowcase
+                  title="Bottom Sheet That's Just a Haiku"
+                  description=" scroll down, scroll back..."
+                  effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.haikuSheet}
+                >
+                   <HaikuBottomSheet />
+                </DemoShowcase>
+                {/* Placeholder Mobile Patterns */}
+                <DemoShowcase title="New Mobile Pattern 4" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newMobilePattern4}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
               </div>
            </Slide>
-
-           {/* TODO: Add Visual Add-ons Section */}
-           {/* TODO: Add Dev Toggle Mode Section */}
 
            {/* Link back */}
            <div className="text-center py-16">
@@ -1834,7 +1884,6 @@ const Interaction01ProjectPage: React.FC = () => {
                 </Link>
            </div>
         </main>
-        {/* We can add a footer if needed */}
       </div>
     </PageTransition>
   );
