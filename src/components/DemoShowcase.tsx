@@ -89,7 +89,7 @@ export const DemoShowcase: React.FC<DemoShowcaseProps> = ({
   }, [codeSnippet]);
 
   return (
-    <div className={`bg-white dark:bg-gray-850 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm mb-8 overflow-hidden flex flex-col ${className}`}>
+    <div className={`dark bg-white dark:bg-gray-850 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm mb-8 overflow-hidden flex flex-col ${className}`}>
       {/* Header Info */}
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         {/* Flex container for Title and Toggle */}
