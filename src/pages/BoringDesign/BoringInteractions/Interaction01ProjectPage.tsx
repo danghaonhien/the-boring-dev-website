@@ -94,9 +94,10 @@ const HoverTabsWithRegret: React.FC = () => {
         ))}
       </div>
       <div className="p-4 flex-grow"> {/* Use flex-grow to fill space */}
-         {activeTab === 'Tab 1' && <p>Content for Tab 1. Seems okay, right?</p>}
-         {activeTab === 'Tab 2' && <p>Content for Tab 2. Or maybe this one?</p>}
-         {activeTab === 'Tab 3' && <p>Content for Tab 3. Definitely this one... unless?</p>}
+         {/* Add dark mode text color */}
+         {activeTab === 'Tab 1' && <p className="text-gray-700 dark:text-gray-300">Content for Tab 1. Seems okay, right?</p>}
+         {activeTab === 'Tab 2' && <p className="text-gray-700 dark:text-gray-300">Content for Tab 2. Or maybe this one?</p>}
+         {activeTab === 'Tab 3' && <p className="text-gray-700 dark:text-gray-300">Content for Tab 3. Definitely this one... unless?</p>}
       </div>
        <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-2">Hover over a tab. It waits {REGRET_DELAY}ms before committing, just like you.</p>
     </DemoWrapper>
@@ -1593,56 +1594,56 @@ const Interaction01ProjectPage: React.FC = () => {
                <DemoShowcase
                  title="Hover Tabs with Regret Delay"
                  description="Adds a 200ms delay for indecisive users. Mentally realistic."
-                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.hoverTabs}
+                 effort="Medium" codeSnippet={codeSnippets.hoverTabs}
                >
                  <HoverTabsWithRegret />
                </DemoShowcase>
                <DemoShowcase
                   title="Sticky Header, Emotionally Detached"
                   description="Always visible. Never invested."
-                  effort="Low" usefulness="Mildly Concerning" codeSnippet={codeSnippets.stickyHeader}
+                  effort="Low" codeSnippet={codeSnippets.stickyHeader}
                >
                   <StickyHeaderDetached />
                </DemoShowcase>
                <DemoShowcase
                   title="Breadcrumbs That Just Loop Back"
                   description="Because we all circle back eventually."
-                  effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.loopingBreadcrumbs}
+                  effort="Low" codeSnippet={codeSnippets.loopingBreadcrumbs}
                >
                   <LoopingBreadcrumbs />
                </DemoShowcase>
                <DemoShowcase
                   title="'Back to Top' That Scrolls Too Slowly"
                   description={"For devs who just need a moment."}
-                  effort="Low" usefulness="Practical" codeSnippet={codeSnippets.slowBackToTop}
+                  effort="Low" codeSnippet={codeSnippets.slowBackToTop}
                >
                   <SlowBackToTop />
                </DemoShowcase>
                <DemoShowcase
                  title="Confused Tab Highlighting"
                  description="Tabs highlight randomly for 1s on load. No reason."
-                 effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.confusedTabs}
+                 effort="Low" codeSnippet={codeSnippets.confusedTabs}
                >
                  <ConfusedTabHighlighting />
                </DemoShowcase>
                <DemoShowcase
                  title="Breadcrumbs with Life Advice"
                  description={`Ends with: "You Should Take a Break".`}
-                 effort="Low" usefulness="Mildly Concerning" codeSnippet={codeSnippets.lifeAdviceBreadcrumbs}
+                 effort="Low" codeSnippet={codeSnippets.lifeAdviceBreadcrumbs}
                >
                  <LifeAdviceBreadcrumbs />
                </DemoShowcase>
                <DemoShowcase
                  title="Side Nav That Shrinks When You Hover"
                  description="Introvert UI: It gets smaller when you approach it."
-                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.shrinkingNav}
+                 effort="Medium" codeSnippet={codeSnippets.shrinkingNav}
                >
                  <ShrinkingSideNav />
                </DemoShowcase>
                <DemoShowcase
                  title="Multi-Level Dropdown That Ends in Regret"
                  description={`After 3 levels it just says, "You\'ve gone too far."`}
-                 effort="Medium" usefulness="Mildly Concerning" codeSnippet={codeSnippets.regretfulDropdown}
+                 effort="Medium" codeSnippet={codeSnippets.regretfulDropdown}
                >
                  <RegretfulDropdown />
                </DemoShowcase>
@@ -1655,84 +1656,84 @@ const Interaction01ProjectPage: React.FC = () => {
                <DemoShowcase
                  title="Primary Button That's Never Sure"
                  description={`Label: "Maybe Continue" / Hover: "Okay, fine."`}
-                 effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.unsureButton}
+                 effort="Low" codeSnippet={codeSnippets.unsureButton}
                >
                  <UnsureButton />
                </DemoShowcase>
                <DemoShowcase
                  title="Ghost Button with Impostor Syndrome"
                  description="Invisible until hovered, then apologetically outlined."
-                 effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.ghostButtonImposter}
+                 effort="Low" codeSnippet={codeSnippets.ghostButtonImposter}
                >
                  <GhostButtonImposter />
                </DemoShowcase>
                <DemoShowcase
                  title="Input That Auto-Fills with Excuses"
                  description={`Placeholder: "Didn\'t finish it because..."`}
-                 effort="Low" usefulness="Mildly Concerning" codeSnippet={codeSnippets.excuseInput}
+                 effort="Low" codeSnippet={codeSnippets.excuseInput}
                >
                  <ExcuseInput />
                </DemoShowcase>
                <DemoShowcase
                  title="Checkbox That Shakes If You Skip It"
                  description="But not in a judgmental way."
-                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.shakyCheckbox}
+                 effort="Medium" codeSnippet={codeSnippets.shakyCheckbox}
                >
                  <ShakyCheckbox />
                </DemoShowcase>
                <DemoShowcase
                   title="Are You Sure-Sure Button"
                   description="Click 1: Sure? Click 2: Sure-sure? Click 3: Never mind."
-                  effort="Low" usefulness="Practical" codeSnippet={codeSnippets.areYouSureSureButton}
+                  effort="Low" codeSnippet={codeSnippets.areYouSureSureButton}
                >
                   <AreYouSureSureButton />
                </DemoShowcase>
                <DemoShowcase
                   title="CTA That Moves When Hovered"
                   description="Playfully avoids commitment. Literally."
-                  effort="High" usefulness="Conceptual" codeSnippet={codeSnippets.movingCTA}
+                  effort="High" codeSnippet={codeSnippets.movingCTA}
                >
                   <MovingCTA />
                </DemoShowcase>
                <DemoShowcase
                   title="Button That Changes Label Each Click"
                   description={`"Click me" → "Again?" → "Still?" → "Okay stop."`}
-                  effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.changingLabelButton}
+                  effort="Low" codeSnippet={codeSnippets.changingLabelButton}
                >
                   <ChangingLabelButton />
                </DemoShowcase>
                <DemoShowcase
                   title="Ghost Button That Gaslights"
                   description={`Hover: "I was never here."`}
-                  effort="Medium" usefulness="Mildly Concerning" codeSnippet={codeSnippets.gaslightingGhostButton}
+                  effort="Medium" codeSnippet={codeSnippets.gaslightingGhostButton}
                >
                   <GaslightingGhostButton />
                </DemoShowcase>
                <DemoShowcase
                   title="Accordion with Existential Questions"
                   description={`Expands to: "Why did you open this?"`}
-                  effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.existentialAccordion}
+                  effort="Low" codeSnippet={codeSnippets.existentialAccordion}
                >
                   <ExistentialAccordion />
                </DemoShowcase>
                <DemoShowcase
                   title="Modal That Opens Slowly"
-                  description="Literally animates at 1fps. Unskippable."
-                  effort="Medium" usefulness="Mildly Concerning" codeSnippet={codeSnippets.slowModal}
+                  description="Builds suspense. Delivers disappointment."
+                  effort="Medium" codeSnippet={codeSnippets.slowModal}
                >
                   <SlowModal />
                </DemoShowcase>
                <DemoShowcase
                   title="Carousel with Passive-Aggressive Arrows"
                   description={`"Oh, you want to see more? Fine."`}
-                  effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.passiveAggressiveCarousel}
+                  effort="Medium" codeSnippet={codeSnippets.passiveAggressiveCarousel}
                >
                   <PassiveAggressiveCarousel />
                </DemoShowcase>
                <DemoShowcase
                   title="Progress Bar That Never Finishes"
                   description="Stuck at 99%. Just like your side project."
-                  effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.unfinishingProgressBar}
+                  effort="Medium" codeSnippet={codeSnippets.unfinishingProgressBar}
                >
                   <UnfinishingProgressBar />
                </DemoShowcase>
@@ -1745,36 +1746,36 @@ const Interaction01ProjectPage: React.FC = () => {
                <DemoShowcase
                  title="Multi-Step Form That Loops Back"
                  description="Because self-discovery is never linear."
-                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.loopingForm}
+                 effort="Medium" codeSnippet={codeSnippets.loopingForm}
                >
                  <LoopingMultiStepForm />
                </DemoShowcase>
                <DemoShowcase
                  title={`"Save as Draft" That Never Really Saves`}
                  description="Just like your dreams."
-                 effort="Low" usefulness="Mildly Concerning" codeSnippet={codeSnippets.neverSavingDraft}
+                 effort="Low" codeSnippet={codeSnippets.neverSavingDraft}
                >
                  <NeverSavingDraftButton />
                </DemoShowcase>
                <DemoShowcase
                  title="Dropdown That Always Reopens"
                  description="It's trying to help. It's not."
-                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.alwaysReopeningDropdown}
+                 effort="Medium" codeSnippet={codeSnippets.alwaysReopeningDropdown}
                >
                  <AlwaysReopeningDropdown />
                </DemoShowcase>
                <DemoShowcase
                  title="Slider with No Labels"
                  description="Adjusts something. Who knows what."
-                 effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.unlabeledSlider}
+                 effort="Low" codeSnippet={codeSnippets.unlabeledSlider}
                >
                  <UnlabeledSlider />
                </DemoShowcase>
                {/* Placeholder Form Patterns */}
-               <DemoShowcase title="New Form Pattern 1" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newFormPattern1}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
-               <DemoShowcase title="New Form Pattern 2" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newFormPattern2}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
-               <DemoShowcase title="New Form Pattern 3" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newFormPattern3}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
-               <DemoShowcase title="New Form Pattern 4" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newFormPattern4}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+               <DemoShowcase title="New Form Pattern 1" description="..." effort="Low" codeSnippet={codeSnippets.newFormPattern1}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+               <DemoShowcase title="New Form Pattern 2" description="..." effort="Low" codeSnippet={codeSnippets.newFormPattern2}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+               <DemoShowcase title="New Form Pattern 3" description="..." effort="Low" codeSnippet={codeSnippets.newFormPattern3}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+               <DemoShowcase title="New Form Pattern 4" description="..." effort="Low" codeSnippet={codeSnippets.newFormPattern4}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
              </div>
            </Slide>
 
@@ -1784,56 +1785,56 @@ const Interaction01ProjectPage: React.FC = () => {
                <DemoShowcase
                  title="Toasts That Sigh When Dismissed"
                  description="You closed it. It closed you."
-                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.sighingToast}
+                 effort="Medium" codeSnippet={codeSnippets.sighingToast}
                >
                  <SighingToast />
                </DemoShowcase>
                <DemoShowcase
                  title="Loading Spinner That Asks for Patience"
                  description={`Caption: "Still working on it (and myself)."`}
-                 effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.patientSpinner}
+                 effort="Low" codeSnippet={codeSnippets.patientSpinner}
                >
                  <PatientLoadingSpinner />
                </DemoShowcase>
                <DemoShowcase
                  title={`"Success!" Notification That Ends With a Question Mark`}
                  description="Because... was it?"
-                 effort="Low" usefulness="Mildly Concerning" codeSnippet={codeSnippets.questionableSuccess}
+                 effort="Low" codeSnippet={codeSnippets.questionableSuccess}
                >
                  <QuestionableSuccessNotification />
                </DemoShowcase>
                <DemoShowcase
                  title="Error Message That Apologizes First"
                  description={`"Sorry, we messed up. Again."`}
-                 effort="Low" usefulness="Practical" codeSnippet={codeSnippets.apologeticError}
+                 effort="Low" codeSnippet={codeSnippets.apologeticError}
                >
                  <ApologeticErrorMessage />
                </DemoShowcase>
                <DemoShowcase
                   title="Toasts with Delayed Reactions"
                   description={`Click something → 4 seconds later: "Oh yeah, that worked."`}
-                  effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.delayedToast}
+                  effort="Medium" codeSnippet={codeSnippets.delayedToast}
                >
                   <DelayedReactionToast />
                </DemoShowcase>
                <DemoShowcase
                   title="Loading Dots That Cry"
                   description={`Typing-like animation with a side of despair: "😔"`}
-                  effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.cryingDots}
+                  effort="Low" codeSnippet={codeSnippets.cryingDots}
                >
                   <CryingLoadingDots />
                </DemoShowcase>
                <DemoShowcase
                   title="Success Toast That Undermines You"
                   description={`"Success (probably)."`}
-                  effort="Low" usefulness="Mildly Concerning" codeSnippet={codeSnippets.underminingSuccess}
+                  effort="Low" codeSnippet={codeSnippets.underminingSuccess}
                >
                   <UnderminingSuccessToast />
                </DemoShowcase>
                <DemoShowcase
                   title="Error Alert That Comforts You"
                   description={`..."but you didn\'t. You\'re doing great."`}
-                  effort="Low" usefulness="Practical" codeSnippet={codeSnippets.comfortingError}
+                  effort="Low" codeSnippet={codeSnippets.comfortingError}
                >
                   <ComfortingErrorAlert />
                </DemoShowcase>
@@ -1846,36 +1847,36 @@ const Interaction01ProjectPage: React.FC = () => {
                <DemoShowcase
                  title="Form Submit Button That Shrinks on Hover"
                  description={`"I don\'t want this responsibility."`}
-                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.shrinkingSubmit}
+                 effort="Medium" codeSnippet={codeSnippets.shrinkingSubmit}
                >
                   <ShrinkingSubmitButton />
                </DemoShowcase>
                <DemoShowcase
                  title="404 Page That Just Sits With You"
                  description="No links. Just vibes."
-                 effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.existential404}
+                 effort="Low" codeSnippet={codeSnippets.existential404}
                >
                   <Existential404Demo />
                </DemoShowcase>
                <DemoShowcase
                  title="Hover Tooltip That Says 'Why are you hovering?'"
                  description="Curiosity = punished."
-                 effort="Low" usefulness="Mildly Concerning" codeSnippet={codeSnippets.hoverPunish}
+                 effort="Low" codeSnippet={codeSnippets.hoverPunish}
                >
                   <HoverPunishTooltip />
                </DemoShowcase>
                <DemoShowcase
                  title="Dropdown Easter Egg"
                  description={`Selecting "Other" opens an existential quiz.`}
-                 effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.existentialDropdown}
+                 effort="Medium" codeSnippet={codeSnippets.existentialDropdown}
                >
                   <ExistentialDropdown />
                </DemoShowcase>
                {/* Placeholder Microinteractions */}
-               <DemoShowcase title="New Microinteraction 1" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newMicrointeraction1}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
-               <DemoShowcase title="New Microinteraction 2" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newMicrointeraction2}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
-               <DemoShowcase title="New Microinteraction 3" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newMicrointeraction3}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
-               <DemoShowcase title="New Microinteraction 4" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newMicrointeraction4}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+               <DemoShowcase title="New Microinteraction 1" description="..." effort="Low" codeSnippet={codeSnippets.newMicrointeraction1}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+               <DemoShowcase title="New Microinteraction 2" description="..." effort="Low" codeSnippet={codeSnippets.newMicrointeraction2}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+               <DemoShowcase title="New Microinteraction 3" description="..." effort="Low" codeSnippet={codeSnippets.newMicrointeraction3}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+               <DemoShowcase title="New Microinteraction 4" description="..." effort="Low" codeSnippet={codeSnippets.newMicrointeraction4}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
              </div>
            </Slide>
 
@@ -1885,47 +1886,47 @@ const Interaction01ProjectPage: React.FC = () => {
                 <DemoShowcase
                   title="Bottom Sheet That Overshares"
                   description={`Title: "Here\'s too much info." / Subtext: "We\'re all figuring it out."`}
-                  effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.oversharingSheet}
+                  effort="Medium" codeSnippet={codeSnippets.oversharingSheet}
                 >
                    <OversharingBottomSheet />
                 </DemoShowcase>
                 <DemoShowcase
                   title="Swipe to Delete That Hesitates"
                   description="You sure? Really sure? Okay… (Wait—gone.)"
-                  effort="Medium" usefulness="Mildly Concerning" codeSnippet={codeSnippets.hesitantSwipe}
+                  effort="Medium" codeSnippet={codeSnippets.hesitantSwipe}
                 >
                    <HesitantSwipeToDelete />
                 </DemoShowcase>
                 <DemoShowcase
                   title="Tap to Expand, Collapse, Then Rethink"
                   description="Accordion with self-doubt built-in."
-                  effort="Medium" usefulness="Conceptual" codeSnippet={codeSnippets.rethinkingAccordion}
+                  effort="Medium" codeSnippet={codeSnippets.rethinkingAccordion}
                 >
                    <RethinkingAccordion />
                 </DemoShowcase>
                 <DemoShowcase
                   title="Swipe to Snooze Notification"
                   description="Not delete — just delay the emotion for later."
-                  effort="Medium" usefulness="Practical" codeSnippet={codeSnippets.snoozeSwipe}
+                  effort="Medium" codeSnippet={codeSnippets.snoozeSwipe}
                 >
                    <SnoozeSwipeNotification />
                 </DemoShowcase>
                 <DemoShowcase
                   title="Pinch to Zoom, But Nothing Changes"
                   description="That was for you. Not the UI."
-                  effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.placeboZoom}
+                  effort="Low" codeSnippet={codeSnippets.placeboZoom}
                 >
                    <PlaceboPinchZoom />
                 </DemoShowcase>
                 <DemoShowcase
                   title="Bottom Sheet That's Just a Haiku"
                   description=" scroll down, scroll back..."
-                  effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.haikuSheet}
+                  effort="Low" codeSnippet={codeSnippets.haikuSheet}
                 >
                    <HaikuBottomSheet />
                 </DemoShowcase>
                 {/* Placeholder Mobile Patterns */}
-                <DemoShowcase title="New Mobile Pattern 4" description="..." effort="Low" usefulness="Conceptual" codeSnippet={codeSnippets.newMobilePattern4}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
+                <DemoShowcase title="New Mobile Pattern 4" description="..." effort="Low" codeSnippet={codeSnippets.newMobilePattern4}><DemoWrapper><span className="text-gray-400 italic">Placeholder</span></DemoWrapper></DemoShowcase>
               </div>
            </Slide>
 
@@ -1934,7 +1935,7 @@ const Interaction01ProjectPage: React.FC = () => {
       </div> {/* End Flex container */}
 
     </div>
-    </PageTransition> // Add the missing closing tag here
+    </PageTransition>
   );
 };
 

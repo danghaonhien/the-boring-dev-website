@@ -455,6 +455,139 @@ const Slide03Slideshow: React.FC = () => {
   );
 };
 
+// --- NEW Interaction Preview Components --- 
+
+const PreviewHoverTabs: React.FC = () => (
+  <div className="w-full h-full bg-gray-200 p-2 rounded flex flex-col justify-center items-center text-xxs">
+    <div className="flex space-x-1 mb-1">
+      <div className="w-4 h-2 bg-gray-400 rounded-sm"></div>
+      <div className="w-4 h-2 bg-indigo-300 ring-1 ring-indigo-500 rounded-sm"></div>
+      <div className="w-4 h-2 bg-gray-400 rounded-sm"></div>
+    </div>
+    <div className="w-10 h-4 bg-white border border-gray-300 rounded-sm"></div>
+    <div className="mt-1 text-gray-500">Hover Tabs</div>
+  </div>
+);
+
+const PreviewUnsureButton: React.FC = () => (
+  <div className="w-full h-full bg-gray-200 p-2 rounded flex flex-col justify-center items-center text-xxs">
+    <div className="px-2 py-0.5 bg-indigo-500 text-white rounded text-[8px]">Maybe?</div>
+    <div className="mt-1 text-gray-500">Unsure Button</div>
+  </div>
+);
+
+const PreviewStickyHeader: React.FC = () => (
+  <div className="w-full h-full bg-white border border-gray-300 p-1 rounded flex flex-col text-xxs overflow-hidden">
+    <div className="bg-gray-300 p-0.5 text-[8px] text-center text-gray-600 rounded-t-sm sticky top-0">Header</div>
+    <div className="flex-grow bg-gray-100 h-4 mt-1"></div>
+    <div className="mt-auto pt-1 text-gray-500 text-center">Sticky Header</div>
+  </div>
+);
+
+const PreviewLoopingBreadcrumbs: React.FC = () => (
+  <div className="w-full h-full bg-gray-200 p-2 rounded flex flex-col justify-center items-start text-xxs">
+    <div className="flex items-center space-x-0.5 text-[8px]">
+      <span className="text-indigo-500 underline">Home</span>
+      <span>&gt;</span>
+      <span className="text-indigo-500 underline">...</span>
+      <span>&gt;</span>
+      <span className="text-gray-600">Loop</span>
+    </div>
+    <div className="mt-1 text-gray-500 self-center">Looping Nav</div>
+  </div>
+);
+
+const PreviewSlowBackToTop: React.FC = () => (
+  <div className="w-full h-full bg-gray-200 p-2 rounded flex flex-col justify-center items-center text-xxs">
+    <div className="px-1.5 py-0.5 border border-gray-400 rounded text-[8px] text-gray-600">Back ^</div>
+    <div className="mt-1 text-gray-500">Slow Scroll</div>
+  </div>
+);
+
+const PreviewGhostButtonImposter: React.FC = () => (
+  <div className="w-full h-full bg-gray-200 p-2 rounded flex flex-col justify-center items-center text-xxs">
+    <div className="px-1.5 py-0.5 border border-indigo-400 border-dashed rounded text-[8px] text-indigo-500 opacity-60">Ghost?</div>
+    <div className="mt-1 text-gray-500">Ghost Button</div>
+  </div>
+);
+
+const PreviewShakyCheckbox: React.FC = () => (
+  <div className="w-full h-full bg-gray-200 p-2 rounded flex flex-col justify-center items-center text-xxs">
+    <div className="flex items-center space-x-1">
+      <div className="w-2.5 h-2.5 border border-gray-500 rounded-sm bg-white relative">
+        {/* Tiny check */} 
+        <svg className="w-2 h-2 absolute top-px left-px text-indigo-600" fill="currentColor" viewBox="0 0 16 16">
+           <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+        </svg>
+      </div>
+      <span className="text-[8px] text-gray-600">Task?</span>
+    </div>
+    <div className="mt-1 text-gray-500">Shaky Checkbox</div>
+  </div>
+);
+
+const PreviewExcuseInput: React.FC = () => (
+  <div className="w-full h-full bg-gray-200 p-2 rounded flex flex-col justify-center items-center text-xxs">
+    <input type="text" placeholder="Excuse..." className="w-16 px-1 py-0.5 text-[8px] border border-gray-400 rounded-sm bg-white placeholder-gray-400" readOnly />
+    <div className="mt-1 text-gray-500">Excuse Input</div>
+  </div>
+);
+
+const PreviewLoopingForm: React.FC = () => (
+  <div className="w-full h-full bg-white border border-gray-300 p-1.5 rounded flex flex-col text-xxs overflow-hidden">
+     <div className="text-center text-[8px] font-medium mb-1">Step 1/3</div>
+     <div className="w-full h-1 bg-gray-200 rounded-full mb-2">
+       <div className="w-1/3 h-full bg-indigo-500 rounded-full"></div>
+     </div>
+     <div className="flex-grow h-4 bg-gray-100 rounded-sm mb-2"></div>
+     <div className="flex justify-end">
+        <button className="px-1 py-0 bg-indigo-500 text-white rounded text-[7px]">Next</button>
+     </div>
+     <div className="mt-auto pt-1 text-gray-500 text-center text-[9px]">Looping Form</div>
+  </div>
+);
+
+const PreviewNeverSavingDraft: React.FC = () => (
+  <div className="w-full h-full bg-gray-200 p-2 rounded flex flex-col justify-center items-center text-xxs">
+    <button className="px-1.5 py-0.5 border border-gray-400 rounded text-[8px] text-gray-600">Save Draft</button>
+     <div className="text-green-600 text-[8px] mt-0.5 h-2">Saved! (...)</div>
+    <div className="mt-1 text-gray-500">Fake Save</div>
+  </div>
+);
+
+// --- NEW Interaction Slideshow Component ---
+const InteractionPreviewSlideshow: React.FC<{ previews: React.ReactNode[] }> = ({ previews }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (previews.length <= 1) return; // Don't cycle if only one preview
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % previews.length);
+    }, 2800); // Adjust timing as needed
+    return () => clearInterval(interval);
+  }, [previews.length]);
+
+  return (
+    <div className="relative h-full w-full overflow-hidden bg-gray-100 dark:bg-gray-800 rounded-lg shadow-inner border border-gray-200 dark:border-gray-700">
+      <AnimatePresence initial={false} mode="wait"> 
+        <motion.div
+          key={currentIndex} // Key change triggers animation
+          initial={{ opacity: 0, scale: 0.9 }} 
+          animate={{ opacity: 1, scale: 1 }} 
+          exit={{ opacity: 0, scale: 0.9 }} 
+          transition={{ duration: 0.35, ease: "easeInOut" }} 
+          className="absolute inset-0 flex items-center justify-center p-4" // Padding inside the motion div
+        >
+          {/* Removed scale-90 from this div */}
+          <div className="w-full h-full">
+            {previews[currentIndex]}
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+};
+
 // --- DUMMY DATA (Using the Components defined above) ---
 const boringDesignsData: Category[] = [
     {
@@ -510,41 +643,85 @@ const boringDesignsData: Category[] = [
     id: 'interactions',
     title: 'Boring Interactions',
     projects: [
+       // Card 1
        {
         id: 'interaction-hover-effect',
-        title: 'Subtle Hover',
-        description: 'A gentle scale and shadow lift on hover.',
-        slideComponent1: <InteractionCard title="Subtle Hover" description="A gentle scale and shadow lift on hover." />,
-        slideComponent2: null, // Keep structure consistent, render nothing
-        tags: ['Hover', 'CSS', 'Animation'],
-        caseStudyLink: '#', // Link to specific interaction page later
+        title: 'Hover Tabs w/ Regret Delay',
+        description: 'Adds a 200ms delay for indecisive users.',
+        slideComponent1: <InteractionPreviewSlideshow previews={[<PreviewHoverTabs />, <PreviewLoopingForm /> ]} />,
+        slideComponent2: null, 
+        tags: ['Hover', 'Delay', 'Regret'],
+        caseStudyLink: '/projects/interaction-01',
       },
+      // Card 2
       {
-        id: 'interaction-button-feedback',
-        title: 'Button Press',
-        description: 'Visual feedback when a button is clicked.',
-        slideComponent1: <InteractionCard title="Button Press" description="Visual feedback when a button is clicked." />,
+        id: 'interaction-unsure-button',
+        title: 'Unsure Primary Button',
+        description: 'Label: "Maybe Continue" / Hover: "Okay, fine." ',
+        slideComponent1: <InteractionPreviewSlideshow previews={[<PreviewUnsureButton />, <PreviewShakyCheckbox />]} />,
         slideComponent2: null,
-        tags: ['Button', 'Feedback', 'UX'],
-        caseStudyLink: '#',
+        tags: ['Button', 'Hover', 'Indecision'],
+        caseStudyLink: '/projects/interaction-01',
       },
+      // Card 3
       {
-        id: 'interaction-loading-state',
-        title: 'Loading Spin',
-        description: 'A simple loading indicator animation.',
-        slideComponent1: <InteractionCard title="Loading Spin" description="A simple loading indicator animation." />,
+        id: 'interaction-sticky-header',
+        title: 'Detached Sticky Header',
+        description: 'Always visible. Never invested.',
+        slideComponent1: <InteractionPreviewSlideshow previews={[<PreviewStickyHeader />, <PreviewExcuseInput />]} />,
         slideComponent2: null,
-        tags: ['Loading', 'Animation', 'SVG'],
-        caseStudyLink: '#',
+        tags: ['Sticky', 'Scroll', 'Layout'],
+        caseStudyLink: '/projects/interaction-01',
       },
+      // Card 4
       {
-        id: 'interaction-focus-outline',
-        title: 'Focus Ring',
-        description: 'Clear visual outline for keyboard navigation focus.',
-        slideComponent1: <InteractionCard title="Focus Ring" description="Clear visual outline for keyboard navigation focus." />,
+        id: 'interaction-looping-replacement',
+        title: 'Breadcrumbs That Forget',
+        description: 'Navigation that leads somewhere unexpected.',
+        slideComponent1: <InteractionPreviewSlideshow previews={[<PreviewNeverSavingDraft />, <PreviewHoverTabs />]} />,
         slideComponent2: null,
-        tags: ['Accessibility', 'Focus', 'CSS'],
-        caseStudyLink: '#',
+        tags: ['Navigation', 'Surprise', 'Existential'],
+        caseStudyLink: '/projects/interaction-01',
+      },
+      // Card 5
+      {
+        id: 'interaction-slow-scroll',
+        title: 'Slow Back To Top',
+        description: 'For devs who just need a moment.',
+        slideComponent1: <InteractionPreviewSlideshow previews={[<PreviewSlowBackToTop />, <PreviewGhostButtonImposter />]} />,
+        slideComponent2: null,
+        tags: ['Scroll', 'Button', 'Patience'],
+        caseStudyLink: '/projects/interaction-01',
+      },
+       // Card 6
+       {
+        id: 'interaction-ghost-imposter',
+        title: 'Ghost Button w/ Impostor Syndrome',
+        description: 'Invisible until hovered, then apologetic.',
+        slideComponent1: <InteractionPreviewSlideshow previews={[<PreviewGhostButtonImposter />, <PreviewNeverSavingDraft />]} />,
+        slideComponent2: null,
+        tags: ['Button', 'Ghost', 'Hover', 'Anxiety'],
+        caseStudyLink: '/projects/interaction-01',
+      },
+      // Card 7
+       {
+        id: 'interaction-excuse-input',
+        title: 'Input Auto-filled with Excuses',
+        description: 'Placeholder: "Didn\'t finish it because..." ',
+        slideComponent1: <InteractionPreviewSlideshow previews={[<PreviewExcuseInput />, <PreviewHoverTabs />]} />,
+        slideComponent2: null,
+        tags: ['Input', 'Form', 'Placeholder', 'Humor'],
+        caseStudyLink: '/projects/interaction-01',
+      },
+      // Card 8
+       {
+        id: 'interaction-shaky-checkbox',
+        title: 'Checkbox That Shakes If Skipped',
+        description: 'But not in a judgmental way.',
+        slideComponent1: <InteractionPreviewSlideshow previews={[<PreviewShakyCheckbox />, <PreviewSlowBackToTop />]} />,
+        slideComponent2: null,
+        tags: ['Checkbox', 'Animation', 'Feedback', 'Anxiety'],
+        caseStudyLink: '/projects/interaction-01',
       },
     ],
   },
@@ -629,7 +806,7 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
                       ))}
                     </div>
                     {/* "View All" Link for Interactions */}
-                    <div className="mt-12 text-center">
+                    <div className="mt-12 text-left">
                        <Link to="/projects/interaction-01" className="inline-block bg-boring-main text-white px-6 py-3 rounded-md hover:bg-boring-dark transition-colors font-medium text-sm uppercase tracking-wider shadow-md hover:shadow-lg">
                         View All Interactions
                        </Link>

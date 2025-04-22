@@ -48,7 +48,7 @@ export interface DemoShowcaseProps {
   title: string;
   description: React.ReactNode;
   effort: 'Low' | 'Medium' | 'High' | 'Existential';
-  usefulness: 'Practical' | 'Conceptual' | 'Mildly Concerning';
+  usefulness?: 'Practical' | 'Conceptual' | 'Mildly Concerning';
   codeSnippet: string;
   children: React.ReactNode;
   className?: string;
@@ -125,9 +125,12 @@ export const DemoShowcase: React.FC<DemoShowcaseProps> = ({
           <span className={`px-2 py-0.5 rounded-full flex items-center ${effortColor[effort]}`}>
              <BoltIcon className="w-3 h-3 mr-1" /> Effort: {effort}
           </span>
-          <span className={`px-2 py-0.5 rounded-full border flex items-center ${usefulnessColor[usefulness]} text-gray-700 dark:text-gray-300`}>
-            <Lightbulb className="w-3 h-3 mr-1" /> {usefulness}
-          </span>
+          {/* Conditionally render usefulness tag */}
+          {usefulness && usefulness.trim() !== '' && (
+            <span className={`px-2 py-0.5 rounded-full border flex items-center ${usefulnessColor[usefulness as keyof typeof usefulnessColor] || 'border-gray-500'} text-gray-700 dark:text-gray-300`}>
+              <Lightbulb className="w-3 h-3 mr-1" /> {usefulness}
+            </span>
+          )}
         </div>
       </div>
 
