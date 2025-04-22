@@ -690,16 +690,16 @@ const codeSnippets = {
           }, 1000);
            console.log("Pretending to save draft. It's the thought that counts?");
       };
-  
-      return (
+
+    return (
            <DemoWrapper>
-               <button
+            <button
                   onClick={handleClick}
                   disabled={!!feedback}
                   className="px-5 py-2 border border-gray-300 dark:border-gray-600 rounded text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50"
                >
                   Save as Draft
-               </button>
+            </button>
                <AnimatePresence>
                   {feedback && (
                       <motion.p
@@ -710,12 +710,12 @@ const codeSnippets = {
                       >
                           {feedback}
                       </motion.p>
-                  )}
-               </AnimatePresence>
+                )}
+            </AnimatePresence>
                <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Provides the *illusion* of saving. Essential for coping.</p>
-          </DemoWrapper>
-      );
-  };`,
+        </DemoWrapper>
+    );
+};`,
     alwaysReopeningDropdown: `const AlwaysReopeningDropdown: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -748,7 +748,7 @@ const codeSnippets = {
     }, [dropdownRef]);
   
     const options = ['Option A', 'Option B', 'Help'];
-  
+
     return (
       <DemoWrapper className="items-stretch justify-start">
         <div className="relative" ref={dropdownRef}>
@@ -758,10 +758,10 @@ const codeSnippets = {
           >
             <span>{selectedOption || 'Select an option...'}</span>
             <svg className={\`w-4 h-4 transition-transform \${isOpen ? 'transform rotate-180' : ''}\`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-          </button>
-          <AnimatePresence>
-            {isOpen && (
-              <motion.div
+            </button>
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
@@ -770,23 +770,23 @@ const codeSnippets = {
                 <ul>
                   {options.map(option => (
                     <li key={option}>
-                      <button
+                            <button
                         onClick={() => handleSelect(option)}
                         className="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
-                      >
+                             >
                         {option}
-                      </button>
+                             </button>
                     </li>
                   ))}
                 </ul>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
         <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">It just wants to be helpful. Maybe too helpful.</p>
-      </DemoWrapper>
+        </DemoWrapper>
     );
-  };`,
+};`,
     unlabeledSlider: `const UnlabeledSlider: React.FC = () => {
       const [value, setValue] = useState(50);
   
@@ -822,13 +822,13 @@ const codeSnippets = {
                    setMessage("Something happened.");
                }, 2000);
           }, 1000);
-      };
-  
-      return (
+    };
+
+    return (
           <DemoWrapper className="justify-end">
                <AnimatePresence>
                   {showToast && (
-                      <motion.div
+                     <motion.div
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, scale: 0.9 }}
@@ -845,9 +845,9 @@ const codeSnippets = {
                               Dismiss
                               </button>
                           </div>
-                      </motion.div>
+                     </motion.div>
                   )}
-               </AnimatePresence>
+                 </AnimatePresence>
                 <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Click dismiss. Feel the subtle disapproval.</p>
           </DemoWrapper>
       );
@@ -869,7 +869,7 @@ const codeSnippets = {
                <div className="flex items-center">
                    <svg className="h-6 w-6 text-green-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                   <p className="text-lg font-medium text-green-800 dark:text-green-200">Success!?</p>
-               </div>
+            </div>
                <p className="text-xs text-green-700 dark:text-green-300 mt-auto pt-4">Celebrates achievement with a healthy dose of uncertainty.</p>
           </DemoWrapper>
       );
@@ -880,11 +880,11 @@ const codeSnippets = {
                <div className="flex items-center">
                    <svg className="h-6 w-6 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                    <p className="text-lg font-medium text-red-800 dark:text-red-200">Sorry, we messed up. Again.</p>
-               </div>
+            </div>
                 <p className="text-xs text-red-700 dark:text-red-300 mt-auto pt-4">Takes responsibility before you can even assign blame.</p>
-          </DemoWrapper>
-      );
-  };`,
+        </DemoWrapper>
+    );
+};`,
     delayedToast: `const DelayedReactionToast: React.FC = () => {
       const [showToast, setShowToast] = useState(false);
       const [isLoading, setIsLoading] = useState(false);
@@ -906,13 +906,13 @@ const codeSnippets = {
       };
   
        // Cleanup timeout on unmount
-      useEffect(() => {
+    useEffect(() => {
           return () => {
               if (toastId.current) clearTimeout(toastId.current);
           };
       }, []);
-  
-      return (
+
+    return (
           <DemoWrapper className="justify-center relative h-[150px]">
                <button
                    onClick={handleClick}
@@ -924,7 +924,7 @@ const codeSnippets = {
                <div className="absolute bottom-5 right-5 z-20">
                    <AnimatePresence>
                       {showToast && (
-                          <motion.div
+                <motion.div
                               initial={{ opacity: 0, y: 20 }}
                               animate={{ opacity: 1, y: 0 }}
                               exit={{ opacity: 0, scale: 0.9 }}
@@ -959,11 +959,11 @@ const codeSnippets = {
             transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 0.6, delay: 0.4 }}
           />
            <span className="ml-2 text-xl">😔</span>
-        </div>
+            </div>
         <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Standard loading dots, plus despair.</p>
-      </DemoWrapper>
+        </DemoWrapper>
     );
-  };`,
+};`,
     underminingSuccess: `const UnderminingSuccessToast: React.FC = () => {
       return (
            <DemoWrapper className="bg-green-50 dark:bg-green-900 border-green-200 dark:border-green-700">
@@ -1043,7 +1043,7 @@ const codeSnippets = {
     };
   
     const options = ['Developer', 'Designer', 'Manager', 'Other'];
-  
+
     return (
       <DemoWrapper>
         <select
@@ -1059,7 +1059,7 @@ const codeSnippets = {
   
         <AnimatePresence>
           {showQuiz && (
-             <motion.div
+                    <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
@@ -1067,37 +1067,37 @@ const codeSnippets = {
               >
                   <p className="text-sm font-medium text-yellow-800 dark:text-yellow-200">Existential Quiz Unlocked!</p>
                   <p className="text-xs text-yellow-700 dark:text-yellow-300 mt-1">Who are you, *really*?</p>
-             </motion.div>
-          )}
-        </AnimatePresence>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Selecting "Other" triggers a brief identity crisis.</p>
-      </DemoWrapper>
+        </DemoWrapper>
     );
-  };`,
+};`,
     oversharingSheet: `const OversharingBottomSheet: React.FC = () => {
-      const [isOpen, setIsOpen] = useState(false);
-  
-      // Effect to add/remove body scroll lock
-      useEffect(() => {
-        if (isOpen) {
-          document.body.style.overflow = 'hidden';
-        } else {
-          document.body.style.overflow = 'unset';
-        }
-        return () => { document.body.style.overflow = 'unset'; };
-      }, [isOpen]);
-  
-      return (
+    const [isOpen, setIsOpen] = useState(false);
+
+    // Effect to add/remove body scroll lock
+    useEffect(() => {
+      if (isOpen) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = 'unset';
+      }
+      return () => { document.body.style.overflow = 'unset'; };
+    }, [isOpen]);
+
+    return (
           <DemoWrapper className="items-stretch justify-end w-full relative overflow-hidden">
               <button
                   onClick={() => setIsOpen(true)}
                   className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded absolute top-4 left-1/2 transform -translate-x-1/2"
               >
                   Show Bottom Sheet
-              </button>
-               <AnimatePresence>
-                  {isOpen && (
-                      <motion.div
+            </button>
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
                           key="bottom-sheet"
                           initial={{ y: "100%" }}
                           animate={{ y: "0%" }}
@@ -1107,19 +1107,19 @@ const codeSnippets = {
                       >
                           <h5 className="text-lg font-semibold mb-1 text-gray-900 dark:text-white">Here's too much info.</h5>
                           <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">We're all figuring it out. Like, did you know this component uses absolute positioning and framer-motion? It's trying its best.</p>
-                          <button
-                              onClick={() => setIsOpen(false)}
+                            <button
+                                onClick={() => setIsOpen(false)}
                               className="mt-auto ml-auto px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded"
-                          >
+                             >
                               Close (Please)
-                          </button>
-                      </motion.div>
-                  )}
-               </AnimatePresence>
+                             </button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 absolute bottom-2 left-1/2 transform -translate-x-1/2">Simulates a bottom sheet appearing.</p>
-          </DemoWrapper>
-      );
-  };`,
+        </DemoWrapper>
+    );
+};`,
     hesitantSwipe: `const HesitantSwipeToDelete: React.FC = () => {
       const [itemState, setItemState] = useState('idle'); // idle, confirming, gone
       const [showItem, setShowItem] = useState(true);
@@ -1152,13 +1152,13 @@ const codeSnippets = {
               setItemState('idle');
               console.log("Phew. Changed your mind?");
           }
-      };
-  
-      return (
+    };
+
+    return (
           <DemoWrapper className="w-full overflow-hidden">
                <AnimatePresence>
                   {showItem && (
-                      <motion.div
+                     <motion.div
                           key="swipe-item"
                           initial={{ x: 0 }}
                           animate={{ x: itemState === 'confirming' ? '-50%' : (itemState === 'gone' ? '-100%' : 0) }}
@@ -1173,15 +1173,15 @@ const codeSnippets = {
                                <button onClick={handleCancel} className="bg-gray-500 hover:bg-gray-600 text-white h-full px-3 text-xs">Cancel</button>
                                <button onClick={handleConfirm} className="bg-red-600 hover:bg-red-700 text-white h-full px-3 text-xs rounded-r">Delete?</button>
                           </div>
-                      </motion.div>
+                     </motion.div>
                   )}
-              </AnimatePresence>
+                 </AnimatePresence>
                {itemState === 'idle' && <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Click the item to simulate swiping.</p>}
                {itemState === 'confirming' && <p className="text-xs text-red-500 dark:text-red-400 mt-auto pt-4">Really sure? Click Delete again.</p>}
                {itemState === 'gone' && !showItem && <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">It's gone. Hope that was the right choice.</p>}
-          </DemoWrapper>
-      );
-  };`,
+        </DemoWrapper>
+    );
+};`,
     rethinkingAccordion: `const RethinkingAccordion: React.FC = () => {
       const [isOpen, setIsOpen] = useState(false);
       const [isRethinking, setIsRethinking] = useState(false);
@@ -1206,14 +1206,14 @@ const codeSnippets = {
           }
       };
   
-       useEffect(() => {
+    useEffect(() => {
           // Cleanup timeout on unmount
           return () => {
               if (timeoutRef.current) clearTimeout(timeoutRef.current);
           };
       }, []);
-  
-      return (
+
+    return (
           <DemoWrapper className="items-stretch justify-start w-full">
               <button
                   onClick={handleClick}
@@ -1221,33 +1221,7 @@ const codeSnippets = {
                   aria-expanded={isOpen}
               >
                   <span className="font-medium">Important Section</span>
-                  <span className={\`transition-transform \${isOpen ? 'rotate-180' : ''}\`}>
-                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-                  </span>
-              </button>
-              <AnimatePresence initial={false}>
-                  {isOpen && (
-                      <motion.div
-                          key="content"
-                          initial="collapsed"
-                          animate="open"
-                          exit="collapsed"
-                          variants={{
-                              open: { opacity: 1, height: "auto" },
-                              collapsed: { opacity: 0, height: 0 }
-                          }}
-                          transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
-                          className="p-4 bg-white dark:bg-gray-800 rounded-b overflow-hidden"
-                      >
-                          This is the content. It seems important, but closing it might trigger second thoughts.
-                          {isRethinking && <p className="text-xs italic text-gray-500 dark:text-gray-400 mt-2">Hmm, maybe keep this open?</p>}
-                      </motion.div>
-                  )}
-              </AnimatePresence>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">Collapsing it causes brief existential doubt.</p>
-          </DemoWrapper>
-      );
-  };`,
+                  <span className={\`transition-transform \${isOpen ? \'rotate-180\' : \'\'}\`}>\n                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>\n                </span>\n            </button>\n            <AnimatePresence initial={false}>\n                {isOpen && (\n                    <motion.div\n                        key="content"\n                        initial="collapsed"\n                        animate="open"\n                        exit="collapsed"\n                        variants={{\n                            open: { opacity: 1, height: "auto" },\n                            collapsed: { opacity: 0, height: 0 }\n                        }}\n                        transition={{ duration: 0.3, ease: "easeInOut" }}\n                        className="p-4 bg-white dark:bg-gray-800 rounded-b overflow-hidden"\n                    >\n                        <AnimatePresence mode="wait">\n                           {isRethinking ? (\n                                <motion.p\n                                    key="overwhelmed-msg"\n                                    initial={{ opacity: 0 }}\n                                    animate={{ opacity: 1 }}\n                                    exit={{ opacity: 0 }}\n                                    transition={{ duration: 0.2 }}\n                                    className="text-red-600 dark:text-red-400 font-semibold"\n                                >\n                                    Too much. Collapsing now.\n                                </motion.p>\n                           ) : (\n                                <motion.p\n                                    key="content-msg"\n                                     initial={{ opacity: 0 }}\n                                    animate={{ opacity: 1 }}\n                                    exit={{ opacity: 0 }}\n                                    transition={{ duration: 0.2 }}\n                                >\n                                    Here\'s the detailed content you wanted...\n                                </motion.p>\n                           )}\n                        </AnimatePresence>\n                    </motion.div>\n                )}\n            </AnimatePresence>\n            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">Expands, gets overwhelmed, collapses.</p>\n        </DemoWrapper>\n    );\n};`,
     snoozeSwipe: `const SnoozeSwipeNotification: React.FC = () => {
       const [itemState, setItemState] = useState('idle'); // idle, snoozing, gone
       const [showItem, setShowItem] = useState(true);
@@ -1308,7 +1282,7 @@ const codeSnippets = {
       );
   };`,
     placeboZoom: `const PlaceboPinchZoom: React.FC = () => {
-    return (
+     return (
       <DemoWrapper className="items-center justify-center text-center">
         <div className="w-32 h-32 bg-gray-200 dark:bg-gray-700 rounded flex items-center justify-center text-sm border border-dashed border-gray-400 select-none touch-none">
           Try Pinching Here (Visually)
@@ -1317,65 +1291,12 @@ const codeSnippets = {
       </DemoWrapper>
     );
   };`,
-    haikuSheet: `const HaikuBottomSheet: React.FC = () => {
-      const [isOpen, setIsOpen] = useState(false);
-  
-      // Effect to add/remove body scroll lock
-      useEffect(() => {
-        if (isOpen) {
-          document.body.style.overflow = 'hidden';
-        } else {
-          document.body.style.overflow = 'unset';
-        }
-        return () => { document.body.style.overflow = 'unset'; };
-      }, [isOpen]);
-  
-      return (
-          <DemoWrapper className="items-stretch justify-end w-full relative overflow-hidden">
-              <button
-                  onClick={() => setIsOpen(true)}
-                  className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded absolute top-4 left-1/2 transform -translate-x-1/2"
-              >
-                  Read Haiku
-              </button>
-               <AnimatePresence>
-                  {isOpen && (
-                      <motion.div
-                           key="haiku-sheet-backdrop"
-                           initial={{ opacity: 0 }}
-                           animate={{ opacity: 1 }}
-                           exit={{ opacity: 0 }}
-                           className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-end"
-                           onClick={() => setIsOpen(false)}
-                       >
-                          <motion.div
-                              key="haiku-sheet-content"
-                              initial={{ y: "100%" }}
-                              animate={{ y: "0%" }}
-                              exit={{ y: "100%" }}
-                              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                              className="w-full h-auto bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 rounded-t-lg shadow-xl p-5 flex flex-col text-center"
-                              onClick={(e) => e.stopPropagation()}
-                          >
-                              <p className="text-base leading-relaxed text-gray-700 dark:text-gray-300 mb-3 font-serif italic">
-                                  scroll down, scroll back<br/>
-                                  nothing more to see down here<br/>
-                                  go touch grass, please now
-                              </p>
-                              <button
-                                  onClick={() => setIsOpen(false)}
-                                  className="mt-2 mx-auto px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded"
-                              >
-                                  Okay
-                              </button>
-                          </motion.div>
-                      </motion.div>
-                  )}
-               </AnimatePresence>
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 absolute bottom-2 left-1/2 transform -translate-x-1/2 w-full text-center">Opens a bottom sheet containing only a haiku.</p>
-          </DemoWrapper>
-      );
-  };`,
+    haikuSheet: `const HaikuBottomSheet: React.FC = () => { ... };`,
+    // New Button Interaction Snippets (Placeholders)
+    changingMindSubmit: `const ChangingMindSubmitButton: React.FC = () => {\\n    const [state, setState] = useState<'idle' | 'thinking' | 'final'>('idle');\\n    const [label, setLabel] = useState('Submit');\\n    const timeoutRef = useRef<NodeJS.Timeout | null>(null);\\n\\n    const handleClick = () => {\\n        if (state !== 'idle') return; // Prevent multiple clicks while thinking\\n\\n        setState('thinking');\\n        setLabel('Wait...');\\n        console.log(\"Submit clicked... rethinking...\");\\n\\n        if (timeoutRef.current) clearTimeout(timeoutRef.current);\\n        timeoutRef.current = setTimeout(() => {\\n            setState('final');\\n            setLabel('Okay fine.');\\n            console.log(\"...Reconsidered. Fine.\");\\n            // Optionally reset after a while\\n            // setTimeout(() => {\\n            //     setState('idle');\\n            //     setLabel('Submit');\\n            // }, 2000);\\n        }, 1500); // 1.5 second thinking time\\n    };\\n\\n     // Cleanup timeout on unmount\\n    useEffect(() => {\\n        return () => {\\n            if (timeoutRef.current) clearTimeout(timeoutRef.current);\\n        };\\n    }, []);\\n\\n    return (\\n        <DemoWrapper>\\n            <motion.button\\n                onClick={handleClick}\\n                className={\`px-6 py-3 font-semibold rounded-lg shadow-md transition-colors duration-200 ease-in-out relative overflow-hidden \${\\n                    state === 'idle' ? 'bg-indigo-600 hover:bg-indigo-700 text-white' :\\n                    state === 'thinking' ? 'bg-yellow-500 text-white cursor-wait' :\\n                    'bg-green-600 text-white cursor-default' // Final state\\n                }\`}\\n                disabled={state === 'thinking'}\\n            >\\n                <AnimatePresence mode=\"wait\">\\n                    <motion.span\\n                        key={state}\\n                        initial={{ opacity: 0, y: state === 'thinking' ? 0 : 10 }}\\n                        animate={{ opacity: 1, y: 0 }}\\n                        exit={{ opacity: 0, y: -10 }}\\n                        transition={{ duration: 0.2 }}\\n                        className=\"inline-flex items-center\"\\n                    >\\n                        {state === 'thinking' && (\\n                           <motion.svg className=\"animate-spin -ml-1 mr-2 h-4 w-4 text-white\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" initial={{ rotate: 0 }} animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: \"linear\" }}>\\n                              <circle className=\"opacity-25\" cx=\"12\" cy=\"12\" r=\"10\" stroke=\"currentColor\" strokeWidth=\"4\"></circle>\\n                              <path className=\"opacity-75\" fill=\"currentColor\" d=\"M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z\"></path>\\n                            </motion.svg>\\n                        )}\\n                        {label}\\n                    </motion.span>\\n                </AnimatePresence>\\n\\n            </motion.button>\\n            <p className=\"text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4\">Click -> Spins -> \"Wait...\" -> \"Okay fine.\"</p>\\n        </DemoWrapper>\\n    );\\n};`,
+    doNotPressButton: `const DoNotPressButton: React.FC = () => {\\n    const [isHovering, setIsHovering] = useState(false);\\n    const [isClicked, setIsClicked] = useState(false);\\n\\n    const handleClick = () => {\\n        setIsClicked(true);\\n        console.log(\"You were warned.\");\\n    };\\n\\n    return (\\n        <DemoWrapper>\\n            <button\\n                onClick={handleClick}\\n                onMouseEnter={() => setIsHovering(true)}\\n                onMouseLeave={() => setIsHovering(false)}\\n                className={\`px-8 py-4 font-bold text-lg rounded-lg shadow-lg transition-all duration-200 ease-in-out \${\\n                    isClicked\\n                        ? 'bg-gray-500 text-gray-200 cursor-not-allowed scale-95'\\n                        : 'bg-red-600 hover:bg-red-700 text-white transform hover:scale-105'\\n                }\`}\\n                disabled={isClicked}\\n            >\\n                {isClicked ? \"You did this.\" : (isHovering ? \"Seriously.\" : \"Do Not Press\")}\\n            </button>\\n            <p className=\"text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4\">Hover: \"Seriously.\" Click: \"You did this.\"</p>\\n        </DemoWrapper>\\n    );\\n};`,
+    cooldownCTA: `const CooldownCTAButton: React.FC = () => {\\n    const [isOnCooldown, setIsOnCooldown] = useState(false);\\n    const cooldownDuration = 3000; // 3 seconds\\n\\n    const handleClick = () => {\\n        if (isOnCooldown) return;\\n\\n        setIsOnCooldown(true);\\n        console.log(\"Button clicked. Entering cooldown...\");\\n        setTimeout(() => {\\n            setIsOnCooldown(false);\\n            console.log(\"...Cooldown finished.\");\\n        }, cooldownDuration);\\n    };\\n\\n    return (\\n        <DemoWrapper>\\n             <button\\n                onClick={handleClick}\\n                className={\`px-6 py-3 font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out relative overflow-hidden \${\\n                    isOnCooldown\\n                        ? 'bg-gray-400 text-gray-700 cursor-wait'\\n                        : 'bg-blue-600 hover:bg-blue-700 text-white'\\n                }\`}\\n                disabled={isOnCooldown}\\n             >\\n                <AnimatePresence mode=\"wait\">\\n                    <motion.span\\n                        key={isOnCooldown ? 'cooldown' : 'active'}\\n                        initial={{ opacity: 0, y: 10 }}\\n                        animate={{ opacity: 1, y: 0 }}\\n                        exit={{ opacity: 0, y: -10 }}\\n                        transition={{ duration: 0.2 }}\\n                    >\\n                        {isOnCooldown ? 'Brb recharging...' : 'Engage!'}\\n                    </motion.span>\\n                 </AnimatePresence>\\n            </button>\\n            <p className=\"text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4\">After click, label becomes: \"Brb recharging...\"</p>\\n        </DemoWrapper>\\n    );\\n};`,
+    moodToggleButton: `const MoodToggleButton: React.FC = () => {\\n    const moods = [\"Click me\", \"Ignore me\", \"Validate me\", \"Never mind.\"];\\n    const [currentMoodIndex, setCurrentMoodIndex] = useState(0);\\n\\n    const handleHover = () => {\\n        setCurrentMoodIndex((prevIndex) => (prevIndex + 1) % moods.length);\\n    };\\n\\n    return (\\n        <DemoWrapper>\\n            <button\\n                onMouseEnter={handleHover}\\n                className=\"px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg shadow-md min-w-[150px] text-center relative overflow-hidden\"\\n            >\\n                <AnimatePresence mode=\"wait\">\\n                     <motion.span\\n                         key={currentMoodIndex}\\n                         initial={{ opacity: 0, y: 10 }}\\n                         animate={{ opacity: 1, y: 0 }}\\n                         exit={{ opacity: 0, y: -10 }}\\n                         transition={{ duration: 0.2 }}\\n                         className=\"block\" // Ensure span takes full button width for centering\\n                     >\\n                        {moods[currentMoodIndex]}\\n                     </motion.span>\\n                 </AnimatePresence>\\n            </button>\\n            <p className=\"text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4\">Each hover changes the text mood.</p>\\n        </DemoWrapper>\\n    );\\n};`,
     // Placeholders remain as placeholders until components are created
     newFormPattern1: `// TODO: Implement New Form Pattern 1`,
     newFormPattern2: `// TODO: Implement New Form Pattern 2`,
@@ -1386,6 +1307,11 @@ const codeSnippets = {
     newMicrointeraction3: `// TODO: Implement New Microinteraction 3`,
     newMicrointeraction4: `// TODO: Implement New Microinteraction 4`,
     newMobilePattern4: `// TODO: Implement New Mobile Pattern 4`,
+    shyCard: `const ShyCard: React.FC = () => {\n    const cardRef = useRef<HTMLDivElement>(null);\n    const [rotate, setRotate] = useState({ x: 0, y: 0 });\n\n    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {\n        if (!cardRef.current) return;\n        const rect = cardRef.current.getBoundingClientRect();\n        const x = e.clientX - rect.left; // x position within the element.\n        const y = e.clientY - rect.top;  // y position within the element.\n\n        const centerX = rect.width / 2;\n        const centerY = rect.height / 2;\n\n        const rotateX = ((y - centerY) / centerY) * -10; // Max rotate 10deg\n        const rotateY = ((x - centerX) / centerX) * 10;  // Max rotate 10deg\n\n        setRotate({ x: rotateX, y: rotateY });\n    };\n\n    const handleMouseLeave = () => {\n        setRotate({ x: 0, y: 0 }); // Reset rotation\n    };\n\n    return (\n        <DemoWrapper className="items-center justify-center perspective">\n            <motion.div\n                ref={cardRef}\n                onMouseMove={handleMouseMove}\n                onMouseLeave={handleMouseLeave}\n                className="w-48 h-32 bg-gradient-to-br from-purple-400 to-indigo-500 dark:from-purple-600 dark:to-indigo-700 rounded-lg shadow-lg flex items-center justify-center text-white font-medium p-4 text-center cursor-default transform-style-3d"\n                style={{\n                    rotateX: rotate.x,\n                    rotateY: rotate.y,\n                }}\n                transition={{ type: \'spring\', stiffness: 300, damping: 20 }}\n            >\n                Give me space.\n            </motion.div>\n            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Tilts away from your cursor. It\'s shy.</p>\n            {/* Add CSS for perspective and transform-style if not globally defined */}\n            <style>{\`.perspective { perspective: 1000px; } .transform-style-3d { transform-style: preserve-3d; }\`}</style>\n        </DemoWrapper>\n    );\n};`,
+    unhelpfulHover: `const UnhelpfulHoverReveal: React.FC = () => {\n    return (\n         <DemoWrapper>\n            <div className="relative group">\n                <span className="inline-block bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded cursor-help">\n                    Hover for info\n                </span>\n                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max px-3 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                    There\'s nothing here. Just vibes.\n                     <svg className="absolute text-gray-900 h-2 w-full left-0 top-full" x="0px" y="0px" viewBox="0 0 255 255" xmlSpace="preserve"><polygon className="fill-current" points="0,0 127.5,127.5 255,0"/></svg>\n                </div>\n            </div>\n            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Reveals absolutely nothing useful on hover.</p>\n        </DemoWrapper>\n    );\n};`,
+    passiveFlipCard: `const PassiveAggressiveFlipCard: React.FC = () => {\n    const [isFlipped, setIsFlipped] = useState(false);\n\n    return (\n        <DemoWrapper className="items-center justify-center perspective h-[150px]">\n            <motion.div\n                className="w-48 h-32 relative cursor-pointer transform-style-3d"\n                onClick={() => setIsFlipped(!isFlipped)}\n                animate={{ rotateY: isFlipped ? 180 : 0 }}\n                transition={{ duration: 0.5 }}\n            >\n                {/* Front */}\n                <motion.div\n                    className="absolute w-full h-full bg-blue-500 dark:bg-blue-700 rounded-lg shadow-md flex items-center justify-center text-white p-4 text-center backface-hidden"\n                     style={{ rotateY: 0 }} // Explicitly set rotateY to prevent flickering issues\n                >\n                    Click to Flip\n                </motion.div>\n                {/* Back */}\n                <motion.div\n                    className="absolute w-full h-full bg-yellow-400 dark:bg-yellow-600 rounded-lg shadow-md flex items-center justify-center text-gray-800 p-4 text-center backface-hidden"\n                    style={{ rotateY: 180 }} // Start flipped\n                >\n                    Was that worth the click?\n                </motion.div>\n            </motion.div>\n             <p className="text-xs text-gray-500 dark:text-gray-400 absolute bottom-2 left-1/2 transform -translate-x-1/2 w-full text-center">Flips over to question your choices.</p>\n             {/* Add CSS for perspective, transform-style, backface-visibility */}\n             <style>{\`\n                .perspective { perspective: 1000px; }\n                .transform-style-3d { transform-style: preserve-3d; }\n                .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }\n            \`}</style>\n        </DemoWrapper>\n    );\n};`,
+    overwhelmedCard: `const OverwhelmedExpandableCard: React.FC = () => {\n    const [isOpen, setIsOpen] = useState(false);\n    const [isOverwhelmed, setIsOverwhelmed] = useState(false);\n    const timeoutRef = useRef<NodeJS.Timeout | null>(null);\n    const collapseTimeoutRef = useRef<NodeJS.Timeout | null>(null);\n    const resetTimeoutRef = useRef<NodeJS.Timeout | null>(null);\n\n    const handleClick = () => {\n        if (isOpen || isOverwhelmed) return; // Prevent interaction while closing/overwhelmed\n\n        setIsOpen(true);\n        console.log("Expanding... oh no.");\n        if (timeoutRef.current) clearTimeout(timeoutRef.current);\n        timeoutRef.current = setTimeout(() => {\n            setIsOverwhelmed(true);\n            console.log("Too much!");\n             // Start collapsing after showing overwhelmed message\n             if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current);\n             collapseTimeoutRef.current = setTimeout(() => {\n                 setIsOpen(false);\n                 // Delay resetting overwhelmed state until after collapse animation might finish (approx 300ms)\n                 if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current);\n                 resetTimeoutRef.current = setTimeout(() => setIsOverwhelmed(false), 300);\n                 console.log("Collapsing. Phew.");\n             }, 800); // How long to show the overwhelmed message\n        }, 1000); // How long to stay open before getting overwhelmed\n    };\n\n    useEffect(() => {\n        // Cleanup all timeouts on unmount\n        return () => {\n            if (timeoutRef.current) clearTimeout(timeoutRef.current);\n            if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current);\n            if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current);\n        };\n    }, []);\n\n\n    return (\n        <DemoWrapper className="items-stretch justify-start w-full">\n            <button\n                onClick={handleClick}\n                className="w-full flex justify-between items-center p-3 bg-gray-100 dark:bg-gray-700 rounded-t border-b border-gray-200 dark:border-gray-600"\n                aria-expanded={isOpen}\n                disabled={isOpen || isOverwhelmed}\n            >\n                <span className="font-medium">Expand Content</span>\n                <span className={\`transition-transform \${isOpen ? \'rotate-180\' : \'\'}\`}>\n                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>\n                </span>\n            </button>\n            <AnimatePresence initial={false}>\n                {isOpen && (\n                    <motion.div\n                        key="content-overwhelmed"\n                        initial="collapsed"\n                        animate="open"\n                        exit="collapsed"\n                        variants={{\n                            open: { opacity: 1, height: "auto" },\n                            collapsed: { opacity: 0, height: 0 }\n                        }}\n                        transition={{ duration: 0.3, ease: "easeInOut" }}\n                        className="p-4 bg-white dark:bg-gray-800 rounded-b overflow-hidden"\n                    >\n                        <AnimatePresence mode="wait">\n                           {isOverwhelmed ? (\n                                <motion.p\n                                    key="overwhelmed-msg"\n                                    initial={{ opacity: 0 }}\n                                    animate={{ opacity: 1 }}\n                                    exit={{ opacity: 0 }}\n                                    transition={{ duration: 0.2 }}\n                                    className="text-red-600 dark:text-red-400 font-semibold"\n                                >\n                                    Too much. Collapsing now.\n                                </motion.p>\n                           ) : (\n                                <motion.p\n                                    key="content-msg"\n                                     initial={{ opacity: 0 }}\n                                    animate={{ opacity: 1 }}\n                                    exit={{ opacity: 0 }}\n                                    transition={{ duration: 0.2 }}\n                                >\n                                    Here\'s the detailed content you wanted...\n                                </motion.p>\n                           )}\n                        </AnimatePresence>\n                    </motion.div>\n                )}\n            </AnimatePresence>\n            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">Expands, gets overwhelmed, collapses.</p>\n        </DemoWrapper>\n    );\n};`,
 };
 
 export default codeSnippets; 

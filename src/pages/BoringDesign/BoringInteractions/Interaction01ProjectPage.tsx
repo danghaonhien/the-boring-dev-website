@@ -812,7 +812,6 @@ const RethinkingAccordion: React.FC = () => {
         </DemoWrapper>
     );
 };
-
 // --- NEW COMPONENTS START HERE ---
 
 // --- Navigation Patterns (New) ---
@@ -941,7 +940,6 @@ const RegretfulDropdown: React.FC = () => {
     </DemoWrapper>
   );
 };
-
 // --- Component Interactions (New Buttons & Cards) ---
 
 // New Button 1: Are You Sure-Sure Button
@@ -1737,6 +1735,64 @@ const Interaction01ProjectPage: React.FC = () => {
                >
                   <UnfinishingProgressBar />
                </DemoShowcase>
+               {/* NEW BUTTONS ADDED HERE */}
+               <DemoShowcase
+                  title="Submit Button That Changes Its Mind"
+                  description={`Click -> Spin -> "Wait..." -> "Okay fine."}`}
+                  effort="Medium" codeSnippet={codeSnippets.changingMindSubmit}
+               >
+                   <ChangingMindSubmitButton />
+               </DemoShowcase>
+               <DemoShowcase
+                  title={`"Do Not Press" Button`}
+                  description={`Obvious red button. Hover: "Seriously." Click: "You did this."`}
+                  effort="Low" codeSnippet={codeSnippets.doNotPressButton}
+               >
+                   <DoNotPressButton />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="CTA Button With Cooldown"
+                  description={`After click, label becomes: "Brb recharging..."`}
+                  effort="Low" codeSnippet={codeSnippets.cooldownCTA}
+               >
+                   <CooldownCTAButton />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Button with Mood Toggle"
+                  description={`Hover changes text: "Click me" -> "Ignore me" -> "Validate me" -> "Never mind."}`}
+                  effort="Medium" codeSnippet={codeSnippets.moodToggleButton}
+               >
+                   <MoodToggleButton />
+               </DemoShowcase>
+               {/* --- NEW CARD DEMOS --- */}
+                <DemoShowcase
+                  title="Card That Tilts Away From Cursor"
+                  description="It's shy. Give it space."
+                  effort="Medium" codeSnippet={codeSnippets.shyCard} // Placeholder snippet key
+               >
+                   <ShyCard />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Hover Reveal That's Not Helpful"
+                  description={`Hover → "There's nothing here. Just vibes."`}
+                  effort="Low" codeSnippet={codeSnippets.unhelpfulHover} // Placeholder snippet key
+               >
+                   <UnhelpfulHoverReveal />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Flip Card That's Passive-Aggressive"
+                  description={`Back side: "Was that worth the click?"`}
+                  effort="Medium" codeSnippet={codeSnippets.passiveFlipCard} // Placeholder snippet key
+               >
+                   <PassiveAggressiveFlipCard />
+               </DemoShowcase>
+               <DemoShowcase
+                  title="Expandable Card That's Overwhelmed"
+                  description={`Open → Text: "Too much. Collapsing now."`}
+                  effort="Medium" codeSnippet={codeSnippets.overwhelmedCard} // Placeholder snippet key
+               >
+                   <OverwhelmedExpandableCard />
+               </DemoShowcase>
              </div>
            </Slide>
 
@@ -1938,5 +1994,394 @@ const Interaction01ProjectPage: React.FC = () => {
     </PageTransition>
   );
 };
-
 export default Interaction01ProjectPage;
+
+// --- BUTTON INTERACTIONS (NEW) ---
+
+// New Button 5: Submit Button That Changes Its Mind
+const ChangingMindSubmitButton: React.FC = () => {
+    const [state, setState] = useState<'idle' | 'thinking' | 'final'>('idle');
+    const [label, setLabel] = useState('Submit');
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    const handleClick = () => {
+        if (state !== 'idle') return; // Prevent multiple clicks while thinking
+
+        setState('thinking');
+        setLabel('Wait...');
+        console.log("Submit clicked... rethinking...");
+
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
+            setState('final');
+            setLabel('Okay fine.');
+            console.log("...Reconsidered. Fine.");
+            // Optionally reset after a while
+            // setTimeout(() => {
+            //     setState('idle');
+            //     setLabel('Submit');
+            // }, 2000);
+        }, 1500); // 1.5 second thinking time
+    };
+
+     // Cleanup timeout on unmount
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
+    }, []);
+
+    return (
+        <DemoWrapper>
+            <motion.button
+                onClick={handleClick}
+                className={`px-6 py-3 font-semibold rounded-lg shadow-md transition-colors duration-200 ease-in-out relative overflow-hidden ${
+                    state === 'idle' ? 'bg-indigo-600 hover:bg-indigo-700 text-white' :
+                    state === 'thinking' ? 'bg-yellow-500 text-white cursor-wait' :
+                    'bg-green-600 text-white cursor-default' // Final state
+                }`}
+                disabled={state === 'thinking'}
+            >
+                <AnimatePresence mode="wait">
+                    <motion.span
+                        key={state}
+                        initial={{ opacity: 0, y: state === 'thinking' ? 0 : 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="inline-flex items-center"
+                    >
+                        {state === 'thinking' && (
+                           <motion.svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" initial={{ rotate: 0 }} animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }}>
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </motion.svg>
+                        )}
+                        {label}
+                    </motion.span>
+                </AnimatePresence>
+
+            </motion.button>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Click -&gt; Spins -&gt; "Wait..." -&gt; "Okay fine."</p>
+        </DemoWrapper>
+    );
+};
+
+
+// New Button 6: "Do Not Press" Button
+const DoNotPressButton: React.FC = () => {
+    const [isHovering, setIsHovering] = useState(false);
+    const [isClicked, setIsClicked] = useState(false);
+
+    const handleClick = () => {
+        setIsClicked(true);
+        console.log("You were warned.");
+    };
+
+    return (
+        <DemoWrapper>
+            <button
+                onClick={handleClick}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+                className={`px-8 py-4 font-bold text-lg rounded-lg shadow-lg transition-all duration-200 ease-in-out ${
+                    isClicked
+                        ? 'bg-gray-500 text-gray-200 cursor-not-allowed scale-95'
+                        : 'bg-red-600 hover:bg-red-700 text-white transform hover:scale-105'
+                }`}
+                disabled={isClicked}
+            >
+                {isClicked ? "You did this." : (isHovering ? "Seriously." : "Do Not Press")}
+            </button>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Hover: "Seriously." Click: "You did this."</p>
+        </DemoWrapper>
+    );
+};
+
+// New Button 7: CTA Button With Cooldown
+const CooldownCTAButton: React.FC = () => {
+    const [isOnCooldown, setIsOnCooldown] = useState(false);
+    const cooldownDuration = 3000; // 3 seconds
+
+    const handleClick = () => {
+        if (isOnCooldown) return;
+
+        setIsOnCooldown(true);
+        console.log("Button clicked. Entering cooldown...");
+        setTimeout(() => {
+            setIsOnCooldown(false);
+            console.log("...Cooldown finished.");
+        }, cooldownDuration);
+    };
+
+    return (
+        <DemoWrapper>
+             <button
+                onClick={handleClick}
+                className={`px-6 py-3 font-semibold rounded-lg shadow-md transition-all duration-300 ease-in-out relative overflow-hidden ${
+                    isOnCooldown
+                        ? 'bg-gray-400 text-gray-700 cursor-wait'
+                        : 'bg-blue-600 hover:bg-blue-700 text-white'
+                }`}
+                disabled={isOnCooldown}
+             >
+                <AnimatePresence mode="wait">
+                    <motion.span
+                        key={isOnCooldown ? 'cooldown' : 'active'}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                    >
+                        {isOnCooldown ? 'Brb recharging...' : 'Engage!'}
+                    </motion.span>
+                 </AnimatePresence>
+            </button>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">After click, label becomes: "Brb recharging..."</p>
+        </DemoWrapper>
+    );
+};
+
+
+// New Button 8: Button with Mood Toggle
+const MoodToggleButton: React.FC = () => {
+    const moods = ["Click me", "Ignore me", "Validate me", "Never mind."];
+    const [currentMoodIndex, setCurrentMoodIndex] = useState(0);
+
+    const handleHover = () => {
+        setCurrentMoodIndex((prevIndex) => (prevIndex + 1) % moods.length);
+    };
+
+    return (
+        <DemoWrapper>
+            <button
+                onMouseEnter={handleHover}
+                className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg shadow-md min-w-[150px] text-center relative overflow-hidden"
+            >
+                <AnimatePresence mode="wait">
+                     <motion.span
+                         key={currentMoodIndex}
+                         initial={{ opacity: 0, y: 10 }}
+                         animate={{ opacity: 1, y: 0 }}
+                         exit={{ opacity: 0, y: -10 }}
+                         transition={{ duration: 0.2 }}
+                         className="block" // Ensure span takes full button width for centering
+                     >
+                        {moods[currentMoodIndex]}
+                     </motion.span>
+                 </AnimatePresence>
+            </button>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Each hover changes the text mood.</p>
+        </DemoWrapper>
+    );
+};
+
+// --- END NEW BUTTON INTERACTIONS ---
+
+
+// --- Form Patterns ---
+// ... existing code ...
+
+
+// New Card 5: Card That Tilts Away From Cursor
+const ShyCard: React.FC = () => {
+    const cardRef = useRef<HTMLDivElement>(null);
+    const [rotate, setRotate] = useState({ x: 0, y: 0 });
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left; // x position within the element.
+        const y = e.clientY - rect.top;  // y position within the element.
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX = ((y - centerY) / centerY) * -10; // Max rotate 10deg
+        const rotateY = ((x - centerX) / centerX) * 10;  // Max rotate 10deg
+
+        setRotate({ x: rotateX, y: rotateY });
+    };
+
+    const handleMouseLeave = () => {
+        setRotate({ x: 0, y: 0 }); // Reset rotation
+    };
+
+    return (
+        <DemoWrapper className="items-center justify-center perspective">
+            <motion.div
+                ref={cardRef}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                className="w-48 h-32 bg-gradient-to-br from-purple-400 to-indigo-500 dark:from-purple-600 dark:to-indigo-700 rounded-lg shadow-lg flex items-center justify-center text-white font-medium p-4 text-center cursor-default transform-style-3d"
+                style={{
+                    rotateX: rotate.x,
+                    rotateY: rotate.y,
+                }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            >
+                Give me space.
+            </motion.div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Tilts away from your cursor. It's shy.</p>
+            {/* Add CSS for perspective and transform-style if not globally defined */}
+            <style>{`.perspective { perspective: 1000px; } .transform-style-3d { transform-style: preserve-3d; }`}</style>
+        </DemoWrapper>
+    );
+};
+
+// New Card 6: Hover Reveal That's Not Helpful
+const UnhelpfulHoverReveal: React.FC = () => {
+    return (
+         <DemoWrapper>
+            <div className="relative group">
+                <span className="inline-block bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded cursor-help">
+                    Hover for info
+                </span>
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max px-3 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                    There's nothing here. Just vibes.
+                     <svg className="absolute text-gray-900 h-2 w-full left-0 top-full" x="0px" y="0px" viewBox="0 0 255 255" xmlSpace="preserve"><polygon className="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
+                </div>
+            </div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Reveals absolutely nothing useful on hover.</p>
+        </DemoWrapper>
+    );
+};
+
+// New Card 7: Flip Card That's Passive-Aggressive
+const PassiveAggressiveFlipCard: React.FC = () => {
+    const [isFlipped, setIsFlipped] = useState(false);
+
+    return (
+        <DemoWrapper className="items-center justify-center perspective h-[150px]">
+            <motion.div
+                className="w-48 h-32 relative cursor-pointer transform-style-3d"
+                onClick={() => setIsFlipped(!isFlipped)}
+                animate={{ rotateY: isFlipped ? 180 : 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                {/* Front */}
+                <motion.div
+                    className="absolute w-full h-full bg-blue-500 dark:bg-blue-700 rounded-lg shadow-md flex items-center justify-center text-white p-4 text-center backface-hidden"
+                     style={{ rotateY: 0 }} // Explicitly set rotateY to prevent flickering issues
+                >
+                    Click to Flip
+                </motion.div>
+                {/* Back */}
+                <motion.div
+                    className="absolute w-full h-full bg-yellow-400 dark:bg-yellow-600 rounded-lg shadow-md flex items-center justify-center text-gray-800 p-4 text-center backface-hidden"
+                    style={{ rotateY: 180 }} // Start flipped
+                >
+                    Was that worth the click?
+                </motion.div>
+            </motion.div>
+             <p className="text-xs text-gray-500 dark:text-gray-400 absolute bottom-2 left-1/2 transform -translate-x-1/2 w-full text-center">Flips over to question your choices.</p>
+             {/* Add CSS for perspective, transform-style, backface-visibility */}
+             <style>{`
+                .perspective { perspective: 1000px; }
+                .transform-style-3d { transform-style: preserve-3d; }
+                .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+            `}</style>
+        </DemoWrapper>
+    );
+};
+
+// New Card 8: Expandable Card That's Overwhelmed
+const OverwhelmedExpandableCard: React.FC = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [isOverwhelmed, setIsOverwhelmed] = useState(false);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const collapseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const resetTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    const handleClick = () => {
+        if (isOpen || isOverwhelmed) return; // Prevent interaction while closing/overwhelmed
+
+        setIsOpen(true);
+        console.log("Expanding... oh no.");
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        timeoutRef.current = setTimeout(() => {
+            setIsOverwhelmed(true);
+            console.log("Too much!");
+             // Start collapsing after showing overwhelmed message
+             if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current);
+             collapseTimeoutRef.current = setTimeout(() => {
+                 setIsOpen(false);
+                 // Delay resetting overwhelmed state until after collapse animation might finish (approx 300ms)
+                 if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current);
+                 resetTimeoutRef.current = setTimeout(() => setIsOverwhelmed(false), 300);
+                 console.log("Collapsing. Phew.");
+             }, 800); // How long to show the overwhelmed message
+        }, 1000); // How long to stay open before getting overwhelmed
+    };
+
+    useEffect(() => {
+        // Cleanup all timeouts on unmount
+        return () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+            if (collapseTimeoutRef.current) clearTimeout(collapseTimeoutRef.current);
+            if (resetTimeoutRef.current) clearTimeout(resetTimeoutRef.current);
+        };
+    }, []);
+
+
+    return (
+        <DemoWrapper className="items-stretch justify-start w-full">
+            <button
+                onClick={handleClick}
+                className="w-full flex justify-between items-center p-3 bg-gray-100 dark:bg-gray-700 rounded-t border-b border-gray-200 dark:border-gray-600"
+                aria-expanded={isOpen}
+                disabled={isOpen || isOverwhelmed}
+            >
+                <span className="font-medium">Expand Content</span>
+                <span className={`transition-transform ${isOpen ? 'rotate-180' : ''}`}>
+                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                </span>
+            </button>
+            <AnimatePresence initial={false}>
+                {isOpen && (
+                    <motion.div
+                        key="content-overwhelmed"
+                        initial="collapsed"
+                        animate="open"
+                        exit="collapsed"
+                        variants={{
+                            open: { opacity: 1, height: "auto" },
+                            collapsed: { opacity: 0, height: 0 }
+                        }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="p-4 bg-white dark:bg-gray-800 rounded-b overflow-hidden text-center"
+                    >
+                        <AnimatePresence mode="wait">
+                           {isOverwhelmed ? (
+                                <motion.p
+                                    key="overwhelmed-msg"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="text-red-600 dark:text-red-400 font-semibold"
+                                >
+                                    Too much. Collapsing now.
+                                </motion.p>
+                           ) : (
+                                <motion.p
+                                    key="content-msg"
+                                     initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                >
+                                    Here's the detailed content you wanted...
+                                </motion.p>
+                           )}
+                        </AnimatePresence>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4 text-center">Expands, gets overwhelmed, collapses.</p>
+        </DemoWrapper>
+    );
+};
+
+
+
