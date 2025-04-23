@@ -19,6 +19,7 @@ import MemeGenerator from '../components/MemeGenerator';
 import BoringDesignsSection from '../components/BoringDesignsSection';
 import IdeaGenerator from '../components/IdeaGenerator';
 import Header from '../components/Header';
+import { useTheme } from '../context/ThemeContext';
 // import boringSvg from '../assets/images/homepage/BORING.svg'; // Removed SVG import
 
 // Array of slogans
@@ -41,6 +42,7 @@ const LandingPage = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hoverColor, setHoverColor] = useState<string | null>(null); // State for hover color
   // const [currentSlogan, setCurrentSlogan] = useState("..."); // REMOVED slogan state
+  const { darkMode } = useTheme();
 
   // Simulate loading progress
   useEffect(() => {
@@ -239,7 +241,7 @@ const LandingPage = () => {
                       opacity: 1,
                       scale: 1,
                       rotate: 0,
-                      color: '#1F2937', // Keep initial dark color
+                      color: darkMode ? '#F2F2F0' : '#1F2937', // Use offwhite in dark mode, dark in light
                       transition: {
                         type: 'spring',
                         stiffness: 100,
@@ -253,8 +255,7 @@ const LandingPage = () => {
                       opacity: 1,
                       scale: 1,
                       rotate: 0,
-                      // Use the state hoverColor, fallback to initial dark if null
-                      color: hoverColor || '#1F2937',
+                      color: hoverColor || (darkMode ? '#F2F2F0' : '#1F2937'),
                       transition: {
                         duration: 0.3,
                         ease: 'easeOut',
@@ -270,7 +271,7 @@ const LandingPage = () => {
                       style={{
                         transitionDelay: `${delay}ms`,
                         willChange: 'transform, color',
-                        color: '#1F2937' // Explicitly set initial color here
+                        color: darkMode ? '#F2F2F0' : '#1F2937'
                       }}
                       variants={variants}
                     >

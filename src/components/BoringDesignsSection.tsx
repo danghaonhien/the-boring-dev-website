@@ -31,7 +31,7 @@ const PlaceholderGraphic: React.FC<{ className?: string; text?: string }> = ({ c
 );
 
 const SlideIntroSlide: React.FC = () => (
-  <div className="bg-white dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
+  <div className="bg-boring-offwhite dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
     <div>
       <h3 className="text-4xl lg:text-5xl font-bold text-black dark:text-white">Slide - 01</h3>
       <p className="text-gray-400 dark:text-gray-500 text-2xl">Template</p>
@@ -47,7 +47,7 @@ const SlideIntroSlide: React.FC = () => (
   </div>
 );
 const SlideIntroSlide2: React.FC = () => (
-  <div className="bg-white dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
+  <div className="bg-boring-offwhite dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
     <div>
       <h3 className="text-4xl lg:text-5xl font-bold text-black dark:text-white">Slide - 02</h3>
       <p className="text-gray-400 dark:text-gray-500 text-2xl">Template</p>
@@ -63,7 +63,7 @@ const SlideIntroSlide2: React.FC = () => (
   </div>
 );
 const SlideIntroSlide3: React.FC = () => (
-  <div className="bg-white dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
+  <div className="bg-boring-offwhite dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
     <div>
       <h3 className="text-4xl lg:text-5xl font-bold text-black dark:text-white">Slide - 03</h3>
       <p className="text-gray-400 dark:text-gray-500 text-2xl">Template</p>
@@ -79,7 +79,7 @@ const SlideIntroSlide3: React.FC = () => (
   </div>
 );
 const DSIntroSlide1: React.FC = () => (
-  <div className="bg-white dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
+  <div className="bg-boring-offwhite dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
     <div>
       <h3 className="text-4xl lg:text-5xl font-bold text-black dark:text-white">Design System - 01</h3>
       <p className="text-gray-400 dark:text-gray-500 text-2xl">Template</p>
@@ -98,7 +98,7 @@ const DSIntroSlide1: React.FC = () => (
 
 // --- NEW Font Display Preview Component (Based on Slide03) ---
 const FontDisplayPreview: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => (
-  <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full ${isDark ? 'bg-black text-white' : 'bg-white text-black border border-gray-200'}`}>
+  <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full ${isDark ? 'bg-black text-white' : 'bg-offwhite text-black border border-gray-200'}`}>
     <div className={`font-semibold mb-1 ${isDark ? 'text-white' : 'text-black'}`}>Inter</div>
     <div style={{ fontFamily: "'Inter', sans-serif" }} className={`mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
       <p style={{ fontWeight: 300 }} className="text-[10px] leading-tight">Light (Aa)</p>
@@ -115,7 +115,7 @@ const FontDisplayPreview: React.FC<{ isDark?: boolean }> = ({ isDark = false }) 
 // --- Slide 02 Preview Components (Based on Slide02ProjectPage) ---
 
 const GraphStatsPreview: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => (
-  <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full ${isDark ? 'bg-gray-950 text-white' : 'bg-white text-black border border-gray-200'}`}>
+  <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full ${isDark ? 'bg-gray-950 text-white' : 'bg-offwhite text-black border border-gray-200'}`}>
     <div className={`font-semibold mb-2 ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Performance</div>
     <div className="flex-grow flex items-end justify-center space-x-1 h-16 px-1">
       {[30, 60, 45, 75, 50].map((value, index) => (
@@ -127,7 +127,7 @@ const GraphStatsPreview: React.FC<{ isDark?: boolean }> = ({ isDark = false }) =
 );
 
 const PhasesTimelinePreview: React.FC<{ isDark?: boolean }> = ({ isDark = true }) => (
-  <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full ${isDark ? 'bg-black text-white' : 'bg-white text-black border border-gray-200'}`}>
+  <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full ${isDark ? 'bg-black text-white' : 'bg-offwhite text-black border border-gray-200'}`}>
     <div className={`font-semibold mb-1 ${isDark ? 'text-white' : 'text-black'}`}>Phases</div>
     <div className={`text-[10px] ${isDark ? 'text-gray-400' : 'text-gray-600'} mb-2`}>High-Level Stages</div>
     {/* Simplified timeline */}
@@ -135,7 +135,7 @@ const PhasesTimelinePreview: React.FC<{ isDark?: boolean }> = ({ isDark = true }
       <div className={`absolute left-0 right-0 top-1/2 h-px ${isDark ? 'bg-gray-700' : 'bg-gray-300'} -translate-y-1/2`}></div>
       <div className="relative flex justify-between h-full">
         {[...Array(5)].map((_, index) => (
-          <div key={`marker-${index}`} className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full border ${isDark ? 'bg-black border-gray-500' : 'bg-white border-gray-500'}`} style={{ left: `${(index / 4) * 100}%` }}></div>
+          <div key={`marker-${index}`} className={`absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full border ${isDark ? 'bg-black border-gray-500' : 'bg-offwhite border-gray-500'}`} style={{ left: `${(index / 4) * 100}%` }}></div>
         ))}
       </div>
     </div>
@@ -257,11 +257,11 @@ const CollageSlideshow: React.FC = () => {
     </div>,
      // Stats Card Preview
     <div className="bg-gray-200 p-4 space-y-2 rounded-lg text-xs w-full h-full flex flex-col justify-center">
-       <div className="bg-white p-2 rounded text-center">
+       <div className="bg-offwhite p-2 rounded text-center">
           <div className="text-xxs text-gray-500 mb-1">Customers</div>
           <div className="text-lg font-medium text-black">▲ 20%</div>
        </div>
-        <div className="bg-white p-2 rounded text-center">
+        <div className="bg-offwhite p-2 rounded text-center">
           <div className="text-xxs text-gray-500 mb-1">Downloads</div>
           <div className="text-lg font-medium text-black">▲ 587</div>
        </div>
@@ -294,7 +294,7 @@ const CollageSlideshow: React.FC = () => {
         </ul>
      </div>,
      // Recognition Card Preview
-     <div className="bg-white p-4 space-y-1 rounded-lg text-xs w-full h-full flex flex-col justify-center">
+     <div className="bg-offwhite p-4 space-y-1 rounded-lg text-xs w-full h-full flex flex-col justify-center">
        <div className="font-medium text-sm">Recognition</div>
        <div className="text-xxs text-gray-500">Industry Press</div>
        <div className="grid grid-cols-2 gap-1 mt-1">
@@ -306,7 +306,7 @@ const CollageSlideshow: React.FC = () => {
        </div>
      </div>,
       // Brief Card Preview
-     <div className="bg-white p-4 rounded-lg text-xs w-full h-full flex flex-col justify-center">
+     <div className="bg-offwhite p-4 rounded-lg text-xs w-full h-full flex flex-col justify-center">
         <div className="text-xxs text-gray-500">Brief</div>
         <div className="font-medium mb-1 text-sm">Overview</div>
         <div className="grid grid-cols-3 gap-1">
@@ -315,7 +315,7 @@ const CollageSlideshow: React.FC = () => {
         </div>
      </div>,
       // Results Card Preview
-     <div className="bg-white p-4 rounded-lg text-xs w-full h-full flex flex-col justify-center">
+     <div className="bg-offwhite p-4 rounded-lg text-xs w-full h-full flex flex-col justify-center">
         <div className="text-xxs text-gray-500">Results</div>
         <div className="font-medium mb-1 text-sm">Achievements</div>
         <div className="bg-black rounded h-10 border border-gray-700/50 p-1 flex items-end space-x-px">
@@ -403,7 +403,7 @@ const Slide03Slideshow: React.FC = () => {
     <FontDisplayPreview isDark={false} />, // Inter light
     <FontDisplayPreview isDark={true} />,  // Inter dark
     // Add previews for other fonts if desired, e.g.:
-     <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full bg-white text-black border border-gray-200`}> {/* Roboto Light */} 
+     <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full bg-offwhite text-black border border-gray-200`}> {/* Roboto Light */} 
       <div className={`font-semibold mb-1 text-black`}>Roboto</div>
       <div style={{ fontFamily: "'Roboto', sans-serif" }} className={`mb-2 text-gray-700`}>
         <p style={{ fontWeight: 300 }} className="text-[10px] leading-tight">Light (Aa)</p>
@@ -465,7 +465,7 @@ const PreviewHoverTabs: React.FC = () => (
       <div className="w-4 h-2 bg-indigo-300 ring-1 ring-indigo-500 rounded-sm"></div>
       <div className="w-4 h-2 bg-gray-400 rounded-sm"></div>
     </div>
-    <div className="w-10 h-4 bg-white border border-gray-300 rounded-sm"></div>
+    <div className="w-10 h-4 bg-offwhite border border-gray-300 rounded-sm"></div>
     <div className="mt-1 text-gray-500">Hover Tabs</div>
   </div>
 );
@@ -478,7 +478,7 @@ const PreviewUnsureButton: React.FC = () => (
 );
 
 const PreviewStickyHeader: React.FC = () => (
-  <div className="w-full h-full bg-white border border-gray-300 p-1 rounded flex flex-col text-xxs overflow-hidden">
+  <div className="w-full h-full bg-offwhite border border-gray-300 p-1 rounded flex flex-col text-xxs overflow-hidden">
     <div className="bg-gray-300 p-0.5 text-[8px] text-center text-gray-600 rounded-t-sm sticky top-0">Header</div>
     <div className="flex-grow bg-gray-100 h-4 mt-1"></div>
     <div className="mt-auto pt-1 text-gray-500 text-center">Sticky Header</div>
@@ -515,7 +515,7 @@ const PreviewGhostButtonImposter: React.FC = () => (
 const PreviewShakyCheckbox: React.FC = () => (
   <div className="w-full h-full bg-gray-200 p-2 rounded flex flex-col justify-center items-center text-xxs">
     <div className="flex items-center space-x-1">
-      <div className="w-2.5 h-2.5 border border-gray-500 rounded-sm bg-white relative">
+      <div className="w-2.5 h-2.5 border border-gray-500 rounded-sm bg-offwhite relative">
         {/* Tiny check */} 
         <svg className="w-2 h-2 absolute top-px left-px text-indigo-600" fill="currentColor" viewBox="0 0 16 16">
            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
@@ -529,13 +529,13 @@ const PreviewShakyCheckbox: React.FC = () => (
 
 const PreviewExcuseInput: React.FC = () => (
   <div className="w-full h-full bg-gray-200 p-2 rounded flex flex-col justify-center items-center text-xxs">
-    <input type="text" placeholder="Excuse..." className="w-16 px-1 py-0.5 text-[8px] border border-gray-400 rounded-sm bg-white placeholder-gray-400" readOnly />
+    <input type="text" placeholder="Excuse..." className="w-16 px-1 py-0.5 text-[8px] border border-gray-400 rounded-sm bg-offwhite placeholder-gray-400" readOnly />
     <div className="mt-1 text-gray-500">Excuse Input</div>
   </div>
 );
 
 const PreviewLoopingForm: React.FC = () => (
-  <div className="w-full h-full bg-white border border-gray-300 p-1.5 rounded flex flex-col text-xxs overflow-hidden">
+  <div className="w-full h-full bg-offwhite border border-gray-300 p-1.5 rounded flex flex-col text-xxs overflow-hidden">
      <div className="text-center text-[8px] font-medium mb-1">Step 1/3</div>
      <div className="w-full h-1 bg-gray-200 rounded-full mb-2">
        <div className="w-1/3 h-full bg-indigo-500 rounded-full"></div>
@@ -737,7 +737,7 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
     : category.projects;
 
   return (
-    <div className="border-b border-boring-slate/20 dark:border-boring-offwhite/20 last:border-b-0 bg-white dark:bg-boring-dark">
+    <div className="border-b border-boring-slate/20 dark:border-boring-offwhite/20 last:border-b-0 bg-offwhite dark:bg-boring-dark">
       <button
         onClick={onToggle}
         className={`
@@ -746,25 +746,25 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
           transition-colors duration-300 ease-out overflow-hidden
           ${
             isOpen
-              ? 'bg-boring-dark dark:bg-boring-dark text-white dark:text-boring-offwhite'
-              : 'bg-transparent text-boring-dark dark:text-boring-offwhite hover:text-white dark:hover:text-boring-main'
+              ? 'bg-boring-dark dark:bg-boring-offwhite text-white dark:text-boring-dark dark:hover:bg-boring-offwhite dark:hover:text-boring-dark'
+              : 'bg-transparent text-boring-dark dark:text-boring-offwhite hover:text-white dark:hover:text-boring-dark hover:bg-gray-100 dark:hover:bg-boring-offwhite'
           }
         `}
         aria-expanded={isOpen}
         aria-controls={`content-${category.id}`}
       >
         {!isOpen && (
-          <div className="absolute inset-0 w-full h-full bg-boring-dark dark:bg-boring-dark transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out origin-bottom z-0"></div>
+          <div className="absolute inset-0 w-full h-full bg-boring-dark dark:bg-boring-offwhite transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out origin-bottom z-0"></div>
         )}
 
         <div className={`relative z-10 flex justify-between items-center w-full`}>
-          <span className={`relative z-10 transition-colors duration-150 ${isOpen ? '' : ''}`}> 
+          <span className={`relative z-10 transition-colors duration-150 ${isOpen ? '' : 'dark:group-hover:text-boring-dark'}`}> 
             {category.title}
           </span>
           <motion.span
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.3 }}
-            className={`relative z-10 text-3xl transition-colors duration-150`}
+            className={`relative z-10 text-3xl transition-colors duration-150 dark:group-hover:text-boring-dark`}
           >
             {isOpen ? '-' : '+'}
           </motion.span>
@@ -893,7 +893,7 @@ const BoringDesignsSection: React.FC = () => {
   };
 
   return (
-    <section className="py-20 md:py-32 relative bg-white dark:bg-boring-dark">
+    <section className="py-20 md:py-32 relative bg-offwhite dark:bg-boring-dark">
        <div className="relative z-10 ">
          <BoringDesignsHeader categories={boringDesignsData} title="Boring Designs" />
 

@@ -106,14 +106,14 @@ const MemeGenerator: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center relative  pb-96   bg-boring-lightgray   overflow-hidden">
+    <div className="flex flex-col items-center justify-center relative  pb-96   bg-boring-lightgray dark:bg-boring-dark   overflow-hidden">
       {/* Section Title */}
-      <h2 className="text-3xl md:text-4xl font-bold text-boring-dark mb-8 text-center px-4">
+      <h2 className="text-3xl md:text-4xl font-bold text-boring-dark dark:text-boring-offwhite mb-8 text-center px-4">
       Break Time = Meme Time
       </h2>
 
       {/* Instructional text */}
-      <p className="text-boring-dark/70 mb-6 text-center text-sm px-4">
+      <p className="text-boring-dark/70 dark:text-boring-offwhite/70 mb-6 text-center text-sm px-4">
         Click the camera for a random dev meme!
       </p>
       

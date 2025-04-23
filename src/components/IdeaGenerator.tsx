@@ -20,11 +20,11 @@ const IdeaGenerator: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-8 bg-boring-hero-bg rounded-lg  relative overflow-hidden">
-      <h2 className="text-3xl md:text-4xl font-bold mb-6 text-boring-dark text-center">
+    <div className="flex flex-col items-center justify-center p-8 bg-boring-hero-bg dark:bg-boring-dark rounded-lg  relative overflow-hidden">
+      <h2 className="text-3xl md:text-4xl font-bold mb-6 text-boring-dark dark:text-boring-offwhite text-center">
         Need a tiny, useful feature idea?
       </h2>
-      <p className="text-boring-dark/80 mb-8 text-center max-w-xl">
+      <p className="text-boring-dark/80 dark:text-boring-offwhite/80 mb-8 text-center max-w-xl">
         Click the console for a random low-effort, high-impact feature!
       </p>
       <div className="relative w-full max-w-2xl cursor-pointer group" onClick={generateIdea}>
