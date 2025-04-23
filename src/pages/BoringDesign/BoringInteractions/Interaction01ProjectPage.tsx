@@ -95,9 +95,9 @@ const HoverTabsWithRegret: React.FC = () => {
       </div>
       <div className="p-4 flex-grow"> {/* Use flex-grow to fill space */}
          {/* Add dark mode text color */}
-         {activeTab === 'Tab 1' && <p className="text-gray-700 dark:text-gray-300">Content for Tab 1. Seems okay, right?</p>}
-         {activeTab === 'Tab 2' && <p className="text-gray-700 dark:text-gray-300">Content for Tab 2. Or maybe this one?</p>}
-         {activeTab === 'Tab 3' && <p className="text-gray-700 dark:text-gray-300">Content for Tab 3. Definitely this one... unless?</p>}
+         {activeTab === 'Tab 1' && <p className="text-gray-700 dark:text-gray-700">Content for Tab 1. Seems okay, right?</p>}
+         {activeTab === 'Tab 2' && <p className="text-gray-700 dark:text-gray-700">Content for Tab 2. Or maybe this one?</p>}
+         {activeTab === 'Tab 3' && <p className="text-gray-700 dark:text-gray-700">Content for Tab 3. Definitely this one... unless?</p>}
       </div>
        <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-2">Hover over a tab. It waits {REGRET_DELAY}ms before committing, just like you.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
@@ -129,11 +129,11 @@ const StickyHeaderDetached: React.FC = () => {
     <DemoWrapper className="items-stretch justify-start overflow-hidden"> {/* Allow internal scroll */}
         <div className="h-full flex flex-col">
             <div className="sticky top-0 bg-gray-200  p-2 z-10 border-b border-gray-300 dark:border-gray-600">
-                <p className="text-sm font-medium text-center text-gray-700 dark:text-gray-300">I'm always here. Watching.</p>
+                <p className="text-sm font-medium text-center text-gray-700 dark:text-gray-700">I'm always here. Watching.</p>
             </div>
             <div className="p-4 flex-grow overflow-y-auto">
                 <p className="text-sm mb-2">Scrollable content below the header...</p>
-                <div className="h-48 bg-gray-100 dark:bg-gray-750 rounded flex items-center justify-center text-xs text-gray-400">
+                <div className="h-48 bg-gray-100  rounded flex items-center justify-center text-xs text-gray-400">
                     [More content...]
                 </div>
                  <p className="text-sm mt-2">The header above remains visible within this box, uncaringly.</p>
@@ -144,43 +144,7 @@ const StickyHeaderDetached: React.FC = () => {
   );
 };
 
-// 4. Breadcrumbs That Just Loop Back
-const LoopingBreadcrumbs: React.FC = () => {
-  const [path, setPath] = useState(['Home']);
 
-  const handleClick = (index: number) => {
-    // Always go back to the start on any click
-    setPath(['Home']);
-    console.log("Ah, back where we started. Predictable.");
-  };
-
-  return (
-    <DemoWrapper className="items-start justify-start">
-      <nav aria-label="Breadcrumb">
-        <ol className="flex items-center space-x-2 text-sm">
-          {path.map((item, index) => (
-            <li key={index} className="flex items-center">
-              {index > 0 && (
-                <svg className="flex-shrink-0 h-5 w-5 text-gray-400 dark:text-gray-500 mx-1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                  <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
-                </svg>
-              )}
-              <button
-                onClick={() => handleClick(index)}
-                className={`font-medium ${index === path.length - 1 ? 'text-gray-700 dark:text-gray-200 cursor-default' : 'text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-200'}`} // Restored dark:text-gray-200 and dark:text-indigo-400
-                aria-current={index === path.length - 1 ? 'page' : undefined}
-                disabled={index === path.length - 1} // Disable last item visually
-              >
-                {item}
-              </button>
-            </li>
-          ))}
-        </ol>
-      </nav>
-       <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-4">Click any link (except the last). Notice a theme?</p> {/* Restored dark:text-gray-400 */}
-    </DemoWrapper>
-  );
-};
 
 // 5. "Back to Top" That Scrolls Too Slowly
 const SlowBackToTop: React.FC = () => {
@@ -230,7 +194,7 @@ const ExcuseInput: React.FC = () => {
       <input
         type="text"
         placeholder="Didn't finish it because..."
-        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white  text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-300 rounded bg-white  text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
       />
        <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">Prefilled with the universal dev excuse.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
@@ -268,7 +232,7 @@ const ShakyCheckbox: React.FC = () => {
           onChange={handleChange}
           className="h-5 w-5 rounded text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600  dark:checked:bg-indigo-500"
         />
-        <span className="text-gray-800 dark:text-gray-200">Important Task (Don't skip me)</span>
+        <span className="text-gray-800 ">Important Task (Don't skip me)</span>
       </motion.label>
        <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">Try unchecking it. It gets a little anxious.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
@@ -342,7 +306,7 @@ const NeverSavingDraftButton: React.FC = () => {
              <button
                 onClick={handleClick}
                 disabled={!!feedback}
-                className="px-5 py-2 border border-gray-300 dark:border-gray-600 rounded text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50"
+                className="px-5 py-2 border border-gray-300 dark:border-gray-300 rounded text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50"
              >
                 Save as Draft
              </button>
@@ -402,7 +366,7 @@ const AlwaysReopeningDropdown: React.FC = () => {
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={handleToggle}
-          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white  text-left flex justify-between items-center"
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-300 rounded bg-white  text-left flex justify-between items-center"
         >
           <span>{selectedOption || 'Select an option...'}</span>
           <svg className={`w-4 h-4 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -413,7 +377,7 @@ const AlwaysReopeningDropdown: React.FC = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="absolute z-10 mt-1 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-lg"
+              className="absolute z-10 mt-1 w-full bg-white border border-gray-300 dark:border-gray-300 rounded shadow-lg"
             >
               <ul>
                 {options.map(option => (
@@ -663,7 +627,7 @@ const OversharingBottomSheet: React.FC = () => {
                         animate={{ y: "0%" }}
                         exit={{ y: "100%" }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className="absolute bottom-0 left-0 right-0 h-auto bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 rounded-t-lg shadow-xl p-5 flex flex-col"
+                        className="absolute bottom-0 left-0 right-0 h-auto bg-white border-t border-gray-200 dark:border-gray-700 rounded-t-lg shadow-xl p-5 flex flex-col"
                     >
                         <h5 className="text-lg font-semibold mb-1 text-gray-900 dark:text-white">Here's too much info.</h5>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">We're all figuring it out. Like, did you know this component uses absolute positioning and framer-motion? It's trying its best.</p> {/* Restored dark:text-gray-400 */}
@@ -801,7 +765,7 @@ const RethinkingAccordion: React.FC = () => {
                             collapsed: { opacity: 0, height: 0 }
                         }}
                         transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
-                        className="p-4 bg-white dark:bg-gray-800 rounded-b overflow-hidden"
+                        className="p-4 bg-white rounded-b overflow-hidden"
                     >
                         This is the content. It seems important, but closing it might trigger second thoughts.
                         {isRethinking && <p className="text-xs italic text-gray-500 dark:text-gray-400 mt-2">Hmm, maybe keep this open?</p>} {/* Restored dark:text-gray-400 */}
@@ -872,7 +836,7 @@ const LifeAdviceBreadcrumbs: React.FC = () => {
                 </svg>
             </li>
           ))}
-           <li className="font-medium text-gray-700 dark:text-gray-200" aria-current="page">
+           <li className="font-medium text-gray-700 dark:text-gray-400" aria-current="page">
              {advice}
            </li>
         </ol>
@@ -916,19 +880,19 @@ const RegretfulDropdown: React.FC = () => {
     // Remove max-w-xs from DemoWrapper
     <DemoWrapper className="items-stretch justify-start relative min-h-[150px]">
       <div className="relative">
-        <button className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded bg-white  text-left" onClick={() => level < 1 && setLevel(1)} disabled={level >= 1}>
+        <button className="w-full px-4 py-2 border border-gray-300 dark:border-gray-300 rounded bg-white  text-left" onClick={() => level < 1 && setLevel(1)} disabled={level >= 1}>
           Level 1 Menu...
         </button>
         {level >= 1 && (
-          <div className="absolute z-10 mt-1 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-lg p-2">
-            <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setLevel(2)} disabled={level >= 2}>Level 2...</button>
-            <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={reset}>Cancel</button>
+          <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 dark:border-gray-300 rounded shadow-lg p-2">
+            <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-300" onClick={() => setLevel(2)} disabled={level >= 2}>Level 2...</button>
+            <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-300" onClick={reset}>Cancel</button>
           </div>
         )}
         {level >= 2 && (
-           <div className="absolute z-20 mt-10 ml-4 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-lg p-2">
-            <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setLevel(3)} disabled={level >= 3}>Level 3...</button>
-            <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={reset}>Cancel</button>
+           <div className="absolute z-20 mt-10 ml-4 w-full bg-white border border-gray-300 dark:border-gray-300 rounded shadow-lg p-2">
+            <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-300" onClick={() => setLevel(3)} disabled={level >= 3}>Level 3...</button>
+            <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-300" onClick={reset}>Cancel</button>
           </div>
         )}
          {level >= 3 && (
@@ -1105,7 +1069,7 @@ const ExistentialAccordion: React.FC = () => {
                             collapsed: { opacity: 0, height: 0 }
                         }}
                         transition={{ duration: 0.4, ease: "easeInOut" }}
-                        className="p-4 bg-white dark:bg-gray-800 rounded-b overflow-hidden text-center"
+                        className="p-4 bg-white  rounded-b overflow-hidden text-center"
                     >
                        <p className="font-semibold mb-1">Why did you open this?</p>
                        <p className="text-sm">What are you <span className="italic">really</span> looking for in life?</p>
@@ -1154,7 +1118,7 @@ const SlowModal: React.FC = () => {
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.8, opacity: 0 }}
                             transition={{ duration: 2.0, delay: 0.5 }} // Even slower content appearance
-                            className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-sm w-full relative"
+                            className="bg-white rounded-lg shadow-xl p-6 max-w-sm w-full relative"
                             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking content
                         >
                             <h3 className="text-lg font-medium mb-3">Important Announcement</h3>
@@ -1490,7 +1454,7 @@ const HaikuBottomSheet: React.FC = () => {
                             animate={{ y: "0%" }}
                             exit={{ y: "100%" }}
                             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                            className="w-full h-auto bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 rounded-t-lg shadow-xl p-5 flex flex-col text-center"
+                            className="w-full h-auto bg-white border-t border-gray-200 dark:border-gray-700 rounded-t-lg shadow-xl p-5 flex flex-col text-center"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <p className="text-base leading-relaxed text-gray-700 dark:text-gray-300 mb-3 font-serif italic">
@@ -1605,13 +1569,7 @@ const Interaction01ProjectPage: React.FC = () => {
                >
                   <StickyHeaderDetached />
                </DemoShowcase>
-               <DemoShowcase
-                  title="Breadcrumbs That Just Loop Back"
-                  description="Because we all circle back eventually."
-                  effort="Low" codeSnippet={codeSnippets.loopingBreadcrumbs}
-               >
-                  <LoopingBreadcrumbs />
-               </DemoShowcase>
+       
                <DemoShowcase
                   title="'Back to Top' That Scrolls Too Slowly"
                   description={"For devs who just need a moment."}
@@ -1619,13 +1577,7 @@ const Interaction01ProjectPage: React.FC = () => {
                >
                   <SlowBackToTop />
                </DemoShowcase>
-               <DemoShowcase
-                 title="Confused Tab Highlighting"
-                 description="Tabs highlight randomly for 1s on load. No reason."
-                 effort="Low" codeSnippet={codeSnippets.confusedTabs}
-               >
-                 <ConfusedTabHighlighting />
-               </DemoShowcase>
+           
                <DemoShowcase
                  title="Breadcrumbs with Life Advice"
                  description={`Ends with: "You Should Take a Break".`}
@@ -2351,7 +2303,7 @@ const OverwhelmedExpandableCard: React.FC = () => {
                             collapsed: { opacity: 0, height: 0 }
                         }}
                         transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="p-4 bg-white dark:bg-gray-800 rounded-b overflow-hidden text-center"
+                        className="p-4 bg-white rounded-b overflow-hidden text-center"
                     >
                         <AnimatePresence mode="wait">
                            {isOverwhelmed ? (
