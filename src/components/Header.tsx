@@ -56,9 +56,9 @@ const Header: React.FC<HeaderProps> = ({
               >
                 {/* Placeholder Avatar - Replace with actual user image if available */}
                 <img 
-                  src={user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.email || 'User')}&background=E8DED1&color=6B5B3B&size=32&rounded=true`} 
+                  src={user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.email || 'User')}&background=A0AEC0&color=FFFFFF&size=32&rounded=true&bold=true`} 
                   alt="User avatar" 
-                  className="w-8 h-8 rounded-full" 
+                  className="w-8 h-8 rounded-full object-cover" 
                 />
               </button>
 
