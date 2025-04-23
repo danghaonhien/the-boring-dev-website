@@ -21,20 +21,20 @@ const Slide: React.FC<SlideProps> = ({ label, title, children, className = "", i
   // Add id and scroll-mt-24 (adjust value if header height changes)
   <section id={id} className={`py-12 md:py-16 flex items-center scroll-mt-24 ${className}`}>
     <div className="px-12 w-full"> {/* Use container for centering */}
-      <ScrollReveal>
+      {/* <ScrollReveal> */}{/* Temporarily commented out */}
         {label && (
-          <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-2 uppercase tracking-wider"> {/* Restored dark:text-indigo-400 */}
+          <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-2 uppercase tracking-wider">
             {label}
           </p>
         )}
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8"> {/* Restored dark:text-white */}
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-8">
           {title}
         </h2>
         {/* Removed prose class wrapper, apply styling within children if needed */}
         <div className="max-w-none">
           {children}
         </div>
-      </ScrollReveal>
+      {/* </ScrollReveal> */}{/* Temporarily commented out */}
     </div>
   </section>
 );
