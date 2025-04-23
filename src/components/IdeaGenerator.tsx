@@ -36,7 +36,7 @@ const IdeaGenerator: React.FC = () => {
         {/* Idea Display Area - Positioned over the screen part of the image */}
         <div className="absolute inset-0 flex items-start justify-center p-4 sm:p-8 md:p-12 lg:p-16 xl:p-auto  ">
           {/* Adjust padding based on image screen area */}
-          <div className="w-[calc(100%-20%)] lg:w-[calc(100%-15%)] lg:h-[calc(100%-50%)] h-[calc(100%-54%)] bg-gray-700 bg-opacity-60 backdrop-blur-sm  rounded-md lg:rounded-xl flex items-center justify-center overflow-hidden mt-3 lg:mt-2">
+          <div className="w-[calc(100%-20%)] lg:w-[calc(100%-15%)] lg:h-[calc(100%-50%)] h-[calc(100%-52%)] bg-gray-700 bg-opacity-60 backdrop-blur-sm  rounded-md lg:rounded-xl flex items-center justify-center overflow-hidden mt-3 lg:mt-2">
              {/* Approximate screen area percentage - adjust as needed */}
             <AnimatePresence mode="wait">
               {isVisible && currentIdea && (
