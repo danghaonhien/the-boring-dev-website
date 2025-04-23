@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+// import HomePage from './pages/HomePage';
 import LandingPage from './pages/LandingPage';
 import RewordThisPage from './pages/RewordThisPage';
 import AdminLogin from './pages/admin/AdminLogin';
@@ -15,6 +15,9 @@ import DesignSystem01ProjectPage from './pages/BoringDesign/BoringDesignSystem/D
 import Interaction01ProjectPage from './pages/BoringDesign/BoringInteractions/Interaction01ProjectPage';
 import { AuthProvider } from './context/AuthContext';
 import './App.css';
+import UpdatePasswordPage from './pages/Auth/UpdatePasswordPage';
+import ProfilePage from './pages/ProfilePage';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
 
@@ -23,7 +26,22 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/home" element={<HomePage />} />
+          {/* <Route 
+            path="/home" 
+            element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            } 
+          /> */}
+          <Route 
+            path="/profile" 
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            } 
+          />
           <Route path="/reword-this" element={<RewordThisPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<SignInPage />} />

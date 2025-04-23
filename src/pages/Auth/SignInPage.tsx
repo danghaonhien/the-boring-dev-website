@@ -77,7 +77,7 @@ export default function SignInPage() {
       // Successful sign-in
       // Redirect to a protected page, e.g., home or dashboard
       // The actual session update should ideally be handled by a global listener (onAuthStateChange)
-      navigate('/home'); // Example redirect
+      navigate('/'); // Redirect to LandingPage
 
     } catch (err) {
       console.error("Unexpected error during sign in:", err);
