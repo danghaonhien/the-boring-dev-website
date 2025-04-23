@@ -4,6 +4,7 @@ import { ScrollReveal } from './EnhancedInteractiveElements';
 import { Link } from 'react-router-dom';
 import BoringDesignsHeader from './BoringDesignsHeader';
 import { ComponentCollageHero } from './ComponentCollageHero';
+import useMediaQuery from '../hooks/useMediaQuery';
 
 // --- Interface Definitions (Define Interfaces First) ---
 interface Project {
@@ -728,7 +729,13 @@ const boringDesignsData: Category[] = [
 ];
 
 // --- AccordionItem Component ---
-const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: () => void }> = ({ category, isOpen, onToggle }) => {
+const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: () => void; isMobile: boolean }> = ({ category, isOpen, onToggle, isMobile }) => {
+  
+  // Slice projects only for interactions on mobile
+  const interactionProjectsToShow = (category.id === 'interactions' && isMobile)
+    ? category.projects.slice(0, 4)
+    : category.projects;
+
   return (
     <div className="border-b border-boring-slate/20 last:border-b-0">
       <button
@@ -737,9 +744,10 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
           group relative flex justify-between items-center w-full px-4 py-6
           text-left text-2xl md:text-3xl font-medium
           transition-colors duration-300 ease-out overflow-hidden
-          ${isOpen
-            ? 'bg-boring-dark text-white' // Open state: Dark bg, white text
-            : 'bg-transparent text-boring-dark hover:text-white' // Added hover:text-white here
+          ${
+            isOpen
+              ? 'bg-boring-dark text-white' // Open state: Dark bg, white text
+              : 'bg-transparent text-boring-dark hover:text-white' // Added hover:text-white here
           }
         `}
         aria-expanded={isOpen}
@@ -773,7 +781,7 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
             variants={{
               open: { 
                 opacity: 1, 
-                maxHeight: '3000px',
+                maxHeight: '3000px', // Adjusted max height for safety
                 marginTop: '1rem', 
                 marginBottom: '2rem' 
               },
@@ -789,13 +797,15 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
             role="region"
             aria-labelledby={`button-${category.id}`}
           >
-            {category.projects.length > 0 ? (
+            {/* Check original category.projects length before rendering */} 
+            {category.projects.length > 0 ? ( 
               <div className="pb-8 md:pb-12"> {/* Added padding bottom */}
                 {/* Conditionally render layout based on category */}
                 {category.id === 'interactions' ? (
                   <>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                      {category.projects.map((project: Project, index: number) => (
+                      {/* Use the sliced array ONLY for interactions */} 
+                      {interactionProjectsToShow.map((project: Project, index: number) => ( 
                         <ScrollReveal key={project.id} delay={index * 50}>
                           <div className="h-full group">
                              <div className="h-56">
@@ -805,7 +815,7 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
                         </ScrollReveal>
                       ))}
                     </div>
-                    {/* "View All" Link for Interactions */}
+                    {/* "View All" Link for Interactions */} 
                     <div className="mt-12 text-left">
                        <Link to="/projects/interaction-01" className="inline-block bg-boring-main text-white px-6 py-3 rounded-md hover:bg-boring-dark transition-colors font-medium text-sm uppercase tracking-wider shadow-md hover:shadow-lg">
                         View All Interactions
@@ -813,9 +823,9 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
                     </div>
                   </>
                 ) : (
-                  /* Original layout for other categories */
+                  /* Original layout for other categories - use full projects array */ 
                   <div className="space-y-16 md:space-y-24">
-                    {category.projects.map((project: Project, index: number) => (
+                    {category.projects.map((project: Project, index: number) => ( 
                       <ScrollReveal key={project.id} delay={index * 100}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                           <div className="h-72 md:h-[440px]">
@@ -827,7 +837,7 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
                             </div>
                           )}
                         </div>
-                        {/* Keep the title/desc/tags section for non-interaction projects */}
+                        {/* Keep the title/desc/tags section for non-interaction projects */} 
                         <div className="mt-6 flex flex-col md:flex-row justify-between md:items-end">
                             <div className="mb-4 md:mb-0">
                                 <h4 className="text-xl font-semibold text-boring-dark mb-1">{project.title}</h4>
@@ -870,6 +880,9 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
 const BoringDesignsSection: React.FC = () => {
   // State to hold an array of open category IDs
   const [openCategoryIds, setOpenCategoryIds] = useState<string[]>([boringDesignsData[0]?.id || ' '].filter(id => id !== ' ')); // Default open first item if it exists
+  
+  // Use the hook here - below 640px is considered mobile
+  const isMobile = useMediaQuery('(max-width: 639px)');
 
   const handleToggle = (id: string) => {
     setOpenCategoryIds(prevOpenIds => 
@@ -891,6 +904,7 @@ const BoringDesignsSection: React.FC = () => {
                category={category}
                isOpen={openCategoryIds.includes(category.id)} // Check if ID is in the array
                onToggle={() => handleToggle(category.id)}
+               isMobile={isMobile} // Pass the mobile status down
              />
            ))}
          </div>
