@@ -36,7 +36,7 @@ const IdeaGenerator: React.FC = () => {
         {/* Idea Display Area - Positioned over the screen part of the image */}
         <div className="absolute inset-0 flex items-start justify-center p-4 sm:p-8 md:p-12 lg:p-16 xl:p-auto  ">
           {/* Adjust padding based on image screen area */}
-          <div className="w-[calc(100%-20%)] lg:w-[calc(100%-15%)] lg:h-[calc(100%-50%)] h-[calc(100%-50%)] bg-gray-800 bg-opacity-70 backdrop-blur-md  rounded-md lg:rounded-xl flex items-center justify-center overflow-hidden">
+          <div className="w-[calc(100%-20%)] lg:w-[calc(100%-15%)] lg:h-[calc(100%-50%)] h-[calc(100%-54%)] bg-gray-700 bg-opacity-60 backdrop-blur-sm  rounded-md lg:rounded-xl flex items-center justify-center overflow-hidden mt-3 lg:mt-2">
              {/* Approximate screen area percentage - adjust as needed */}
             <AnimatePresence mode="wait">
               {isVisible && currentIdea && (
@@ -48,14 +48,14 @@ const IdeaGenerator: React.FC = () => {
                   transition={{ duration: 0.3, ease: 'easeInOut' }}
                   className="text-left p-4 text-boring-offwhite max-w-full"
                 >
-                  <h3 className="text-[11px] sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2 text-boring-offwhite/80">{currentIdea.title}</h3>
+                  <h3 className="text-[11px] sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2 text-boring-offwhite/90">{currentIdea.title}</h3>
                   <p className="text-[11px] sm:text-sm md:text-base mb-1 sm:mb-2">{currentIdea.description}</p>
-                  <p className="text-[11px] sm:text-sm md:text-base mb-2 sm:mb-3 italic text-boring-offwhite/80">
+                  <p className="text-[11px] sm:text-sm md:text-base mb-2 sm:mb-3 italic text-boring-offwhite/90">
                     <span className="font-semibold">Solves:</span> {currentIdea.problem}
                   </p>
                   <div className="flex flex-wrap gap-1 sm:gap-2">
                     {currentIdea.tags.map((tag) => (
-                      <span key={tag} className="text-[8px] md:text-[12px] sm:text-xs bg-boring-slate/50 text-boring-offwhite/90 px-2 py-1 rounded-full">
+                      <span key={tag} className="text-[8px] md:text-[12px] sm:text-xs bg-boring-slate/80 text-boring-offwhite/90 px-2 py-1 rounded-full">
                         {tag}
                       </span>
                     ))}
