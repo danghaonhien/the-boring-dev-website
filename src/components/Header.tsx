@@ -1,66 +1,75 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { AnimatedLink, MagneticButton } from './EnhancedInteractiveElements';
+import { useAuth } from '../context/AuthContext'; // Adjust path if needed
 
-const Header: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+// Define props for the Header, including menu state from parent if needed
+interface HeaderProps {
+  isRevealed?: boolean; // Example prop, adjust as needed based on LandingPage logic
+  isMenuOpen?: boolean;
+  toggleMenu?: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ 
+  isRevealed = true, // Default to revealed if not controlled by parent
+  isMenuOpen = false, // Default state
+  toggleMenu = () => {} // Default no-op function
+}) => {
+  const { user, signOut, loading } = useAuth();
+
+  // Determine visibility based on reveal state (passed as prop)
+  const headerVisibilityClasses = isRevealed ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0 pointer-events-none';
+
   return (
-    <header className="bg-boring-dark py-4 sticky top-0 z-50 shadow-md">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center">
-          <Link to="/" className="text-boring-offwhite font-bold text-xl hover:opacity-90 transition-opacity">
-            The Boring Dev
+    <header
+      className={`w-full transition-all duration-1000 transform ${headerVisibilityClasses}`}
+    >
+      <div className="flex justify-between items-center">
+        <div className="text-boring-dark font-bold text-2xl uppercase">
+          {/* Link the logo back to home or landing page */}
+          <Link to="/" className="hover:opacity-80 transition-opacity">
+             THE BORING DEV
           </Link>
-          
-          {/* Mobile Menu Button */}
-          <button 
-            className="md:hidden text-boring-offwhite focus:outline-none"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              {isMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
-          
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <AnimatedLink href="#projects" className="text-boring-offwhite hover:text-opacity-90 transition-colors">
-              Projects
-            </AnimatedLink>
-            <AnimatedLink href="#" className="text-boring-offwhite hover:text-opacity-90 transition-colors">
-              About
-            </AnimatedLink>
-            <AnimatedLink href="#" className="text-boring-offwhite hover:text-opacity-90 transition-colors">
-              Contact
-            </AnimatedLink>
-            <MagneticButton className="bg-boring-main text-boring-offwhite px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-all">
-              Get In Touch
-            </MagneticButton>
-          </nav>
         </div>
-        
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <nav className="md:hidden mt-4 flex flex-col space-y-4 pb-4">
-            <a href="#projects" className="text-boring-offwhite hover:text-opacity-90 transition-colors p-2">
-              Projects
-            </a>
-            <a href="#" className="text-boring-offwhite hover:text-opacity-90 transition-colors p-2">
-              About
-            </a>
-            <a href="#" className="text-boring-offwhite hover:text-opacity-90 transition-colors p-2">
-              Contact
-            </a>
-            <a href="#" className="bg-boring-main text-boring-offwhite px-4 py-2 rounded-md font-medium hover:bg-opacity-90 transition-all text-center">
-              Get In Touch
-            </a>
-          </nav>
-        )}
+
+        <div className="flex items-center space-x-4">
+          {/* Auth State Display - Show loading state briefly if needed */}
+          {loading ? (
+            <span className="text-sm text-gray-500">...</span>
+          ) : user ? (
+            <>
+              {/* Display user email or link to profile page later */}
+              <span className="text-sm text-boring-dark hidden sm:inline">{user.email}</span>
+              <button
+                onClick={signOut}
+                className="text-sm text-boring-dark hover:underline"
+              >
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="text-sm text-boring-dark hover:underline">
+                Sign In
+              </Link>
+              <Link
+                to="/signup"
+                className="text-sm text-boring-dark font-medium bg-gray-200 px-3 py-1 rounded hover:bg-gray-300 transition-colors"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
+
+          {/* Menu Toggle Button (State managed by parent via props) */}
+          <button
+            className="text-boring-dark text-4xl font-bold z-30 relative"
+            onClick={toggleMenu} // Use the function passed via props
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            disabled={!isRevealed} // Disable if the header isn't fully revealed
+          >
+            {isMenuOpen ? '\u00D7' : '+'}
+          </button>
+        </div>
       </div>
     </header>
   );

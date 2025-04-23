@@ -18,6 +18,7 @@ import TechRoadmapDiagram from '../components/TechRoadmapDiagram';
 import MemeGenerator from '../components/MemeGenerator';
 import BoringDesignsSection from '../components/BoringDesignsSection';
 import IdeaGenerator from '../components/IdeaGenerator';
+import Header from '../components/Header';
 // import boringSvg from '../assets/images/homepage/BORING.svg'; // Removed SVG import
 
 // Array of slogans
@@ -193,14 +194,6 @@ const LandingPage = () => {
             className={`absolute inset-0 p-6 md:p-12 flex flex-col justify-between pb-20 h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible transition-opacity duration-700 ease-linear ${!isLoading ? 'opacity-100' : 'opacity-100'
               } ${startCurtainAnimation ? 'opacity-0' : 'opacity-100'}`}
           >
-            <header className={`w-full transition-opacity duration-700 ease-linear ${startCurtainAnimation ? 'opacity-0' : 'opacity-100'}`}>
-              <div className="flex justify-between items-center">
-                <div className="text-boring-offwhite font-bold text-2xl uppercase">
-                  THE BORING DEV
-                </div>
-              </div>
-            </header>
-
             <div className="flex-grow flex flex-col justify-end">
               <div className="text-boring-offwhite font-bold text-[25vw] leading-none select-none text-left">
                 {loadingProgress}
@@ -214,25 +207,11 @@ const LandingPage = () => {
             className={`relative h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible pb-32 md:pb-12 flex flex-col justify-between transition-opacity duration-500 ${isHeroRevealed ? 'opacity-100' : 'opacity-0 pointer-events-none'
               }`}
           >
-            <header
-              className={`w-full transition-all duration-1000 transform  ${isHeroRevealed ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0'
-                }`}
-            >
-              <div className="flex justify-between items-center">
-                <div className="text-boring-dark font-bold text-2xl uppercase">
-                  THE BORING DEV
-                </div>
-
-                <button
-                  className="text-boring-dark text-4xl font-bold z-30 relative"
-                  onClick={toggleMenu}
-                  aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                  disabled={!isHeroRevealed}
-                >
-                  {isMenuOpen ? '\u00D7' : '+'}
-                </button>
-              </div>
-            </header>
+            <Header 
+              isRevealed={isHeroRevealed} 
+              isMenuOpen={isMenuOpen} 
+              toggleMenu={toggleMenu} 
+            />
 
             <div className="flex-grow flex flex-col justify-end">
               <SloganGenerator />
