@@ -106,7 +106,7 @@ const MemeGenerator: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center relative py-24 pb-96  bg-boring-lightgray  shadow-inner overflow-hidden">
+    <div className="flex flex-col items-center justify-center relative py-12 pb-96  bg-boring-lightgray   overflow-hidden">
       {/* Section Title */}
       <h2 className="text-3xl md:text-4xl font-bold text-boring-dark mb-8 text-center px-4">
       Break Time = Meme Time
