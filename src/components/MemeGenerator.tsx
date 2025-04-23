@@ -106,7 +106,7 @@ const MemeGenerator: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center relative py-12 pb-96  bg-boring-lightgray   overflow-hidden">
+    <div className="flex flex-col items-center justify-center relative  pb-96   bg-boring-lightgray   overflow-hidden">
       {/* Section Title */}
       <h2 className="text-3xl md:text-4xl font-bold text-boring-dark mb-8 text-center px-4">
       Break Time = Meme Time
@@ -153,7 +153,7 @@ const MemeGenerator: React.FC = () => {
               style={{ translateX: '-50%' }}
               initial={{ y: '0%', opacity: 0.8, scale: 0.9 }} 
               animate={{ 
-                y: '90%', 
+                y: '85%', 
                 opacity: 1, 
                 scale: 1,
                 transition: { duration: 1.5, ease: [0.4, 0, 0.6, 1] } 

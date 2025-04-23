@@ -17,6 +17,7 @@ import CustomCursor from '../components/CustomCursor';
 import TechRoadmapDiagram from '../components/TechRoadmapDiagram';
 import MemeGenerator from '../components/MemeGenerator';
 import BoringDesignsSection from '../components/BoringDesignsSection';
+import IdeaGenerator from '../components/IdeaGenerator';
 // import boringSvg from '../assets/images/homepage/BORING.svg'; // Removed SVG import
 
 // Array of slogans
@@ -340,6 +341,14 @@ const LandingPage = () => {
           <ScrollReveal delay={300}>
             <BoringDesignsSection />
           </ScrollReveal>
+
+          {/* Idea Generator Section */}
+          <section className="py-20 md:py-32">
+             <ScrollReveal delay={300}>
+               <IdeaGenerator />
+             </ScrollReveal>
+          </section>
+
           {/* Meme Generator Section */}
           <section className="py-20 md:py-32">
             <ScrollReveal delay={300}> {/* Added ScrollReveal for smooth appearance */}

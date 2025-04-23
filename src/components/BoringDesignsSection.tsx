@@ -81,15 +81,15 @@ const SlideIntroSlide3: React.FC = () => (
 const DSIntroSlide1: React.FC = () => (
   <div className="bg-white dark:bg-black p-6 rounded-lg shadow-md h-full flex flex-col justify-between">
     <div>
-      <h3 className="text-4xl lg:text-5xl font-bold text-black dark:text-white">Slide - 03</h3>
+      <h3 className="text-4xl lg:text-5xl font-bold text-black dark:text-white">Design System - 01</h3>
       <p className="text-gray-400 dark:text-gray-500 text-2xl">Template</p>
     </div>
     <div className="mt-auto pt-4 text-right">
       <p className="text-3xl lg:text-6xl font-semibold text-black dark:text-white mb-6">
-          Typography vs<br/> Impostor Syndrome
+      A system so simple, <br/> it kinda works
       </p>
       <p className="text-xs text-gray-500 dark:text-gray-400 ml-auto max-w-[60%]">
-     Good font is a choice, not a default.
+      Just enough structure to stop chaos, not enough to start a fight.
       </p>
     </div>
   </div>
