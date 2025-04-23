@@ -14,7 +14,7 @@ interface SlideProps {
 
 const Slide: React.FC<SlideProps> = ({ label, title, children, className = "" }) => (
   <section className={` py-12 md:py-12 flex items-center ${className}`}>
-    <div className="px-12 w-full">
+    <div className="px-6 w-full">
       <ScrollReveal>
         {label && (
           <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">
@@ -341,7 +341,7 @@ const Pitch02ProjectPage: React.FC = () => { // Renamed component
           label="Templates" // Updated Label
           title={
             <div className="flex justify-between items-center">
-              <span>Planning Component Examples</span> {/* Updated Title */}
+              <span>Inspirations</span> {/* Updated Title */}
               <button
                  onClick={shuffleAll} // Updated function name
                  className="ml-4 relative overflow-hidden group flex justify-center items-center text-gray-700 dark:text-gray-300 border border-gray-400 dark:border-gray-600 rounded-full px-4 py-1 text-sm transition-colors duration-300 ease-in-out whitespace-nowrap hover:bg-gray-900 dark:hover:bg-gray-100 hover:text-white dark:hover:text-black hover:border-gray-900 dark:hover:border-gray-100"

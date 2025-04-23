@@ -20,7 +20,7 @@ interface SlideProps {
 const Slide: React.FC<SlideProps> = ({ label, title, children, className = "", id }) => (
   // Add id and scroll-mt-24 (adjust value if header height changes)
   <section id={id} className={`py-12 md:py-16 flex items-center scroll-mt-24 ${className}`}>
-    <div className="px-12 w-full"> {/* Use container for centering */}
+    <div className="px-6 lg:px-6 w-full"> {/* Use container for centering */}
       {/* <ScrollReveal> */}{/* Temporarily commented out */}
         {label && (
           <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-2 uppercase tracking-wider">

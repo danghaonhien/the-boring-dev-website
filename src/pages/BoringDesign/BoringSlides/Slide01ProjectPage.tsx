@@ -13,8 +13,8 @@ interface SlideProps {
 }
 
 const Slide: React.FC<SlideProps> = ({ label, title, children, className = "" }) => (
-  <section className={` py-12 md:py-12 flex items-center ${className}`}>
-    <div className="px-12 w-full">
+  <section className={` py-16 md:py-24 flex items-center ${className}`}>
+    <div className="px-6 w-full">
       <ScrollReveal>
         {label && (
           <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">
