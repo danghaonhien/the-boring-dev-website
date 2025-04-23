@@ -118,8 +118,8 @@ const IdeaGenerator: React.FC = () => {
                   className="text-left p-4 text-boring-offwhite max-w-full"
                 >
                   <h3 className="text-[11px] sm:text-xl md:text-2xl font-bold mb-1 sm:mb-2 text-boring-offwhite/80">{currentIdea.title}</h3>
-                  <p className="text-[10px] sm:text-sm md:text-base mb-1 sm:mb-2">{currentIdea.description}</p>
-                  <p className="text-[10px] sm:text-sm md:text-base mb-2 sm:mb-3 italic text-boring-offwhite/80">
+                  <p className="text-[11px] sm:text-sm md:text-base mb-1 sm:mb-2">{currentIdea.description}</p>
+                  <p className="text-[11px] sm:text-sm md:text-base mb-2 sm:mb-3 italic text-boring-offwhite/80">
                     <span className="font-semibold">Solves:</span> {currentIdea.problem}
                   </p>
                   <div className="flex flex-wrap gap-1 sm:gap-2">
