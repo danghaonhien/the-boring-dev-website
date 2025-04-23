@@ -737,7 +737,7 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
     : category.projects;
 
   return (
-    <div className="border-b border-boring-slate/20 last:border-b-0">
+    <div className="border-b border-boring-slate/20 dark:border-boring-offwhite/20 last:border-b-0 bg-white dark:bg-boring-dark">
       <button
         onClick={onToggle}
         className={`
@@ -746,15 +746,15 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
           transition-colors duration-300 ease-out overflow-hidden
           ${
             isOpen
-              ? 'bg-boring-dark text-white' // Open state: Dark bg, white text
-              : 'bg-transparent text-boring-dark hover:text-white' // Added hover:text-white here
+              ? 'bg-boring-dark dark:bg-boring-dark text-white dark:text-boring-offwhite'
+              : 'bg-transparent text-boring-dark dark:text-boring-offwhite hover:text-white dark:hover:text-boring-main'
           }
         `}
         aria-expanded={isOpen}
         aria-controls={`content-${category.id}`}
       >
         {!isOpen && (
-          <div className="absolute inset-0 w-full h-full bg-boring-dark transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out origin-bottom z-0"></div>
+          <div className="absolute inset-0 w-full h-full bg-boring-dark dark:bg-boring-dark transform -translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out origin-bottom z-0"></div>
         )}
 
         <div className={`relative z-10 flex justify-between items-center w-full`}>
@@ -817,7 +817,7 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
                     </div>
                     {/* "View All" Link for Interactions */} 
                     <div className="mt-12 text-left">
-                       <Link to="/projects/interaction-01" className="inline-block bg-boring-main text-white px-6 py-3 rounded-md hover:bg-boring-dark transition-colors font-medium text-sm uppercase tracking-wider shadow-md hover:shadow-lg">
+                       <Link to="/projects/interaction-01" className="inline-block bg-boring-main text-white px-6 py-3 rounded-md hover:bg-boring-dark dark:hover:bg-boring-offwhite hover:text-white dark:hover:text-boring-dark transition-colors font-medium text-sm uppercase tracking-wider shadow-md hover:shadow-lg">
                         View All Interactions
                        </Link>
                     </div>
@@ -840,22 +840,22 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
                         {/* Keep the title/desc/tags section for non-interaction projects */} 
                         <div className="mt-6 flex flex-col md:flex-row justify-between md:items-end">
                             <div className="mb-4 md:mb-0">
-                                <h4 className="text-xl font-semibold text-boring-dark mb-1">{project.title}</h4>
-                                <p className="text-boring-dark/80 mb-3 max-w-md">{project.description}</p>
+                                <h4 className="text-xl font-semibold text-boring-dark dark:text-boring-offwhite mb-1">{project.title}</h4>
+                                <p className="text-boring-dark/80 dark:text-boring-offwhite/80 mb-3 max-w-md">{project.description}</p>
                                  {project.caseStudyLink && project.caseStudyLink !== '#' && (
-                                    <Link to={project.caseStudyLink} className="text-boring-main hover:underline font-medium text-sm uppercase tracking-wider">
+                                    <Link to={project.caseStudyLink} className="text-boring-main dark:text-boring-main hover:underline font-medium text-sm uppercase tracking-wider">
                                     Read Full Case Study
                                     </Link>
                                 )}
                                 {project.caseStudyLink === '#' && category.id !== 'interactions' && ( // Hide placeholder link for interactions
-                                       <span className="text-gray-400 font-medium text-sm uppercase tracking-wider"> {/* Ensure this is span */} 
+                                       <span className="text-gray-400 dark:text-boring-offwhite/60 font-medium text-sm uppercase tracking-wider"> {/* Ensure this is span */} 
                                        Case Study Coming Soon
                                        </span>
                                 )}
                             </div>
                            <div className="text-left md:text-right flex flex-wrap gap-2 justify-start md:justify-end">
                                 {project.tags.map((tag: string) => (
-                                <span key={tag} className="bg-boring-main/10 text-boring-main px-3 py-1 rounded-full text-xs font-medium">
+                                <span key={tag} className="bg-boring-main/10 dark:bg-boring-main/20 text-boring-main dark:text-boring-main px-3 py-1 rounded-full text-xs font-medium">
                                     {tag}
                                 </span>
                                 ))}
@@ -867,7 +867,7 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
                 )}
               </div>
             ) : (
-              <p className="text-boring-dark/70 py-4">No projects yet in this category.</p>
+              <p className="text-boring-dark/70 dark:text-boring-offwhite/70 py-4">No projects yet in this category.</p>
             )}
           </motion.div>
         )}
@@ -893,7 +893,7 @@ const BoringDesignsSection: React.FC = () => {
   };
 
   return (
-    <section className="py-20 md:py-32 relative">
+    <section className="py-20 md:py-32 relative bg-white dark:bg-boring-dark">
        <div className="relative z-10 ">
          <BoringDesignsHeader categories={boringDesignsData} title="Boring Designs" />
 

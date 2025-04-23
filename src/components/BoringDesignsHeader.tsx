@@ -44,17 +44,17 @@ const BoringDesignsHeader: React.FC<BoringDesignsHeaderProps> = ({ categories, t
   return (
     <ScrollReveal>
       <div className="flex flex-col md:flex-row justify-between items-center mb-12 md:mb-16">
-        <h2 className="text-4xl md:text-5xl lg:text-8xl font-bold text-boring-dark text-center md:text-left mb-4 md:mb-0">
+        <h2 className="text-4xl md:text-5xl lg:text-8xl font-bold text-boring-dark dark:text-boring-offwhite text-center md:text-left mb-4 md:mb-0">
           {title}
         </h2>
         <div className="text-center md:text-right">
-          <div className="text-sm text-boring-dark/70 uppercase tracking-wider mb-1">
+          <div className="text-sm text-boring-dark/70 dark:text-boring-offwhite/70 uppercase tracking-wider mb-1">
             Total Projects
           </div>
           {/* Display the animated rounded motion value */}
           <motion.div
             // Remove previous animation props, the value itself is animated now
-            className="text-5xl md:text-6xl font-bold text-boring-dark"
+            className="text-5xl md:text-6xl font-bold text-boring-dark dark:text-boring-offwhite"
           >
             {rounded}
           </motion.div>

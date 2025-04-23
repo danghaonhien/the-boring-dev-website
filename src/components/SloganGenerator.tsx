@@ -125,7 +125,7 @@ const slogans = [
 
   "\"From wireframes to existential dread.\"",
 
-  "\"Where ‘final_v2’ is never final.\"",
+  "\"Where 'final_v2' is never final.\"",
 
   "\"Your career is a roadmap… kind of.\"",
 
@@ -139,7 +139,7 @@ const slogans = [
 
   "\"Too junior for this. Too senior to care.\"",
 
-  "\"It’s not burnout. It’s feature creep.\"",
+  "\"It's not burnout. It's feature creep.\"",
 
   "\"Navigating chaos with sticky notes and sass.\"",
 
@@ -159,7 +159,7 @@ const slogans = [
 
   "\"This is a safe space for Ctrl+Z.\"",
 
-  "\"Let’s build things and slowly unravel.\"",
+  "\"Let's build things and slowly unravel.\"",
 ];
 
 const defaultSlogan = "\"Low-key building, high-key tired.\""; // Default with quotes
@@ -285,7 +285,7 @@ const SloganGenerator = () => {
   return (
     <div className="group flex flex-col md:flex-row items-start md:items-center mb-4 z-10 relative min-h-[10em] md:min-h-[4em] lg:min-h-[7em]">
       {/* Slogan Text */}
-      <p className={`text-boring-dark font-medium text-4xl md:text-xl lg:text-[3rem] flex-grow md:mr-4 transition-opacity duration-200 min-h-[4em] md:min-h-0 leading-tight ${isAnimating ? ' overflow-hidden md:overflow-visible' : ''}`}>
+      <p className={`text-boring-dark dark:text-boring-offwhite font-medium text-4xl md:text-xl lg:text-[3rem] flex-grow md:mr-4 transition-opacity duration-200 min-h-[4em] md:min-h-0 leading-tight ${isAnimating ? ' overflow-hidden md:overflow-visible' : ''}`}>
         {displayText}
       </p>
       
@@ -294,8 +294,8 @@ const SloganGenerator = () => {
         {/* Copy Button */}
         <button
           onClick={handleCopy}
-          className={`p-1.5 rounded-full text-boring-dark/60 transition-colors duration-200 ${
-            isAnimating ? 'opacity-50 cursor-not-allowed' : 'hover:bg-boring-dark/10 hover:text-boring-dark'
+          className={`p-1.5 rounded-full text-boring-dark/60 dark:text-boring-offwhite/60 transition-colors duration-200 ${
+            isAnimating ? 'opacity-50 cursor-not-allowed' : 'hover:bg-boring-dark/10 dark:hover:bg-boring-offwhite/10 hover:text-boring-dark dark:hover:text-boring-offwhite'
           }`}
           aria-label={copyStatus === 'copied' ? "Copied slogan" : "Copy slogan"}
           disabled={isAnimating}
@@ -317,7 +317,7 @@ const SloganGenerator = () => {
         {/* Generate Button */}
         <button
           onClick={generateNewSlogan}
-          className={`relative overflow-hidden group flex justify-center items-center text-boring-dark border border-boring-dark/30 rounded-full px-4 py-1 text-sm transition-colors duration-300 ease-in-out whitespace-nowrap ${isAnimating ? 'opacity-50 cursor-not-allowed' : 'hover:bg-boring-dark hover:text-boring-offwhite hover:border-boring-dark'}`}
+          className={`relative overflow-hidden group flex justify-center items-center text-boring-dark dark:text-boring-offwhite border border-boring-dark/30 dark:border-boring-offwhite/30 rounded-full px-4 py-1 text-sm transition-colors duration-300 ease-in-out whitespace-nowrap ${isAnimating ? 'opacity-50 cursor-not-allowed' : 'hover:bg-boring-dark hover:text-boring-offwhite hover:border-boring-dark dark:hover:bg-boring-offwhite/10 dark:hover:text-boring-offwhite dark:hover:border-boring-offwhite'}"`}
           aria-label="Generate new slogan"
           disabled={isAnimating}
         >

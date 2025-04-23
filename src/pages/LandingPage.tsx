@@ -174,20 +174,20 @@ const LandingPage = () => {
   return (
     <PageTransition>
       <div
-        className="relative min-h-screen bg-boring-hero-bg overflow-hidden"
+        className="relative min-h-screen bg-boring-hero-bg dark:bg-boring-dark overflow-hidden"
         style={{ cursor: isMobile ? 'auto' : 'none' }}
       >
         {!isMobile && <CustomCursor />}
-
+{/* 
         <div
           className="absolute inset-0 h-screen z-0 
                      bg-[url('/src/assets/images/hero-grid-background.svg')]
                      bg-cover bg-center bg-no-repeat"
-          aria-hidden="true" // Hide from screen readers
-        ></div>
+          aria-hidden="true" 
+        ></div> */}
 
         <div
-          className={`fixed inset-0 z-50 bg-boring-dark transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] ${startCurtainAnimation ? '-translate-y-full pointer-events-none' : 'translate-y-0'
+          className={`fixed inset-0 z-50 bg-boring-dark dark:bg-boring-dark transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] ${startCurtainAnimation ? '-translate-y-full pointer-events-none' : 'translate-y-0'
             }`}
         >
           <div
@@ -202,10 +202,9 @@ const LandingPage = () => {
           </div>
         </div>
 
-        <div className="p-6 md:p-12 relative z-10 min-h-screen">
+        <div className="p-6 md:p-12 relative z-10 min-h-screen dark:bg-boring-dark">
           <section
-            className={`relative h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible pb-32 md:pb-12 flex flex-col justify-between transition-opacity duration-500 ${isHeroRevealed ? 'opacity-100' : 'opacity-0 pointer-events-none'
-              }`}
+            className={`relative h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible pb-32 md:pb-12 flex flex-col justify-between transition-opacity duration-500 ${isHeroRevealed ? 'opacity-100' : 'opacity-0 pointer-events-none'} dark:bg-boring-dark`}
           >
             <Header 
               isRevealed={isHeroRevealed} 
@@ -215,7 +214,7 @@ const LandingPage = () => {
               <SloganGenerator />
 
               <motion.h1
-                className="text-boring-dark font-bold text-[22vw]  md:text-[22vw] lg:text-[24.5vw] fhd:text-[25vw] leading-none select-none text-left overflow-hidden flex"
+                className="text-boring-dark dark:text-boring-offwhite font-bold text-[22vw]  md:text-[22vw] lg:text-[24.5vw] fhd:text-[25vw] leading-none select-none text-left overflow-hidden flex"
                 initial="rest"
                 whileHover="hover"
                 animate="rest"
@@ -285,7 +284,7 @@ const LandingPage = () => {
           {/* Large Text Section */}
           <section className="py-20 md:py-32">
 
-            <div className="text-left text-4xl md:text-5xl lg:text-8xl font-medium text-boring-dark leading-tight">
+            <div className="text-left text-4xl md:text-5xl lg:text-8xl font-medium text-boring-dark dark:text-boring-offwhite leading-tight">
               <ScrollReveal>
                 <span className="reveal-text-line inline-block pl-42">We're a community of devs,</span>
               </ScrollReveal>{' '}
@@ -350,7 +349,7 @@ const LandingPage = () => {
 
           <section className="py-20 md:py-32">
 
-            <div className="text-right text-4xl md:text-5xl lg:text-8xl font-medium text-boring-dark leading-tight">
+            <div className="text-right text-4xl md:text-5xl lg:text-8xl font-medium text-boring-dark dark:text-boring-offwhite leading-tight">
               <ScrollReveal>
                 <span className="reveal-text-line inline-block pl-42">We're a community of devs,</span>
               </ScrollReveal>{' '}
@@ -381,8 +380,8 @@ const LandingPage = () => {
 
           <nav
             className={`
-              fixed inset-0 p-12 bg-white z-40 flex flex-col 
-              md:absolute md:top-28 md:right-12 md:inset-auto md:p-0 md:bg-transparent md:z-20 md:block
+              fixed inset-0 p-12 bg-white dark:bg-boring-dark z-40 flex flex-col 
+              md:absolute md:top-28 md:right-12 md:inset-auto md:p-0 md:bg-transparent md:dark:bg-transparent md:z-20 md:block
               transition-all duration-300 ease-in-out
               ${isMenuOpen
                 ? 'opacity-100 translate-y-0'
@@ -391,11 +390,11 @@ const LandingPage = () => {
           >
             <header className="w-full md:hidden">
               <div className="flex justify-between items-center">
-                <div className="text-boring-dark font-bold text-2xl uppercase">
+                <div className="text-boring-dark dark:text-boring-offwhite font-bold text-2xl uppercase">
                   THE BORING DEV
                 </div>
                 <button
-                  className="text-boring-dark text-4xl font-bold"
+                  className="text-boring-dark dark:text-boring-offwhite text-4xl font-bold"
                   onClick={toggleMenu}
                   aria-label="Close menu"
                 >
@@ -408,7 +407,7 @@ const LandingPage = () => {
               <li>
                 <Link
                   to="/products"
-                  className="text-boring-dark hover:text-boring-main text-4xl md:text-3xl font-medium uppercase transition-colors duration-200"
+                  className="text-boring-dark dark:text-boring-offwhite hover:text-boring-main dark:hover:text-boring-main text-4xl md:text-3xl font-medium uppercase transition-colors duration-200"
                   onClick={toggleMenu}
                 >
                   Products
@@ -417,7 +416,7 @@ const LandingPage = () => {
               <li>
                 <Link
                   to="/about"
-                  className="text-boring-dark hover:text-boring-main text-4xl md:text-3xl font-medium uppercase transition-colors duration-200"
+                  className="text-boring-dark dark:text-boring-offwhite hover:text-boring-main dark:hover:text-boring-main text-4xl md:text-3xl font-medium uppercase transition-colors duration-200"
                   onClick={toggleMenu}
                 >
                   About
@@ -426,7 +425,7 @@ const LandingPage = () => {
               <li>
                 <Link
                   to="/contact"
-                  className="text-boring-dark hover:text-boring-main text-4xl md:text-3xl font-medium uppercase transition-colors duration-200"
+                  className="text-boring-dark dark:text-boring-offwhite hover:text-boring-main dark:hover:text-boring-main text-4xl md:text-3xl font-medium uppercase transition-colors duration-200"
                   onClick={toggleMenu}
                 >
                   Contact
@@ -439,7 +438,7 @@ const LandingPage = () => {
             <ProductsSection scrollToRef={scrollToSection} />
           </div>
 
-          <section className="py-24 bg-boring-dark relative overflow-hidden">
+          <section className="py-24 bg-boring-dark dark:bg-boring-dark relative overflow-hidden">
             <AnimatedGradientBlob
               color1="from-boring-main/10"
               color2="to-boring-slate/5"
@@ -532,48 +531,48 @@ const LandingPage = () => {
             </div>
           </section>
 
-          <footer className="py-12 bg-boring-offwhite relative">
+          <footer className="py-12 bg-boring-offwhite dark:bg-boring-dark relative">
             <div className="container mx-auto px-4">
               <div className="flex flex-col md:flex-row justify-between items-center">
                 <div className="mb-8 md:mb-0">
-                  <h3 className="text-2xl font-bold text-boring-dark">
+                  <h3 className="text-2xl font-bold text-boring-dark dark:text-boring-offwhite">
                     the <AnimatedGradientText>boring</AnimatedGradientText> dev
                   </h3>
-                  <p className="text-boring-dark/70 mt-2">
+                  <p className="text-boring-dark/70 dark:text-boring-offwhite/70 mt-2">
                     Simple tools, thoughtful design.
                   </p>
                 </div>
 
                 <div className="flex flex-wrap gap-8">
                   <div>
-                    <h4 className="text-boring-dark font-medium mb-3">Links</h4>
+                    <h4 className="text-boring-dark dark:text-boring-offwhite font-medium mb-3">Links</h4>
                     <ul className="space-y-2">
-                      <li><a href="/about" className="text-boring-dark/70 hover:text-boring-main transition-colors">About</a></li>
-                      <li><a href="/projects" className="text-boring-dark/70 hover:text-boring-main transition-colors">Projects</a></li>
-                      <li><a href="/contact" className="text-boring-dark/70 hover:text-boring-main transition-colors">Contact</a></li>
+                      <li><a href="/about" className="text-boring-dark/70 dark:text-boring-offwhite/70 hover:text-boring-main dark:hover:text-boring-main transition-colors">About</a></li>
+                      <li><a href="/projects" className="text-boring-dark/70 dark:text-boring-offwhite/70 hover:text-boring-main dark:hover:text-boring-main transition-colors">Projects</a></li>
+                      <li><a href="/contact" className="text-boring-dark/70 dark:text-boring-offwhite/70 hover:text-boring-main dark:hover:text-boring-main transition-colors">Contact</a></li>
                     </ul>
                   </div>
 
                   <div>
-                    <h4 className="text-boring-dark font-medium mb-3">Social</h4>
+                    <h4 className="text-boring-dark dark:text-boring-offwhite font-medium mb-3">Social</h4>
                     <ul className="space-y-2">
-                      <li><a href="#" className="text-boring-dark/70 hover:text-boring-main transition-colors">Twitter</a></li>
-                      <li><a href="#" className="text-boring-dark/70 hover:text-boring-main transition-colors">GitHub</a></li>
-                      <li><a href="#" className="text-boring-dark/70 hover:text-boring-main transition-colors">LinkedIn</a></li>
+                      <li><a href="#" className="text-boring-dark/70 dark:text-boring-offwhite/70 hover:text-boring-main dark:hover:text-boring-main transition-colors">Twitter</a></li>
+                      <li><a href="#" className="text-boring-dark/70 dark:text-boring-offwhite/70 hover:text-boring-main dark:hover:text-boring-main transition-colors">GitHub</a></li>
+                      <li><a href="#" className="text-boring-dark/70 dark:text-boring-offwhite/70 hover:text-boring-main dark:hover:text-boring-main transition-colors">LinkedIn</a></li>
                     </ul>
                   </div>
 
                   <div>
-                    <h4 className="text-boring-dark font-medium mb-3">Legal</h4>
+                    <h4 className="text-boring-dark dark:text-boring-offwhite font-medium mb-3">Legal</h4>
                     <ul className="space-y-2">
-                      <li><a href="#" className="text-boring-dark/70 hover:text-boring-main transition-colors">Privacy Policy</a></li>
-                      <li><a href="#" className="text-boring-dark/70 hover:text-boring-main transition-colors">Terms of Service</a></li>
+                      <li><a href="#" className="text-boring-dark/70 dark:text-boring-offwhite/70 hover:text-boring-main dark:hover:text-boring-main transition-colors">Privacy Policy</a></li>
+                      <li><a href="#" className="text-boring-dark/70 dark:text-boring-offwhite/70 hover:text-boring-main dark:hover:text-boring-main transition-colors">Terms of Service</a></li>
                     </ul>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-12 pt-6 border-t border-boring-slate/20 text-center text-boring-dark/60 text-sm">
+              <div className="mt-12 pt-6 border-t border-boring-slate/20 dark:border-boring-offwhite/20 text-center text-boring-dark/60 dark:text-boring-offwhite/60 text-sm">
                 &copy; {new Date().getFullYear()} The Boring Dev. All rights reserved.
               </div>
             </div>
