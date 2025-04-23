@@ -342,7 +342,7 @@ const CollageSlideshow: React.FC = () => {
           transition={{ duration: 0.4, ease: "easeInOut" }}
           className="absolute inset-0 flex items-center justify-center p-4"
         >
-          <div className="transform scale-150 w-[50%]">
+          <div className="transform scale-140 lg:scale-150 w-[70%] lg:w-[50%]">
              {cardPreviews[currentIndex]}
           </div>
         </motion.div>
