@@ -25,7 +25,7 @@ const IdeaGenerator: React.FC = () => {
         Need a tiny, useful feature idea?
       </h2>
       <p className="text-boring-dark/80 mb-8 text-center max-w-xl">
-        Click the screen below for a low-effort, high-impact feature you could build this weekend.
+        Click the console for a random low-effort, high-impact feature!
       </p>
       <div className="relative w-full max-w-2xl cursor-pointer group" onClick={generateIdea}>
         <img
@@ -67,9 +67,9 @@ const IdeaGenerator: React.FC = () => {
                    initial={{ opacity: 0 }}
                    animate={{ opacity: 1 }}
                    transition={{ delay: 0.5 }}
-                   className="text-boring-offwhite/70 text-center p-4 text-sm sm:text-base md:text-lg font-medium"
+                   className="text-boring-offwhite text-center p-4 text-md sm:text-base md:text-lg lg:text-3xl font-bold"
                  >
-                    Click Me!
+                    Touch me if you dare!
                  </motion.div>
               )}
             </AnimatePresence>
