@@ -413,7 +413,7 @@ const AlwaysReopeningDropdown: React.FC = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="absolute z-10 mt-1 w-full bg-white  border border-gray-300 dark:border-gray-600 rounded shadow-lg"
+              className="absolute z-10 mt-1 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-lg"
             >
               <ul>
                 {options.map(option => (
@@ -663,7 +663,7 @@ const OversharingBottomSheet: React.FC = () => {
                         animate={{ y: "0%" }}
                         exit={{ y: "100%" }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        className="absolute bottom-0 left-0 right-0 h-auto bg-white  border-t border-gray-200 dark:border-gray-700 rounded-t-lg shadow-xl p-5 flex flex-col"
+                        className="absolute bottom-0 left-0 right-0 h-auto bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 rounded-t-lg shadow-xl p-5 flex flex-col"
                     >
                         <h5 className="text-lg font-semibold mb-1 text-gray-900 dark:text-white">Here's too much info.</h5>
                         <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">We're all figuring it out. Like, did you know this component uses absolute positioning and framer-motion? It's trying its best.</p> {/* Restored dark:text-gray-400 */}
@@ -801,7 +801,7 @@ const RethinkingAccordion: React.FC = () => {
                             collapsed: { opacity: 0, height: 0 }
                         }}
                         transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
-                        className="p-4 bg-white  rounded-b overflow-hidden"
+                        className="p-4 bg-white dark:bg-gray-800 rounded-b overflow-hidden"
                     >
                         This is the content. It seems important, but closing it might trigger second thoughts.
                         {isRethinking && <p className="text-xs italic text-gray-500 dark:text-gray-400 mt-2">Hmm, maybe keep this open?</p>} {/* Restored dark:text-gray-400 */}
@@ -920,13 +920,13 @@ const RegretfulDropdown: React.FC = () => {
           Level 1 Menu...
         </button>
         {level >= 1 && (
-          <div className="absolute z-10 mt-1 w-full bg-white  border border-gray-300 dark:border-gray-600 rounded shadow-lg p-2">
+          <div className="absolute z-10 mt-1 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-lg p-2">
             <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setLevel(2)} disabled={level >= 2}>Level 2...</button>
             <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={reset}>Cancel</button>
           </div>
         )}
         {level >= 2 && (
-           <div className="absolute z-20 mt-10 ml-4 w-full bg-white  border border-gray-300 dark:border-gray-600 rounded shadow-lg p-2">
+           <div className="absolute z-20 mt-10 ml-4 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded shadow-lg p-2">
             <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={() => setLevel(3)} disabled={level >= 3}>Level 3...</button>
             <button className="block w-full text-left py-1 hover:bg-gray-100 dark:hover:bg-gray-700" onClick={reset}>Cancel</button>
           </div>
@@ -1105,7 +1105,7 @@ const ExistentialAccordion: React.FC = () => {
                             collapsed: { opacity: 0, height: 0 }
                         }}
                         transition={{ duration: 0.4, ease: "easeInOut" }}
-                        className="p-4 bg-white  rounded-b overflow-hidden text-center"
+                        className="p-4 bg-white dark:bg-gray-800 rounded-b overflow-hidden text-center"
                     >
                        <p className="font-semibold mb-1">Why did you open this?</p>
                        <p className="text-sm">What are you <span className="italic">really</span> looking for in life?</p>
@@ -1154,7 +1154,7 @@ const SlowModal: React.FC = () => {
                             animate={{ scale: 1, opacity: 1 }}
                             exit={{ scale: 0.8, opacity: 0 }}
                             transition={{ duration: 2.0, delay: 0.5 }} // Even slower content appearance
-                            className="bg-white  rounded-lg shadow-xl p-6 max-w-sm w-full relative"
+                            className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-sm w-full relative"
                             onClick={(e) => e.stopPropagation()} // Prevent closing when clicking content
                         >
                             <h3 className="text-lg font-medium mb-3">Important Announcement</h3>
@@ -1490,7 +1490,7 @@ const HaikuBottomSheet: React.FC = () => {
                             animate={{ y: "0%" }}
                             exit={{ y: "100%" }}
                             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                            className="w-full h-auto bg-white  border-t border-gray-200 dark:border-gray-700 rounded-t-lg shadow-xl p-5 flex flex-col text-center"
+                            className="w-full h-auto bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 rounded-t-lg shadow-xl p-5 flex flex-col text-center"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <p className="text-base leading-relaxed text-gray-700 dark:text-gray-300 mb-3 font-serif italic">
@@ -2351,7 +2351,7 @@ const OverwhelmedExpandableCard: React.FC = () => {
                             collapsed: { opacity: 0, height: 0 }
                         }}
                         transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="p-4 bg-white  rounded-b overflow-hidden text-center"
+                        className="p-4 bg-white dark:bg-gray-800 rounded-b overflow-hidden text-center"
                     >
                         <AnimatePresence mode="wait">
                            {isOverwhelmed ? (
