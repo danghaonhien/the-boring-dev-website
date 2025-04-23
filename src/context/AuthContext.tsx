@@ -44,9 +44,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Function to fetch profile data and merge with auth user
   const fetchAndSetUserWithProfile = useCallback(async (authUser: User | null) => {
-    console.log('[AuthContext] fetchAndSetUserWithProfile called. Auth user:', authUser);
     if (!authUser) {
-      console.log('[AuthContext] No auth user, setting user to null and loading to false.');
       setUser(null);
       setLoading(false);
       return;
@@ -56,9 +54,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     let combinedUser: UserWithProfile = { ...authUser };
 
     try {
-      console.log('[AuthContext] Setting loading to true (profile fetch).');
       setLoading(true); // Indicate loading profile data specifically
-      console.log(`[AuthContext] Fetching profile for user ID: ${authUser.id}`);
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         // Select only the fields defined in ProfileData
@@ -68,23 +64,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       if (profileError && profileError.code !== 'PGRST116') { // Ignore 'Row not found' error initially
         console.error("Error fetching profile data:", profileError);
-        console.log('[AuthContext] Profile fetch error:', profileError);
         // Optionally handle specific errors
       }
 
       if (profileData) {
-        console.log('[AuthContext] Profile data fetched successfully:', profileData);
         // Merge profile data into the user object
         combinedUser = { ...combinedUser, ...profileData };
-      } else {
-        console.log('[AuthContext] No profile data found or error occurred during fetch.');
       }
     } catch (error) {
       console.error("Exception fetching profile data:", error);
-      console.log('[AuthContext] Exception during profile fetch process:', error);
     } finally {
-      console.log('[AuthContext] Setting final user state:', combinedUser);
-      console.log('[AuthContext] Setting loading to false (finally block).');
       setUser(combinedUser); // Set the combined user (even if profile fetch failed)
       setLoading(false); // Stop loading
     }
@@ -96,22 +85,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     // 1. Get initial session and profile
     async function getInitialSessionAndProfile() {
-      console.log('[AuthContext] getInitialSessionAndProfile started.');
       try {
-        console.log('[AuthContext] Attempting supabase.auth.getSession()...');
         const { data: { session: initialSession }, error } = await supabase.auth.getSession();
-        console.log('[AuthContext] supabase.auth.getSession() returned. Error:', error, 'Session:', initialSession);
 
         if (error) throw error;
         if (isMounted) {
           setSession(initialSession);
           // Fetch profile based on initial user
           await fetchAndSetUserWithProfile(initialSession?.user ?? null);
-          console.log('[AuthContext] Initial session and profile fetch complete.');
         }
       } catch (error) {
         console.error("Error getting initial session:", error);
-        console.log('[AuthContext] Error during initial session fetch:', error);
         if (isMounted) setLoading(false); // Ensure loading stops on error
       }
       // setLoading(false) is handled within fetchAndSetUserWithProfile now
@@ -123,8 +107,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, currentSession) => {
         if (isMounted) {
-          console.log(`Supabase auth event: ${event}`);
-          console.log('[AuthContext] onAuthStateChange triggered. Session:', currentSession);
           setSession(currentSession);
           // Fetch profile based on the user from the current session
           await fetchAndSetUserWithProfile(currentSession?.user ?? null);
@@ -153,7 +135,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Refresh function to be called after profile updates
   const refreshUserProfile = useCallback(async () => {
-    console.log('[AuthContext] refreshUserProfile called.');
     // Re-use the fetching logic, passing the current auth user
     await fetchAndSetUserWithProfile(session?.user ?? null);
   }, [session, fetchAndSetUserWithProfile]); // Depend on session and the fetcher
