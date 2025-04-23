@@ -342,12 +342,7 @@ const LandingPage = () => {
             <BoringDesignsSection />
           </ScrollReveal>
 
-          {/* Idea Generator Section */}
-          <section className="py-20 md:py-32">
-             <ScrollReveal delay={300}>
-               <IdeaGenerator />
-             </ScrollReveal>
-          </section>
+         
 
           {/* Meme Generator Section */}
           <section className="py-20 md:py-32">
@@ -360,6 +355,13 @@ const LandingPage = () => {
           <ScrollReveal delay={300}>
             <BoringDesignsSection />
           </ScrollReveal>
+
+           {/* Idea Generator Section */}
+           <section className="py-20 md:py-32">
+             <ScrollReveal delay={300}>
+               <IdeaGenerator />
+             </ScrollReveal>
+          </section>
           {/* Tech Roadmap Section */}
           <section className="py-20 md:py-32">
             <ScrollReveal delay={300}> {/* Added ScrollReveal for smooth appearance */}
