@@ -203,14 +203,14 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-
-        <div className="p-6 md:p-12 relative z-10 min-h-screen dark:bg-boring-dark">
+        <Header 
+              isRevealed={isHeroRevealed} 
+            />
+        <div className="px-6 md:px-12 lg:px-12  relative z-10 min-h-screen dark:bg-boring-dark">
           <section
             className={`relative h-screen overflow-y-auto md:min-h-screen md:overflow-y-visible pb-32 md:pb-12 flex flex-col justify-between transition-opacity duration-500 ${isHeroRevealed ? 'opacity-100' : 'opacity-0 pointer-events-none'} dark:bg-boring-dark`}
           >
-            <Header 
-              isRevealed={isHeroRevealed} 
-            />
+          
 
             <div className="flex-grow flex flex-col justify-end">
               <SloganGenerator />

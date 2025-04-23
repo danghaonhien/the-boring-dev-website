@@ -843,7 +843,7 @@ const AccordionItem: React.FC<{ category: Category; isOpen: boolean; onToggle: (
                                 <h4 className="text-xl font-semibold text-boring-dark dark:text-boring-offwhite mb-1">{project.title}</h4>
                                 <p className="text-boring-dark/80 dark:text-boring-offwhite/80 mb-3 max-w-md">{project.description}</p>
                                  {project.caseStudyLink && project.caseStudyLink !== '#' && (
-                                    <Link to={project.caseStudyLink} className="text-boring-main dark:text-boring-main hover:underline font-medium text-sm uppercase tracking-wider">
+                                    <Link to={project.caseStudyLink} className="text-boring-main dark:text-boring-offwhite hover:underline font-medium text-sm uppercase tracking-wider">
                                     Read Full Case Study
                                     </Link>
                                 )}

@@ -3,6 +3,7 @@ import PageTransition from '../../../components/PageTransition';
 import { ScrollReveal } from '../../../components/EnhancedInteractiveElements';
 import { Link } from 'react-router-dom';
 import { ComponentCollageHero } from '../../../components/ComponentCollageHero';
+import Header from '../../../components/Header';
 // import { Box, Typography, List, ListItem, Paper, Grid } from '@mui/material'; // Example imports if using a UI library
 
 const CorePrinciplesSection: React.FC = () => (
@@ -300,15 +301,7 @@ const WhyBuildItSection: React.FC = () => (
 const DesignSystem01ProjectPage: React.FC = () => {
     return (
         <PageTransition>
-            <header className="p-6 md:p-12 w-full absolute top-0 left-0 z-20">
-                <div className="flex justify-between items-center">
-                    <Link to="/">
-                      <div className="text-gray-900 dark:text-gray-100 font-bold text-2xl uppercase">
-                        THE BORING DEV
-                      </div>
-                    </Link>
-                </div>
-            </header>
+            <Header />
 
             <div className="bg-white dark:bg-black min-h-screen text-black dark:text-white pt-12 md:pt-12">
                 <div className=" px-6 lg:px-12 py-16 md:py-24">

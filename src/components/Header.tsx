@@ -35,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <header
-      className={`w-full transition-all duration-1000 transform bg-offwhite dark:bg-boring-dark ${headerVisibilityClasses}`}
+      className={`w-full p-6 md:p-12 lg:p-12  bg-offwhite dark:bg-boring-dark ${headerVisibilityClasses}`}
     >
       <div className="flex justify-between items-center">
         <div className="text-boring-dark dark:text-boring-offwhite font-bold text-2xl uppercase">
