@@ -8,7 +8,7 @@ import { ComponentCollageHero } from '../../../components/ComponentCollageHero';
 const CorePrinciplesSection: React.FC = () => (
     <section className="mb-12 md:mb-16">
         <ScrollReveal>
-            <h2 className="text-2xl md:text-3xl font-semibold mb-6 border-b border-gray-200 dark:border-gray-700 pb-2">🔧 Core Principles</h2>
+            <h2 className="text-2xl md:text-3xl font-semibold mb-6 border-b border-gray-200 dark:border-gray-700 pb-2 pt-12">🔧 Core Principles</h2>
             <ul className="space-y-3 list-disc pl-5 text-gray-700 dark:text-gray-300">
                 <li><strong>Low Effort, High Consistency:</strong> Reusable tokens, basic structure, and components that don't need a PhD to use.</li>
                 <li><strong>Default to "Good Enough":</strong> No overthinking. Just clean defaults that won't embarrass you.</li>
