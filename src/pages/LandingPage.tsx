@@ -209,8 +209,6 @@ const LandingPage = () => {
           >
             <Header 
               isRevealed={isHeroRevealed} 
-              isMenuOpen={isMenuOpen} 
-              toggleMenu={toggleMenu} 
             />
 
             <div className="flex-grow flex flex-col justify-end">

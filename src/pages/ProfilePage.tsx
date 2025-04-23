@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../utils/supabaseClient';
 import Header from '../components/Header'; // Import the Header
+import Toast from '../components/Toast'; // Import the Toast component
 
 // Placeholder Icons (replace with actual icons, e.g., from react-icons)
 const CalendarIcon = () => <svg className="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"></path></svg>;
@@ -25,7 +26,7 @@ interface Profile {
 }
 
 export default function ProfilePage() {
-  const { user } = useAuth();
+  const { user, refreshUserProfile } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -34,8 +35,8 @@ export default function ProfilePage() {
   const [fullName, setFullName] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [updateLoading, setUpdateLoading] = useState(false);
-  const [updateError, setUpdateError] = useState<string | null>(null);
-  const [updateSuccess, setUpdateSuccess] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toastType, setToastType] = useState<'success' | 'error' | null>(null);
 
   const [websiteUrl, setWebsiteUrl] = useState('');
   const [location, setLocation] = useState('');
@@ -112,7 +113,8 @@ export default function ProfilePage() {
     const file = e.target.files?.[0];
     if (file) {
         if (file.size > 2 * 1024 * 1024) {
-            setUpdateError("File is too large. Maximum size is 2MB.");
+            setToastMessage("File is too large. Maximum size is 2MB.");
+            setToastType('error');
             setAvatarFile(null);
             setAvatarPreview(profile?.avatar_url || null);
             e.target.value = '';
@@ -124,11 +126,17 @@ export default function ProfilePage() {
             setAvatarPreview(reader.result as string);
         };
         reader.readAsDataURL(file);
-        setUpdateError(null);
+        setToastMessage(null);
+        setToastType(null);
     } else {
         setAvatarFile(null);
         setAvatarPreview(profile?.avatar_url || null);
     }
+  };
+
+  const handleCloseToast = () => {
+      setToastMessage(null);
+      setToastType(null);
   };
 
   const resetFormFields = () => {
@@ -143,25 +151,27 @@ export default function ProfilePage() {
       setDisplayEmail(profile?.display_email || false);
       setAvatarFile(null);
       setAvatarPreview(profile?.avatar_url || null);
-      setUpdateError(null);
-      setUpdateSuccess(null);
+      handleCloseToast();
   };
 
   const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setUpdateLoading(true);
-    setUpdateError(null);
-    setUpdateSuccess(null);
+    handleCloseToast();
+
     if (!user) {
-        setUpdateError("Cannot update profile: User not found.");
+        setToastMessage("Cannot update profile: User not found.");
+        setToastType("error");
         setUpdateLoading(false);
         return;
     }
     if (!username.trim()) {
-        setUpdateError("Username cannot be empty.");
+        setToastMessage("Username cannot be empty.");
+        setToastType("error");
         setUpdateLoading(false);
         return;
     }
+
     try {
         let avatarPublicUrl: string | null = profile?.avatar_url || null;
 
@@ -175,7 +185,8 @@ export default function ProfilePage() {
 
             if (uploadError) {
                 console.error("Avatar upload error:", uploadError);
-                setUpdateError(`Failed to upload avatar: ${uploadError.message}`);
+                setToastMessage(`Failed to upload avatar: ${uploadError.message}`);
+                setToastType('error');
                 throw uploadError;
             }
 
@@ -185,7 +196,8 @@ export default function ProfilePage() {
 
             if (!urlData?.publicUrl) {
                  console.error("Could not get public URL for avatar");
-                 setUpdateError("Failed to get avatar URL after upload.");
+                 setToastMessage("Failed to get avatar URL after upload.");
+                 setToastType('error');
                  avatarPublicUrl = null;
             } else {
                 avatarPublicUrl = urlData.publicUrl;
@@ -210,27 +222,32 @@ export default function ProfilePage() {
       const { error: updateError } = await supabase.from('profiles').upsert(updates);
 
       if (updateError) {
-         if (updateError.message.includes('duplicate key value violates unique constraint "profiles_username_key"')) {
-            setUpdateError('Username is already taken. Please choose another.');
-        } else {
-            setUpdateError('Failed to update profile. Please try again.');
-        }
          console.error("Profile update error:", updateError.message);
-         if (!updateError.message.includes('duplicate key')) {
-              setUpdateError(`Failed to update profile: ${updateError.message}`);
+         let specificError = 'Failed to update profile. Please try again.';
+         if (updateError.message.includes('duplicate key value violates unique constraint "profiles_username_key"')) {
+            specificError = 'Username is already taken. Please choose another.';
+         } else if (updateError.message.includes('violates row-level security policy')) {
+            specificError = 'You do not have permission to perform this update.';
          }
+         setToastMessage(specificError);
+         setToastType('error');
          throw updateError;
       }
 
       setProfile(prev => prev ? { ...prev, ...updates } as Profile : updates as Profile);
-      setUpdateSuccess("Profile updated successfully!");
+      setToastMessage("Profile updated successfully!");
+      setToastType('success');
       setIsEditing(false);
       setAvatarFile(null);
 
+      // Refresh the user profile data in the context
+      await refreshUserProfile();
+
     } catch (err: any) {
       console.error("Error during profile update process:", err.message);
-       if (!updateError && !updateSuccess) {
-           setUpdateError('An unexpected error occurred during the update.');
+       if (!toastMessage) {
+           setToastMessage('An unexpected error occurred during the update.');
+           setToastType('error');
        }
     } finally {
       setUpdateLoading(false);
@@ -264,7 +281,15 @@ export default function ProfilePage() {
   const joinedDate = user?.created_at ? new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A';
 
   return (
-    <div className="min-h-screen mx-auto px-4 sm:px-6 lg:px-12 py-6 bg-gray-100">
+    <div className="min-h-screen mx-auto px-4 sm:px-6 lg:px-12 py-6 bg-gray-100 relative">
+      {toastMessage && toastType && (
+        <Toast
+          message={toastMessage}
+          type={toastType}
+          onClose={handleCloseToast}
+        />
+      )}
+
       <Header />
       
       <main className="max-w-4xl mx-auto py-8">
@@ -331,13 +356,11 @@ export default function ProfilePage() {
             {isEditing && (
               <div className="mt-6 bg-white p-6 rounded-lg shadow">
                   <h2 className="text-xl font-semibold mb-6 border-b pb-3">Edit Profile</h2>
-                  {updateError && <p className="text-red-500 text-sm mb-4 p-3 bg-red-100 rounded">{updateError}</p>}
-                  {updateSuccess && <p className="text-green-600 text-sm mb-4 p-3 bg-green-100 rounded">{updateSuccess}</p>}
 
                   <form onSubmit={handleUpdateProfile} className="space-y-6">
-                      <div className="border p-4 rounded-md">
+                      <div className="border p-4 rounded-md space-y-4">
                            <h3 className="text-lg font-medium mb-4 text-gray-800">User</h3>
-                            <div className="flex items-center space-x-4 mb-4">
+                            <div className="flex items-center space-x-4">
                                 <img
                                     src={avatarPreview || 'https://via.placeholder.com/80'}
                                     alt="Avatar Preview"
@@ -375,7 +398,7 @@ export default function ProfilePage() {
                            </div>
                       </div>
 
-                      <div className="border p-4 rounded-md">
+                      <div className="border p-4 rounded-md space-y-4">
                             <h3 className="text-lg font-medium mb-4 text-gray-800">Basic</h3>
                             <div>
                                 <label htmlFor="websiteUrl" className="block text-sm font-medium text-gray-700">Website URL</label>
@@ -392,7 +415,7 @@ export default function ProfilePage() {
                             </div>
                       </div>
 
-                      <div className="border p-4 rounded-md">
+                      <div className="border p-4 rounded-md space-y-4">
                            <h3 className="text-lg font-medium mb-4 text-gray-800">Personal</h3>
                             <div>
                                 <label htmlFor="pronouns" className="block text-sm font-medium text-gray-700">Pronouns</label>
@@ -400,7 +423,7 @@ export default function ProfilePage() {
                             </div>
                       </div>
 
-                      <div className="border p-4 rounded-md">
+                      <div className="border p-4 rounded-md space-y-4">
                            <h3 className="text-lg font-medium mb-4 text-gray-800">Work</h3>
                             <div>
                                 <label htmlFor="work" className="block text-sm font-medium text-gray-700">Work</label>
