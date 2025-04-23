@@ -208,7 +208,7 @@ const LandingPage = () => {
             />
         <div className="px-6 md:px-12 lg:px-12  relative z-10 min-h-screen dark:bg-boring-dark">
           <section
-            className={`relative h-screen overflow-y-auto md:min-h-screen lg:min-h-screen md:overflow-y-visible pb-16 md:pb-6 lg:pt-48 flex flex-col justify-between transition-opacity duration-500 ${isHeroRevealed ? 'opacity-100' : 'opacity-0 pointer-events-none'} dark:bg-boring-dark`}
+            className={`relative h-screen overflow-y-auto md:min-h-screen lg:min-h-screen md:overflow-y-visible pt-16 md:pt-6 lg:pt-48 flex flex-col justify-between transition-opacity duration-500 ${isHeroRevealed ? 'opacity-100' : 'opacity-0 pointer-events-none'} dark:bg-boring-dark`}
           >
           
 
