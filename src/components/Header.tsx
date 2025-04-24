@@ -88,14 +88,14 @@ const Header: React.FC<HeaderProps> = ({
                   </div>
                   <Link 
                     to="/profile"
-                    className="block px-4 py-2 text-sm text-gray-700 dark:text-boring-offwhite hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-boring-main w-full text-left"
+                    className="block px-4 py-2 text-sm text-gray-700 dark:text-boring-offwhite hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-boring-main w-full text-left z-50"
                     onClick={() => setIsDropdownOpen(false)} // Close dropdown on link click
                   >
                     Dashboard
                   </Link>
                   <Link 
                     to="/settings" 
-                    className="block px-4 py-2 text-sm text-gray-700 dark:text-boring-offwhite hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-boring-main w-full text-left"
+                    className="block px-4 py-2 text-sm text-gray-700 dark:text-boring-offwhite hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-boring-main w-full text-left z-50"
                     onClick={() => setIsDropdownOpen(false)} // Close dropdown on link click
                   >
                     Settings
