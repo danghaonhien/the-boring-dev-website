@@ -19,8 +19,8 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose, duration = 10000 
 
   const baseClasses = "fixed top-5 left-1/2 transform -translate-x-1/2 max-w-md w-full p-4 rounded-lg shadow-lg flex items-center justify-between z-50";
   const typeClasses = type === 'success'
-    ? "bg-green-100 border border-green-300 text-green-800"
-    : "bg-red-100 border border-red-300 text-red-800";
+    ? "bg-green-100 dark:bg-green-900 border border-green-300 dark:border-green-700 text-green-800 dark:text-green-200"
+    : "bg-red-100 dark:bg-red-900 border border-red-300 dark:border-red-700 text-red-800 dark:text-red-200";
 
   const icon = type === 'success' ? (
     // Success Icon (Checkmark)
@@ -42,7 +42,11 @@ const Toast: React.FC<ToastProps> = ({ message, type, onClose, duration = 10000 
       </div>
       <button
         onClick={onClose}
-        className={`ml-4 p-1 rounded-md focus:outline-none focus:ring-2 ${type === 'success' ? 'text-green-600 hover:bg-green-200 focus:ring-green-400' : 'text-red-600 hover:bg-red-200 focus:ring-red-400'}`}
+        className={`ml-4 p-1 rounded-md focus:outline-none focus:ring-2 ${
+          type === 'success' 
+            ? 'text-green-600 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-800 focus:ring-green-400 dark:focus:ring-green-600' 
+            : 'text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-800 focus:ring-red-400 dark:focus:ring-red-600'
+        }`}
         aria-label="Close"
       >
         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">

@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../utils/supabaseClient';
-import Header from '../components/Header'; // Import the Header
-import Toast from '../components/Toast'; // Import the Toast component
+import Header from '../components/Header';
+import Toast from '../components/Toast';
+import FormField from '../components/FormField';
+import CheckboxField from '../components/CheckboxField';
+import AvatarUpload from '../components/AvatarUpload';
+import Button from '../components/Button';
+import FormSection from '../components/FormSection';
+import FormContainer from '../components/FormContainer';
 
 // Placeholder Icons (replace with actual icons, e.g., from react-icons)
 const CalendarIcon = () => <svg className="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"></path></svg>;
@@ -338,24 +344,24 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div>Loading profile...</div>
+        <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-boring-dark">
+            <div className="text-gray-800 dark:text-boring-offwhite">Loading profile...</div>
         </div>
     );
   }
 
   if (error) {
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-             <div className="p-6 text-red-500">Error: {error}</div>
+        <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-boring-dark">
+             <div className="p-6 text-red-500 dark:text-red-400">Error: {error}</div>
         </div>
     );
   }
 
   if (!profile) {
       return (
-          <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="p-6">Profile not found or initializing...</div>
+          <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-boring-dark">
+            <div className="p-6 text-gray-800 dark:text-boring-offwhite">Profile not found or initializing...</div>
           </div>
       );
   }
@@ -363,7 +369,7 @@ export default function ProfilePage() {
   const joinedDate = user?.created_at ? new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A';
 
   return (
-    <div className="min-h-screen mx-auto px-4 sm:px-6 lg:px-12 py-6 bg-gray-100 relative">
+    <div className="min-h-screen mx-auto px-4 sm:px-6 lg:px-12 py-6 bg-gray-100 dark:bg-boring-dark relative">
       {toastMessage && toastType && (
         <Toast
           message={toastMessage}
@@ -372,19 +378,19 @@ export default function ProfilePage() {
         />
       )}
 
-      <Header />
+      <Header isRevealed={true} />
       
-      <main className=" mx-auto py-8">
-        <div className="h-32 bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 rounded-t-lg mb-[-60px]"></div>
+      <main className="mx-auto py-8">
+        <div className="h-32 bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 dark:from-indigo-900 dark:via-purple-900 dark:to-pink-900 rounded-t-lg mb-[-60px]"></div>
         
         <div className="flex flex-col md:flex-row md:space-x-8">
           <section className="w-full">
-            <div className="bg-white rounded-lg shadow p-6 relative">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 relative">
               <div className="absolute left-1/2 transform -translate-x-1/2 -top-16">
                  <img
                     src={isEditing ? (avatarPreview || DEFAULT_AVATAR) : (profile.avatar_url || DEFAULT_AVATAR)}
                     alt={profile.full_name || profile.username || 'User Avatar'}
-                    className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
+                    className="w-32 h-32 rounded-full border-4 border-white dark:border-gray-800 shadow-lg object-cover"
                     onError={(e) => {
                       e.currentTarget.src = DEFAULT_AVATAR;
                     }}
@@ -395,7 +401,7 @@ export default function ProfilePage() {
                   <div className="absolute top-4 right-4">
                       <button
                           onClick={() => setIsEditing(true)}
-                          className="px-3 py-1.5 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 text-xs font-medium"
+                          className="px-3 py-1.5 bg-indigo-600 dark:bg-indigo-700 text-white rounded-md hover:bg-indigo-700 dark:hover:bg-indigo-600 text-xs font-medium"
                       >
                           Edit profile
                       </button>
@@ -403,30 +409,30 @@ export default function ProfilePage() {
               )}
 
               <div className="pt-20 text-center">
-                <h1 className="text-2xl font-bold text-gray-900">{profile.full_name || profile.username || 'User'}</h1>
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-boring-offwhite">{profile.full_name || profile.username || 'User'}</h1>
                 {(profile.username) && (
-                    <p className="text-md text-gray-500">@{profile.username}</p>
+                    <p className="text-md text-gray-500 dark:text-gray-400">@{profile.username}</p>
                 )}
                 {profile.pronouns && (
-                    <p className="text-sm text-gray-500 italic">({profile.pronouns})</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 italic">({profile.pronouns})</p>
                 )}
 
-                <p className="mt-3 text-gray-700 max-w-md mx-auto">{profile.bio || "404 bio not found"}</p>
+                <p className="mt-3 text-gray-700 dark:text-gray-300 max-w-md mx-auto">{profile.bio || "404 bio not found"}</p>
 
                 {(profile.work || profile.education) && (
-                    <div className="mt-3 text-sm text-gray-600">
+                    <div className="mt-3 text-sm text-gray-600 dark:text-gray-400">
                          {profile.work && <p>{profile.work}</p>}
                          {profile.education && <p>{profile.education}</p>}
                     </div>
                  )}
 
-                <div className="mt-4 flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-sm text-gray-500">
+                <div className="mt-4 flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
                    {profile.location && (
                        <span className="flex items-center"><svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg> {profile.location}</span>
                    )}
                    <span className="flex items-center"><CalendarIcon /> Joined on {joinedDate}</span>
                    {profile.website_url && (
-                        <a href={profile.website_url.startsWith('http') ? profile.website_url : `https://${profile.website_url}`} target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-gray-700 hover:underline">
+                        <a href={profile.website_url.startsWith('http') ? profile.website_url : `https://${profile.website_url}`} target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-gray-700 dark:hover:text-gray-300 hover:underline">
                             <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M12.232 4.232a2.5 2.5 0 013.536 3.536l-1.225 1.224a.75.75 0 001.061 1.06l1.224-1.224a4 4 0 00-5.656-5.656l-3 3a4 4 0 00.225 5.865.75.75 0 00.977-1.138 2.5 2.5 0 01-.142-3.665l3-3z" /><path d="M8.603 14.714a2.5 2.5 0 01-3.536-3.536l1.225-1.224a.75.75 0 00-1.061-1.06l-1.224 1.224a4 4 0 005.656 5.656l3-3a4 4 0 00-.225-5.865.75.75 0 00-.977 1.138 2.5 2.5 0 01.142 3.665l-3 3z" /></svg>
                             Website
                         </a>
@@ -439,114 +445,139 @@ export default function ProfilePage() {
             </div>
 
             {isEditing && (
-              <div className="mt-6 bg-white p-6 rounded-lg shadow">
-                  <h2 className="text-xl font-semibold mb-6 border-b pb-3">Edit Profile</h2>
+              <FormContainer title="Edit Profile">
+                <form onSubmit={handleUpdateProfile} className="space-y-6">
+                  <FormSection title="User">
+                    <AvatarUpload 
+                      previewUrl={avatarPreview}
+                      defaultUrl={DEFAULT_AVATAR}
+                      onFileChange={handleAvatarChange}
+                      disabled={updateLoading}
+                    />
 
-                  <form onSubmit={handleUpdateProfile} className="space-y-6">
-                      <div className="border p-4 rounded-md space-y-4">
-                           <h3 className="text-lg font-medium mb-4 text-gray-800">User</h3>
-                            <div className="flex items-center space-x-4">
-                                <img
-                                    src={avatarPreview || DEFAULT_AVATAR}
-                                    alt="Avatar Preview"
-                                    className="w-20 h-20 rounded-full object-cover border"
-                                    onError={(e) => {
-                                      e.currentTarget.src = DEFAULT_AVATAR;
-                                    }}
-                                />
-                                <div>
-                                    <label htmlFor="avatar" className="block text-sm font-medium text-gray-700 mb-1">Profile image</label>
-                                    <input
-                                        id="avatar"
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={handleAvatarChange}
-                                        disabled={updateLoading}
-                                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 disabled:opacity-50"
-                                    />
-                                    <p className="text-xs text-gray-500 mt-1">Max file size: 2MB.</p>
-                                </div>
-                            </div>
+                    <FormField
+                        id="fullName"
+                        label="Name"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        disabled={updateLoading}
+                        placeholder="Your full name"
+                    />
 
-                           <div>
-                              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">Name</label>
-                              <input id="fullName" type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} disabled={updateLoading} className="mt-1 input-field" placeholder="Your full name" />
-                           </div>
-                           <div>
-                              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                              <input id="email" type="email" value={user?.email || ''} disabled className="mt-1 input-field bg-gray-100 cursor-not-allowed" />
-                           </div>
-                           <div className="flex items-center mt-2">
-                                <input id="displayEmail" type="checkbox" checked={displayEmail} onChange={(e) => setDisplayEmail(e.target.checked)} disabled={updateLoading} className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded disabled:opacity-50" />
-                                <label htmlFor="displayEmail" className="ml-2 block text-sm text-gray-900">Display email on profile</label>
-                           </div>
-                           <div>
-                              <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
-                              <input id="username" type="text" value={username} onChange={(e) => setUsername(e.target.value)} disabled={updateLoading} className="mt-1 input-field" placeholder="Your unique username" required />
-                           </div>
-                      </div>
+                    <FormField
+                        id="email"
+                        type="email"
+                        label="Email"
+                        value={user?.email || ''}
+                        disabled={true}
+                        placeholder="Your email"
+                    />
 
-                      <div className="border p-4 rounded-md space-y-4">
-                            <h3 className="text-lg font-medium mb-4 text-gray-800">Basic</h3>
-                            <div>
-                                <label htmlFor="websiteUrl" className="block text-sm font-medium text-gray-700">Website URL</label>
-                                <input id="websiteUrl" type="url" value={websiteUrl} onChange={(e) => setWebsiteUrl(e.target.value)} disabled={updateLoading} className="mt-1 input-field" placeholder="https://yoursite.com" />
-                            </div>
-                             <div>
-                                <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
-                                <input id="location" type="text" value={location} onChange={(e) => setLocation(e.target.value)} disabled={updateLoading} className="mt-1 input-field" placeholder="City, Country" />
-                            </div>
-                            <div>
-                                <label htmlFor="bio" className="block text-sm font-medium text-gray-700">Bio</label>
-                                <textarea id="bio" value={bio} onChange={(e) => setBio(e.target.value)} rows={3} disabled={updateLoading} className="mt-1 input-field" placeholder="A short bio..."></textarea>
-                                <p className="text-xs text-gray-500 text-right">{bio.length}/200</p>
-                            </div>
-                      </div>
+                    <CheckboxField
+                        id="displayEmail"
+                        label="Display email on profile"
+                        checked={displayEmail}
+                        onChange={(e) => setDisplayEmail(e.target.checked)}
+                        disabled={updateLoading}
+                    />
 
-                      <div className="border p-4 rounded-md space-y-4">
-                           <h3 className="text-lg font-medium mb-4 text-gray-800">Personal</h3>
-                            <div>
-                                <label htmlFor="pronouns" className="block text-sm font-medium text-gray-700">Pronouns</label>
-                                <input id="pronouns" type="text" value={pronouns} onChange={(e) => setPronouns(e.target.value)} disabled={updateLoading} className="mt-1 input-field" placeholder="e.g., she/her, he/him, they/them" />
-                            </div>
-                      </div>
+                    <FormField
+                        id="username"
+                        label="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        disabled={updateLoading}
+                        placeholder="Your unique username"
+                        required
+                    />
+                  </FormSection>
 
-                      <div className="border p-4 rounded-md space-y-4">
-                           <h3 className="text-lg font-medium mb-4 text-gray-800">Work</h3>
-                            <div>
-                                <label htmlFor="work" className="block text-sm font-medium text-gray-700">Work</label>
-                                <input id="work" type="text" value={work} onChange={(e) => setWork(e.target.value)} disabled={updateLoading} className="mt-1 input-field" placeholder="What do you do? Example: CEO at ACME Inc." />
-                            </div>
-                            <div>
-                                <label htmlFor="education" className="block text-sm font-medium text-gray-700">Education</label>
-                                <input id="education" type="text" value={education} onChange={(e) => setEducation(e.target.value)} disabled={updateLoading} className="mt-1 input-field" placeholder="Where did you go to school?" />
-                            </div>
-                      </div>
+                  <FormSection title="Basic">
+                    <FormField
+                        id="websiteUrl"
+                        type="url"
+                        label="Website URL"
+                        value={websiteUrl}
+                        onChange={(e) => setWebsiteUrl(e.target.value)}
+                        disabled={updateLoading}
+                        placeholder="https://yoursite.com"
+                    />
 
-                      <div className="flex justify-end space-x-3 pt-4">
-                          <button
-                              type="button"
-                              onClick={() => {
-                                  setIsEditing(false);
-                                  resetFormFields();
-                              }}
-                              disabled={updateLoading}
-                              className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 text-sm font-medium disabled:opacity-50"
-                          >
-                              Cancel
-                          </button>
-                          <button
-                              type="submit"
-                              disabled={updateLoading}
-                              className={`px-4 py-2 text-white rounded-md text-sm font-medium disabled:opacity-50 ${
-                                  updateLoading ? 'bg-indigo-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'
-                              }`}
-                          >
-                              {updateLoading ? 'Saving...' : 'Save Changes'}
-                          </button>
-                      </div>
-                  </form>
-              </div>
+                    <FormField
+                        id="location"
+                        label="Location"
+                        value={location}
+                        onChange={(e) => setLocation(e.target.value)}
+                        disabled={updateLoading}
+                        placeholder="City, Country"
+                    />
+
+                    <FormField
+                        id="bio"
+                        type="textarea"
+                        label="Bio"
+                        value={bio}
+                        onChange={(e) => setBio(e.target.value)}
+                        disabled={updateLoading}
+                        placeholder="A short bio..."
+                        rows={3}
+                        helperText={`${bio.length}/200`}
+                    />
+                  </FormSection>
+
+                  <FormSection title="Personal">
+                    <FormField
+                        id="pronouns"
+                        label="Pronouns"
+                        value={pronouns}
+                        onChange={(e) => setPronouns(e.target.value)}
+                        disabled={updateLoading}
+                        placeholder="e.g., she/her, he/him, they/them"
+                    />
+                  </FormSection>
+
+                  <FormSection title="Work">
+                    <FormField
+                        id="work"
+                        label="Work"
+                        value={work}
+                        onChange={(e) => setWork(e.target.value)}
+                        disabled={updateLoading}
+                        placeholder="What do you do? Example: CEO at ACME Inc."
+                    />
+
+                    <FormField
+                        id="education"
+                        label="Education"
+                        value={education}
+                        onChange={(e) => setEducation(e.target.value)}
+                        disabled={updateLoading}
+                        placeholder="Where did you go to school?"
+                    />
+                  </FormSection>
+
+                  <div className="flex justify-end space-x-3 pt-4">
+                      <Button
+                          type="button"
+                          variant="secondary"
+                          disabled={updateLoading}
+                          onClick={() => {
+                              setIsEditing(false);
+                              resetFormFields();
+                          }}
+                      >
+                          Cancel
+                      </Button>
+                      <Button
+                          type="submit"
+                          variant="primary"
+                          disabled={updateLoading}
+                      >
+                          {updateLoading ? 'Saving...' : 'Save Changes'}
+                      </Button>
+                  </div>
+                </form>
+              </FormContainer>
             )}
           </section>
         </div>
