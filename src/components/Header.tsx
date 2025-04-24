@@ -17,6 +17,7 @@ const Header: React.FC<HeaderProps> = ({
   const { darkMode, toggleDarkMode } = useTheme();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
@@ -24,6 +25,22 @@ const Header: React.FC<HeaderProps> = ({
 
   // Determine visibility based on reveal state (passed as prop)
   const headerVisibilityClasses = isRevealed ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0';
+
+  // Add scroll listener to detect when to show shadow
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setHasScrolled(true);
+      } else {
+        setHasScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   // Calculate dropdown position when it's toggled
   useEffect(() => {
@@ -198,7 +215,11 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <header
-      className={`relative overflow-visible w-full p-6 md:p-12 lg:p-12 bg-offwhite dark:bg-boring-dark ${headerVisibilityClasses}`}
+      className={`fixed top-0 left-0 right-0 z-50 w-full p-6 md:p-12 lg:p-12 lg:py-6 transition-all duration-300 ${headerVisibilityClasses} ${
+        hasScrolled 
+          ? 'shadow-md dark:shadow-black/30 backdrop-blur-md bg-offwhite/90 dark:bg-boring-dark/90' 
+          : 'bg-offwhite dark:bg-boring-dark'
+      }`}
     >
       <div className="flex justify-between items-center">
         <div className="text-boring-dark dark:text-boring-offwhite font-bold text-2xl uppercase">
