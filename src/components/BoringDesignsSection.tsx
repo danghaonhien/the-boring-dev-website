@@ -98,14 +98,14 @@ const DSIntroSlide1: React.FC = () => (
 
 // --- NEW Font Display Preview Component (Based on Slide03) ---
 const FontDisplayPreview: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => (
-  <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full ${isDark ? 'bg-black text-white' : 'bg-offwhite text-black border border-gray-200'}`}>
+  <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full ${isDark ? 'bg-boring-main text-white ' : 'bg-boring-offwhite text-black border border-gray-200'}`}>
     <div className={`font-semibold mb-1 ${isDark ? 'text-white' : 'text-black'}`}>Inter</div>
-    <div style={{ fontFamily: "'Inter', sans-serif" }} className={`mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+    <div style={{ fontFamily: "'Inter', sans-serif" }} className={`mb-2 ${isDark ? 'text-boring-offwhite' : 'text-gray-700'}`}>
       <p style={{ fontWeight: 300 }} className="text-[10px] leading-tight">Light (Aa)</p>
       <p style={{ fontWeight: 400 }} className="text-[10px] leading-tight">Regular (Bb)</p>
       <p style={{ fontWeight: 500 }} className="text-[10px] leading-tight">Medium (Cc)</p>
     </div>
-    <div className={`text-[9px] mt-auto pt-1 ${isDark ? 'text-gray-500' : 'text-gray-600'}`}>
+    <div className={`text-[9px] mt-auto pt-1 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
       Sizes: 14px, 18px, 30px<br/>
       Use: UI, Body, Headings
     </div>
@@ -115,7 +115,7 @@ const FontDisplayPreview: React.FC<{ isDark?: boolean }> = ({ isDark = false }) 
 // --- Slide 02 Preview Components (Based on Slide02ProjectPage) ---
 
 const GraphStatsPreview: React.FC<{ isDark?: boolean }> = ({ isDark = false }) => (
-  <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full ${isDark ? 'bg-gray-950 text-white' : 'bg-offwhite text-black border border-gray-200'}`}>
+  <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full ${isDark ? 'bg-gray-950 text-white' : 'bg-boring-offwhite text-black border border-gray-200'}`}>
     <div className={`font-semibold mb-2 ${isDark ? 'text-gray-200' : 'text-gray-800'}`}>Performance</div>
     <div className="flex-grow flex items-end justify-center space-x-1 h-16 px-1">
       {[30, 60, 45, 75, 50].map((value, index) => (
@@ -248,10 +248,10 @@ const CollageSlideshow: React.FC = () => {
     </div>,
     // TOC Card Preview
     <div className="bg-gray-200 p-4 rounded-lg text-xs w-full h-full flex flex-col justify-center">
-       <div className="text-gray-400 text-xl font-bold space-y-0 leading-tight">
-          <div><span className="text-gray-400">03</span> Process</div>
-          <div><span className="text-gray-400">04</span> Concept</div>
-          <div><span className="text-gray-400">05</span> Results</div>
+       <div className="text-gray-500 text-xl font-bold space-y-0 leading-tight">
+          <div><span className="text-gray-500">03</span> Process</div>
+          <div><span className="text-gray-500">04</span> Concept</div>
+          <div><span className="text-gray-500">05</span> Results</div>
        </div>
        <div className="text-xxs text-gray-500 mt-2">Client / Project</div>
     </div>,
@@ -295,7 +295,7 @@ const CollageSlideshow: React.FC = () => {
      </div>,
      // Recognition Card Preview
      <div className="bg-offwhite p-4 space-y-1 rounded-lg text-xs w-full h-full flex flex-col justify-center">
-       <div className="font-medium text-sm">Recognition</div>
+       <div className="font-medium text-sm dark:text-boring-offwhite">Recognition</div>
        <div className="text-xxs text-gray-500">Industry Press</div>
        <div className="grid grid-cols-2 gap-1 mt-1">
          {[...Array(4)].map((_, i) => (
@@ -308,7 +308,7 @@ const CollageSlideshow: React.FC = () => {
       // Brief Card Preview
      <div className="bg-offwhite p-4 rounded-lg text-xs w-full h-full flex flex-col justify-center">
         <div className="text-xxs text-gray-500">Brief</div>
-        <div className="font-medium mb-1 text-sm">Overview</div>
+        <div className="font-medium mb-1 text-sm dark:text-boring-offwhite">Overview</div>
         <div className="grid grid-cols-3 gap-1">
            <div className="bg-gray-200 rounded h-8"></div> <div className="bg-gray-200 rounded h-8"></div> <div className="bg-gray-200 rounded h-8"></div>
            <div className="text-xxs text-gray-500 mt-0.5">Client?</div> <div className="text-xxs text-gray-500 mt-0.5">Problem?</div> <div className="text-xxs text-gray-500 mt-0.5">Opps?</div>
@@ -317,7 +317,7 @@ const CollageSlideshow: React.FC = () => {
       // Results Card Preview
      <div className="bg-offwhite p-4 rounded-lg text-xs w-full h-full flex flex-col justify-center">
         <div className="text-xxs text-gray-500">Results</div>
-        <div className="font-medium mb-1 text-sm">Achievements</div>
+        <div className="font-medium mb-1 text-sm dark:text-boring-offwhite">Achievements</div>
         <div className="bg-black rounded h-10 border border-gray-700/50 p-1 flex items-end space-x-px">
             <div className="w-1/5 h-[30%] bg-gray-600"></div> <div className="w-1/5 h-[50%] bg-gray-600"></div> <div className="w-1/5 h-[75%] bg-gray-500"></div> <div className="w-1/5 h-[60%] bg-gray-600"></div> <div className="w-1/5 h-[85%] bg-gray-500"></div>
         </div>
@@ -403,7 +403,7 @@ const Slide03Slideshow: React.FC = () => {
     <FontDisplayPreview isDark={false} />, // Inter light
     <FontDisplayPreview isDark={true} />,  // Inter dark
     // Add previews for other fonts if desired, e.g.:
-     <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full bg-offwhite text-black border border-gray-200`}> {/* Roboto Light */} 
+     <div className={`rounded-lg shadow-md overflow-hidden p-3 text-xxs flex flex-col h-full bg-boring-offwhite text-black border border-gray-200`}> {/* Roboto Light */} 
       <div className={`font-semibold mb-1 text-black`}>Roboto</div>
       <div style={{ fontFamily: "'Roboto', sans-serif" }} className={`mb-2 text-gray-700`}>
         <p style={{ fontWeight: 300 }} className="text-[10px] leading-tight">Light (Aa)</p>

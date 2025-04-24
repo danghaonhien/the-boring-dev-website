@@ -13,7 +13,7 @@ export const ComponentCollageHero: React.FC = () => (
 
                 {/* Card Example (Larger) */}
                 <div className="w-full sm:w-[30%] p-2 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 shadow-sm flex flex-col">
-                    <h4 className="font-medium mb-0.5">Card</h4>
+                    <h4 className="font-medium dark:text-boring-offwhite mb-0.5">Card</h4>
                     <p className="text-gray-500 dark:text-gray-400 flex-grow text-[9px] leading-tight">Content area...</p>
                     <button className="mt-1 px-1.5 py-0.5 bg-boring-dark/10 dark:bg-boring-offwhite/10 rounded self-start text-[9px]">Action</button>
                  </div>
@@ -27,7 +27,7 @@ export const ComponentCollageHero: React.FC = () => (
 
                  {/* Input Example */}
                  <div className="w-[25%] flex-grow p-2 bg-white dark:bg-gray-800 rounded flex flex-col justify-center">
-                    <label className="text-gray-500 dark:text-gray-400 mb-0.5">Input</label>
+                    <label className="text-gray-500  mb-0.5 dark:text-boring-offwhite">Input</label>
                     <input type="text" placeholder="meh" className="w-full p-0.5 border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 placeholder-gray-400 dark:placeholder-gray-500 text-[10px]"/>
                  </div>
 
@@ -39,7 +39,7 @@ export const ComponentCollageHero: React.FC = () => (
                         <div className="w-4 h-4 rounded-full bg-boring-dark"></div>
                          <div className="w-4 h-4 rounded-full bg-blue-500"></div>
                     </div>
-                    <code className="text-gray-500 dark:text-gray-400 text-[9px]">Colors</code>
+                    <code className="text-gray-500 dark:text-boring-offwhite text-[9px]">Colors</code>
                 </div>
                 
                 {/* Tabs Snippet */}
@@ -77,7 +77,7 @@ export const ComponentCollageHero: React.FC = () => (
 
                  {/* Progress Snippet */}
                  <div className="w-[20%] flex-grow p-2 bg-white dark:bg-gray-800 rounded flex flex-col justify-center">
-                     <label className="text-gray-500 dark:text-gray-400 mb-0.5 text-[9px]">Progress</label>
+                     <label className="text-gray-500 dark:text-boring-offwhite mb-0.5 text-[9px]">Progress</label>
                     <div className="w-full bg-gray-200 rounded-full h-1 dark:bg-gray-700">
                         <div className="bg-blue-600 h-1 rounded-full" style={{ width: '70%' }}></div>
                     </div>
@@ -85,7 +85,7 @@ export const ComponentCollageHero: React.FC = () => (
                  
                  {/* Modal Snippet */}
                   <div className="w-full sm:w-[40%] p-2 bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 flex flex-col">
-                     <h4 className="font-medium mb-0.5 border-b border-gray-200 dark:border-gray-700 pb-0.5 text-[10px]">Modal</h4>
+                     <h4 className="font-medium mb-0.5 border-b border-gray-200 dark:border-gray-700 pb-0.5 text-[10px] dark:text-boring-offwhite">Modal</h4>
                      <p className="text-gray-500 dark:text-gray-400 flex-grow py-0.5 text-[9px] leading-tight">Content...</p>
                      <div className="flex justify-end space-x-1 mt-0.5">
                           <button className="px-1 py-0 bg-gray-100 dark:bg-gray-700 rounded text-[9px]">Cancel</button>
