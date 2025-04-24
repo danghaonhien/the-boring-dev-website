@@ -369,7 +369,7 @@ export default function ProfilePage() {
   const joinedDate = user?.created_at ? new Date(user.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : 'N/A';
 
   return (
-    <div className="min-h-screen mx-auto px-4 sm:px-6 lg:px-12 py-6 bg-gray-100 dark:bg-boring-dark relative">
+    <div className="min-h-screen bg-gray-100 dark:bg-boring-dark relative p-0">
       {toastMessage && toastType && (
         <Toast
           message={toastMessage}
@@ -380,206 +380,208 @@ export default function ProfilePage() {
 
       <Header isRevealed={true} />
       
-      <main className="mx-auto py-8">
-        <div className="h-32 bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 dark:from-indigo-900 dark:via-purple-900 dark:to-pink-900 rounded-t-lg mb-[-60px]"></div>
+      <main className="w-full">
+        <div className="w-full h-48 bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 dark:from-indigo-900 dark:via-purple-900 dark:to-pink-900 mb-[-60px]"></div>
         
-        <div className="flex flex-col md:flex-row md:space-x-8">
-          <section className="w-full">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 relative">
-              <div className="absolute left-1/2 transform -translate-x-1/2 -top-16">
-                 <img
-                    src={isEditing ? (avatarPreview || DEFAULT_AVATAR) : (profile.avatar_url || DEFAULT_AVATAR)}
-                    alt={profile.full_name || profile.username || 'User Avatar'}
-                    className="w-32 h-32 rounded-full border-4 border-white dark:border-gray-800 shadow-lg object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = DEFAULT_AVATAR;
-                    }}
-                 />
-              </div>
+        <div className="px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row md:space-x-8">
+            <section className="w-full">
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 relative">
+                <div className="absolute left-1/2 transform -translate-x-1/2 -top-16">
+                   <img
+                      src={isEditing ? (avatarPreview || DEFAULT_AVATAR) : (profile.avatar_url || DEFAULT_AVATAR)}
+                      alt={profile.full_name || profile.username || 'User Avatar'}
+                      className="w-32 h-32 rounded-full border-4 border-white dark:border-gray-800 shadow-lg object-cover"
+                      onError={(e) => {
+                        e.currentTarget.src = DEFAULT_AVATAR;
+                      }}
+                   />
+                </div>
 
-              {!isEditing && (
-                  <div className="absolute top-4 right-4">
-                      <button
-                          onClick={() => setIsEditing(true)}
-                          className="px-3 py-1.5 bg-indigo-600 dark:bg-indigo-700 text-white rounded-md hover:bg-indigo-700 dark:hover:bg-indigo-600 text-xs font-medium"
-                      >
-                          Edit profile
-                      </button>
-                  </div>
-              )}
-
-              <div className="pt-20 text-center">
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-boring-offwhite">{profile.full_name || profile.username || 'User'}</h1>
-                {(profile.username) && (
-                    <p className="text-md text-gray-500 dark:text-gray-400">@{profile.username}</p>
-                )}
-                {profile.pronouns && (
-                    <p className="text-sm text-gray-500 dark:text-gray-400 italic">({profile.pronouns})</p>
-                )}
-
-                <p className="mt-3 text-gray-700 dark:text-gray-300 max-w-md mx-auto">{profile.bio || "404 bio not found"}</p>
-
-                {(profile.work || profile.education) && (
-                    <div className="mt-3 text-sm text-gray-600 dark:text-gray-400">
-                         {profile.work && <p>{profile.work}</p>}
-                         {profile.education && <p>{profile.education}</p>}
+                {!isEditing && (
+                    <div className="absolute top-4 right-4">
+                        <button
+                            onClick={() => setIsEditing(true)}
+                            className="px-3 py-1.5 bg-indigo-600 dark:bg-indigo-700 text-white rounded-md hover:bg-indigo-700 dark:hover:bg-indigo-600 text-xs font-medium"
+                        >
+                            Edit profile
+                        </button>
                     </div>
-                 )}
+                )}
 
-                <div className="mt-4 flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
-                   {profile.location && (
-                       <span className="flex items-center"><svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg> {profile.location}</span>
+                <div className="pt-20 text-center">
+                  <h1 className="text-2xl font-bold text-gray-900 dark:text-boring-offwhite">{profile.full_name || profile.username || 'User'}</h1>
+                  {(profile.username) && (
+                      <p className="text-md text-gray-500 dark:text-gray-400">@{profile.username}</p>
+                  )}
+                  {profile.pronouns && (
+                      <p className="text-sm text-gray-500 dark:text-gray-400 italic">({profile.pronouns})</p>
+                  )}
+
+                  <p className="mt-3 text-gray-700 dark:text-gray-300 max-w-md mx-auto">{profile.bio || "404 bio not found"}</p>
+
+                  {(profile.work || profile.education) && (
+                      <div className="mt-3 text-sm text-gray-600 dark:text-gray-400">
+                           {profile.work && <p>{profile.work}</p>}
+                           {profile.education && <p>{profile.education}</p>}
+                      </div>
                    )}
-                   <span className="flex items-center"><CalendarIcon /> Joined on {joinedDate}</span>
-                   {profile.website_url && (
-                        <a href={profile.website_url.startsWith('http') ? profile.website_url : `https://${profile.website_url}`} target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-gray-700 dark:hover:text-gray-300 hover:underline">
-                            <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M12.232 4.232a2.5 2.5 0 013.536 3.536l-1.225 1.224a.75.75 0 001.061 1.06l1.224-1.224a4 4 0 00-5.656-5.656l-3 3a4 4 0 00.225 5.865.75.75 0 00.977-1.138 2.5 2.5 0 01-.142-3.665l3-3z" /><path d="M8.603 14.714a2.5 2.5 0 01-3.536-3.536l1.225-1.224a.75.75 0 00-1.061-1.06l-1.224 1.224a4 4 0 005.656 5.656l3-3a4 4 0 00-.225-5.865.75.75 0 00-.977 1.138 2.5 2.5 0 01.142 3.665l-3 3z" /></svg>
-                            Website
-                        </a>
-                   )}
-                    {profile.display_email && user?.email && (
-                         <span className="flex items-center"><svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z" /><path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" /></svg> {user.email}</span>
-                    )}
+
+                  <div className="mt-4 flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
+                     {profile.location && (
+                         <span className="flex items-center"><svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg> {profile.location}</span>
+                     )}
+                     <span className="flex items-center"><CalendarIcon /> Joined on {joinedDate}</span>
+                     {profile.website_url && (
+                          <a href={profile.website_url.startsWith('http') ? profile.website_url : `https://${profile.website_url}`} target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-gray-700 dark:hover:text-gray-300 hover:underline">
+                              <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M12.232 4.232a2.5 2.5 0 013.536 3.536l-1.225 1.224a.75.75 0 001.061 1.06l1.224-1.224a4 4 0 00-5.656-5.656l-3 3a4 4 0 00.225 5.865.75.75 0 00.977-1.138 2.5 2.5 0 01-.142-3.665l3-3z" /><path d="M8.603 14.714a2.5 2.5 0 01-3.536-3.536l1.225-1.224a.75.75 0 00-1.061-1.06l-1.224 1.224a4 4 0 005.656 5.656l3-3a4 4 0 00-.225-5.865.75.75 0 00-.977 1.138 2.5 2.5 0 01.142 3.665l-3 3z" /></svg>
+                              Website
+                          </a>
+                     )}
+                      {profile.display_email && user?.email && (
+                           <span className="flex items-center"><svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M3 4a2 2 0 00-2 2v1.161l8.441 4.221a1.25 1.25 0 001.118 0L19 7.162V6a2 2 0 00-2-2H3z" /><path d="M19 8.839l-7.77 3.885a2.75 2.75 0 01-2.46 0L1 8.839V14a2 2 0 002 2h14a2 2 0 002-2V8.839z" /></svg> {user.email}</span>
+                      )}
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {isEditing && (
-              <FormContainer title="Edit Profile">
-                <form onSubmit={handleUpdateProfile} className="space-y-6">
-                  <FormSection title="User">
-                    <AvatarUpload 
-                      previewUrl={avatarPreview}
-                      defaultUrl={DEFAULT_AVATAR}
-                      onFileChange={handleAvatarChange}
-                      disabled={updateLoading}
-                    />
-
-                    <FormField
-                        id="fullName"
-                        label="Name"
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
+              {isEditing && (
+                <FormContainer title="Edit Profile">
+                  <form onSubmit={handleUpdateProfile} className="space-y-6">
+                    <FormSection title="User">
+                      <AvatarUpload 
+                        previewUrl={avatarPreview}
+                        defaultUrl={DEFAULT_AVATAR}
+                        onFileChange={handleAvatarChange}
                         disabled={updateLoading}
-                        placeholder="Your full name"
-                    />
+                      />
 
-                    <FormField
-                        id="email"
-                        type="email"
-                        label="Email"
-                        value={user?.email || ''}
-                        disabled={true}
-                        placeholder="Your email"
-                    />
-
-                    <CheckboxField
-                        id="displayEmail"
-                        label="Display email on profile"
-                        checked={displayEmail}
-                        onChange={(e) => setDisplayEmail(e.target.checked)}
-                        disabled={updateLoading}
-                    />
-
-                    <FormField
-                        id="username"
-                        label="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        disabled={updateLoading}
-                        placeholder="Your unique username"
-                        required
-                    />
-                  </FormSection>
-
-                  <FormSection title="Basic">
-                    <FormField
-                        id="websiteUrl"
-                        type="url"
-                        label="Website URL"
-                        value={websiteUrl}
-                        onChange={(e) => setWebsiteUrl(e.target.value)}
-                        disabled={updateLoading}
-                        placeholder="https://yoursite.com"
-                    />
-
-                    <FormField
-                        id="location"
-                        label="Location"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        disabled={updateLoading}
-                        placeholder="City, Country"
-                    />
-
-                    <FormField
-                        id="bio"
-                        type="textarea"
-                        label="Bio"
-                        value={bio}
-                        onChange={(e) => setBio(e.target.value)}
-                        disabled={updateLoading}
-                        placeholder="A short bio..."
-                        rows={3}
-                        helperText={`${bio.length}/200`}
-                    />
-                  </FormSection>
-
-                  <FormSection title="Personal">
-                    <FormField
-                        id="pronouns"
-                        label="Pronouns"
-                        value={pronouns}
-                        onChange={(e) => setPronouns(e.target.value)}
-                        disabled={updateLoading}
-                        placeholder="e.g., she/her, he/him, they/them"
-                    />
-                  </FormSection>
-
-                  <FormSection title="Work">
-                    <FormField
-                        id="work"
-                        label="Work"
-                        value={work}
-                        onChange={(e) => setWork(e.target.value)}
-                        disabled={updateLoading}
-                        placeholder="What do you do? Example: CEO at ACME Inc."
-                    />
-
-                    <FormField
-                        id="education"
-                        label="Education"
-                        value={education}
-                        onChange={(e) => setEducation(e.target.value)}
-                        disabled={updateLoading}
-                        placeholder="Where did you go to school?"
-                    />
-                  </FormSection>
-
-                  <div className="flex justify-end space-x-3 pt-4">
-                      <Button
-                          type="button"
-                          variant="secondary"
+                      <FormField
+                          id="fullName"
+                          label="Name"
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
                           disabled={updateLoading}
-                          onClick={() => {
-                              setIsEditing(false);
-                              resetFormFields();
-                          }}
-                      >
-                          Cancel
-                      </Button>
-                      <Button
-                          type="submit"
-                          variant="primary"
+                          placeholder="Your full name"
+                      />
+
+                      <FormField
+                          id="email"
+                          type="email"
+                          label="Email"
+                          value={user?.email || ''}
+                          disabled={true}
+                          placeholder="Your email"
+                      />
+
+                      <CheckboxField
+                          id="displayEmail"
+                          label="Display email on profile"
+                          checked={displayEmail}
+                          onChange={(e) => setDisplayEmail(e.target.checked)}
                           disabled={updateLoading}
-                      >
-                          {updateLoading ? 'Saving...' : 'Save Changes'}
-                      </Button>
-                  </div>
-                </form>
-              </FormContainer>
-            )}
-          </section>
+                      />
+
+                      <FormField
+                          id="username"
+                          label="Username"
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                          disabled={updateLoading}
+                          placeholder="Your unique username"
+                          required
+                      />
+                    </FormSection>
+
+                    <FormSection title="Basic">
+                      <FormField
+                          id="websiteUrl"
+                          type="url"
+                          label="Website URL"
+                          value={websiteUrl}
+                          onChange={(e) => setWebsiteUrl(e.target.value)}
+                          disabled={updateLoading}
+                          placeholder="https://yoursite.com"
+                      />
+
+                      <FormField
+                          id="location"
+                          label="Location"
+                          value={location}
+                          onChange={(e) => setLocation(e.target.value)}
+                          disabled={updateLoading}
+                          placeholder="City, Country"
+                      />
+
+                      <FormField
+                          id="bio"
+                          type="textarea"
+                          label="Bio"
+                          value={bio}
+                          onChange={(e) => setBio(e.target.value)}
+                          disabled={updateLoading}
+                          placeholder="A short bio..."
+                          rows={3}
+                          helperText={`${bio.length}/200`}
+                      />
+                    </FormSection>
+
+                    <FormSection title="Personal">
+                      <FormField
+                          id="pronouns"
+                          label="Pronouns"
+                          value={pronouns}
+                          onChange={(e) => setPronouns(e.target.value)}
+                          disabled={updateLoading}
+                          placeholder="e.g., she/her, he/him, they/them"
+                      />
+                    </FormSection>
+
+                    <FormSection title="Work">
+                      <FormField
+                          id="work"
+                          label="Work"
+                          value={work}
+                          onChange={(e) => setWork(e.target.value)}
+                          disabled={updateLoading}
+                          placeholder="What do you do? Example: CEO at ACME Inc."
+                      />
+
+                      <FormField
+                          id="education"
+                          label="Education"
+                          value={education}
+                          onChange={(e) => setEducation(e.target.value)}
+                          disabled={updateLoading}
+                          placeholder="Where did you go to school?"
+                      />
+                    </FormSection>
+
+                    <div className="flex justify-end space-x-3 pt-4">
+                        <Button
+                            type="button"
+                            variant="secondary"
+                            disabled={updateLoading}
+                            onClick={() => {
+                                setIsEditing(false);
+                                resetFormFields();
+                            }}
+                        >
+                            Cancel
+                        </Button>
+                        <Button
+                            type="submit"
+                            variant="primary"
+                            disabled={updateLoading}
+                        >
+                            {updateLoading ? 'Saving...' : 'Save Changes'}
+                        </Button>
+                    </div>
+                  </form>
+                </FormContainer>
+              )}
+            </section>
+          </div>
         </div>
       </main>
     </div>
