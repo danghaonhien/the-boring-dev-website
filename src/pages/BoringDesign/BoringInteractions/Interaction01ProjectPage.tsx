@@ -95,9 +95,9 @@ const HoverTabsWithRegret: React.FC = () => {
       </div>
       <div className="p-4 flex-grow"> {/* Use flex-grow to fill space */}
          {/* Add dark mode text color */}
-         {activeTab === 'Tab 1' && <p className="text-gray-700 dark:text-gray-700">Content for Tab 1. Seems okay, right?</p>}
-         {activeTab === 'Tab 2' && <p className="text-gray-700 dark:text-gray-700">Content for Tab 2. Or maybe this one?</p>}
-         {activeTab === 'Tab 3' && <p className="text-gray-700 dark:text-gray-700">Content for Tab 3. Definitely this one... unless?</p>}
+         {activeTab === 'Tab 1' && <p className="text-gray-700 dark:text-gray-200">Content for Tab 1. Seems okay, right?</p>}
+         {activeTab === 'Tab 2' && <p className="text-gray-700 dark:text-gray-200">Content for Tab 2. Or maybe this one?</p>}
+         {activeTab === 'Tab 3' && <p className="text-gray-700 dark:text-gray-200">Content for Tab 3. Definitely this one... unless?</p>}
       </div>
        <p className="text-xs text-gray-500 dark:text-gray-400 mt-auto pt-2">Hover over a tab. It waits {REGRET_DELAY}ms before committing, just like you.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
@@ -128,12 +128,12 @@ const StickyHeaderDetached: React.FC = () => {
   return (
     <DemoWrapper className="items-stretch justify-start overflow-hidden"> {/* Allow internal scroll */}
         <div className="h-full flex flex-col">
-            <div className="sticky top-0 bg-gray-200  p-2 z-10 border-b border-gray-300 dark:border-gray-600">
-                <p className="text-sm font-medium text-center text-gray-700 dark:text-gray-700">I'm always here. Watching.</p>
+            <div className="sticky top-0 bg-gray-200  p-2 z-10 border-b border-gray-300 dark:bg-gray-800 dark:border-gray-600">
+                <p className="text-sm font-medium text-center text-gray-700 dark:text-boring-offwhite">I'm always here. Watching.</p>
             </div>
             <div className="p-4 flex-grow overflow-y-auto">
                 <p className="text-sm mb-2">Scrollable content below the header...</p>
-                <div className="h-48 bg-gray-100  rounded flex items-center justify-center text-xs text-gray-400">
+                <div className="h-48 bg-gray-100 dark:bg-gray-800 dark:border dark:border-gray-700 rounded flex items-center justify-center text-xs text-gray-400">
                     [More content...]
                 </div>
                  <p className="text-sm mt-2">The header above remains visible within this box, uncaringly.</p>
@@ -852,7 +852,7 @@ const ShrinkingSideNav: React.FC = () => {
     // Remove max-w-xs from DemoWrapper
     <DemoWrapper className="items-stretch justify-start relative h-[200px]">
       <motion.div
-        className="bg-gray-100  p-3 rounded h-full absolute left-0 top-0 origin-left overflow-hidden"
+        className="bg-gray-100 dark:bg-gray-900  p-3 rounded h-full absolute left-0 top-0 origin-left overflow-hidden"
         initial={{ width: '120px' }}
         whileHover={{ width: '80px' }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
@@ -1518,7 +1518,7 @@ const Interaction01ProjectPage: React.FC = () => {
                      Interaction Library <span className="text-indigo-600 ">for Boring Devs</span>
                    </h1>
                    {/* Note: Removed extra px-12 from here as padding is now on the parent section */}
-                   <p className="text-lg md:text-xl text-gray-600  max-w-2xl ">
+                   <p className="text-lg md:text-xl text-gray-600 dark:text-boring-offwhite  max-w-2xl ">
                      Quirky, practical, low-effort UI/UX patterns that do just enough (with a side of existential dread).
                    </p> {/* Fix potential extra closing tag here? Let's ensure it's closed properly */} 
                </ScrollReveal>
@@ -1526,7 +1526,7 @@ const Interaction01ProjectPage: React.FC = () => {
 
             {/* Navigation Patterns Section - Add ID */}
             <Slide id={sections[0].id} label="🧭 Navigation Patterns" title="Finding things without getting lost (too much)">
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-12"> {/* Adjusted grid gap */}
+             <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-12"> {/* Adjusted grid gap */}
                <DemoShowcase
                  title="Hover Tabs with Regret Delay"
                  description="Adds a 200ms delay for indecisive users. Mentally realistic."

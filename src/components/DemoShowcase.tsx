@@ -23,7 +23,7 @@ const DevPanel: React.FC<DevPanelProps> = ({
   copySuccess,
 }) => {
   return (
-    <div className="mt-auto p-3 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-b-md flex justify-end items-center space-x-2 w-full">
+    <div className="mt-auto p-3 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 rounded-b-md flex justify-end items-center space-x-2 w-full">
       {/* Copy Button (visible only when code is shown) */}
       {isCodeVisible && (
            <button
@@ -89,19 +89,19 @@ export const DemoShowcase: React.FC<DemoShowcaseProps> = ({
   }, [codeSnippet]);
 
   return (
-    <div className={`bg-white border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm mb-8 overflow-hidden flex flex-col ${className}`}>
+    <div className={`bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm mb-8 overflow-hidden flex flex-col ${className}`}>
       {/* Header Info */}
-      <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-white">
+      <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
         {/* Flex container for Title and Toggle */}
         <div className="flex justify-between items-start mb-2">
-            <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-boring-offwhite">{title}</h3>
             {/* Preview/Code Toggle */}
             <div className="flex space-x-1 flex-shrink-0 ml-4">
                  <button
                      onClick={() => setIsCodeVisible(false)}
                      className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
                      !isCodeVisible
-                         ? 'border border-gray-500 text-gray-700 bg-transparent'
+                         ? 'border border-gray-500 text-gray-700 dark:text-boring-offwhite bg-transparent'
                          : 'text-gray-500 hover:bg-gray-100'
                      }`}
                  >
@@ -111,7 +111,7 @@ export const DemoShowcase: React.FC<DemoShowcaseProps> = ({
                      onClick={() => setIsCodeVisible(true)}
                      className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
                      isCodeVisible
-                         ? 'border border-gray-500 text-gray-700 bg-transparent'
+                         ? 'border border-gray-500 text-gray-700 dark:text-boring-offwhite bg-transparent'
                          : 'text-gray-500 hover:bg-gray-100'
                      }`}
                  >
@@ -120,7 +120,7 @@ export const DemoShowcase: React.FC<DemoShowcaseProps> = ({
             </div>
         </div>
         {/* End Flex container */}
-        <div className="text-sm text-gray-600 mb-3">{description}</div>
+        <div className="text-sm text-gray-600 dark:text-gray-300 mb-3">{description}</div>
         <div className="flex items-center space-x-3 text-xs">
           <span className={`px-2 py-0.5 rounded-full flex items-center ${effortColor[effort].replace(/ dark:[^ ]+/g, '')}`}>
              <BoltIcon className="w-3 h-3 mr-1" /> Effort: {effort}
