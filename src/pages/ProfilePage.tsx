@@ -381,7 +381,7 @@ export default function ProfilePage() {
       <Header isRevealed={true} />
       
       <main className="w-full">
-        <div className="w-full h-48 bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 dark:from-indigo-900 dark:via-purple-900 dark:to-pink-900 mb-[-60px]"></div>
+        <div className="w-full mt-22 h-64 bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 dark:from-indigo-900 dark:via-purple-900 dark:to-pink-900 mb-[-60px]"></div>
         
         <div className="px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:space-x-8">
