@@ -64,4 +64,59 @@ export const handleSupabaseError = (error: any, defaultMessage = 'An error occur
   }
   
   return defaultMessage;
+};
+
+// Debug utility for profile loading issues
+export const debugProfileLoading = async (userId: string) => {
+  // Removed detailed logging for security reasons
+  try {
+    // Check if user exists in auth.users
+    const { data: authUser, error: authError } = await supabase
+      .rpc('get_auth_user_by_id', { user_id: userId });
+    
+    // Check if user exists in public.users
+    const { data: publicUser, error: publicUserError } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', userId)
+      .single();
+    
+    // Check if profile exists
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
+      .single();
+    
+    // If no public user but auth user exists, create public user
+    if (publicUserError && publicUserError.code === 'PGRST116' && authUser) {
+      const { data: insertedUser, error: insertError } = await supabase
+        .from('users')
+        .insert({ 
+          id: userId,
+          email: authUser.email || 'unknown@example.com',
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        })
+        .select()
+        .single();
+    }
+    
+    // If no profile but public user exists, create profile
+    if (profileError && profileError.code === 'PGRST116' && (publicUser || authUser)) {
+      const { data: insertedProfile, error: insertProfileError } = await supabase
+        .from('profiles')
+        .insert({ 
+          id: userId,
+          updated_at: new Date().toISOString()
+        })
+        .select()
+        .single();
+    }
+    
+    return true;
+  } catch (e) {
+    console.error("Debug process error occurred");
+    return false;
+  }
 }; 

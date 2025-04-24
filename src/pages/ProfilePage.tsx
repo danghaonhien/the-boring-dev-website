@@ -52,30 +52,24 @@ export default function ProfilePage() {
     let isMounted = true;
     async function fetchProfile() {
         if (!user) {
-            console.log("ProfilePage: No user found in context");
             setError("User not found.");
             setLoading(false);
             return;
         }
         
-        console.log("ProfilePage: User found, ID:", user.id);
         setLoading(true);
         setError(null);
         
         try {
             // First check if users entry exists
-            console.log("ProfilePage: Checking if user exists in users table");
             const { data: userData, error: userError } = await supabase
                 .from('users')
                 .select('id, email')
                 .eq('id', user.id)
                 .single();
                 
-            console.log("User data check result:", { userData, error: userError });
-            
             // If user record doesn't exist, create it
             if (userError && userError.code === 'PGRST116') {
-                console.log("User record not found, creating one");
                 const { error: insertUserError } = await supabase
                     .from('users')
                     .insert({ 
@@ -84,24 +78,20 @@ export default function ProfilePage() {
                     });
                 
                 if (insertUserError) {
-                    console.error("Failed to create user record:", insertUserError);
+                    console.error("Failed to create user record");
                 }
             }
             
             // Now fetch profile data
-            console.log("ProfilePage: Fetching profile for user ID:", user.id);
             const { data, error: fetchError, status } = await supabase
                 .from('profiles')
                 .select(`username, full_name, avatar_url, updated_at, website_url, location, bio, pronouns, work, education, display_email`)
                 .eq('id', user.id)
                 .single();
 
-            console.log("Profile fetch result:", { data, error: fetchError, status });
-
             if (fetchError) {
                 // If no data was found (PGRST116 is the "no rows returned" error)
                 if (fetchError.code === 'PGRST116' || status === 406) {
-                    console.log("No profile found, creating default profile object");
                     // Try to create a profile
                     const { error: insertError } = await supabase
                         .from('profiles')
@@ -111,8 +101,7 @@ export default function ProfilePage() {
                         });
                     
                     if (insertError) {
-                        console.error("Error creating profile:", insertError);
-                        // Don't throw, try to continue
+                        console.error("Error creating profile");
                     }
                     
                     // Check if profile was created successfully
@@ -121,8 +110,6 @@ export default function ProfilePage() {
                         .select('id')
                         .eq('id', user.id)
                         .single();
-                        
-                    console.log("Profile creation check:", { data: checkData, error: checkError });
                     
                     // Set empty profile data
                     if (isMounted) {
@@ -132,7 +119,6 @@ export default function ProfilePage() {
                             work: null, education: null, display_email: false
                         };
                         
-                        console.log("Setting empty profile:", emptyProfile);
                         setProfile(emptyProfile);
                         // Reset all form fields to empty values
                         setUsername('');
@@ -148,11 +134,10 @@ export default function ProfilePage() {
                     }
                 } else {
                     // For other errors
-                    console.error("Other profile fetch error:", fetchError);
+                    console.error("Profile fetch error");
                     throw fetchError;
                 }
             } else if (data) {
-                console.log("Profile data found:", data);
                 if (isMounted) {
                     setProfile(data);
                     setUsername(data.username || '');
@@ -168,10 +153,9 @@ export default function ProfilePage() {
                 }
             }
         } catch (err: any) {
-            console.error("Error in profile fetch:", err);
+            console.error("Error in profile fetch");
             if (isMounted) setError("Could not fetch profile data: " + (err.message || "Unknown error"));
         } finally {
-            console.log("Profile fetch completed");
             if (isMounted) setLoading(false);
         }
     }
@@ -247,19 +231,13 @@ export default function ProfilePage() {
         let avatarPublicUrl: string | null = profile?.avatar_url || null;
 
         if (avatarFile) {
-            console.log("Starting avatar upload process");
             const fileExt = avatarFile.name.split('.').pop();
             const filePath = `${user.id}/${Date.now()}.${fileExt}`;
             
-            console.log("Avatar upload path:", filePath);
-
-            // First check if the storage bucket exists
             const { data: buckets, error: bucketsError } = await supabase
                 .storage
                 .listBuckets();
                 
-            console.log("Available storage buckets:", buckets);
-            
             if (bucketsError) {
                 console.error("Error fetching storage buckets:", bucketsError);
                 throw bucketsError;
@@ -285,13 +263,9 @@ export default function ProfilePage() {
                 throw uploadError;
             }
             
-            console.log("Avatar uploaded successfully, getting public URL");
-
             const { data: urlData } = supabase.storage
                 .from('avatars')
                 .getPublicUrl(filePath);
-
-            console.log("URL data response:", urlData);
 
             if (!urlData?.publicUrl) {
                  console.error("Could not get public URL for avatar");
@@ -300,7 +274,6 @@ export default function ProfilePage() {
                  avatarPublicUrl = null;
             } else {
                 avatarPublicUrl = urlData.publicUrl;
-                console.log("Public URL for avatar:", avatarPublicUrl);
             }
         }
 
@@ -399,17 +372,11 @@ export default function ProfilePage() {
           <section className="w-full">
             <div className="bg-white rounded-lg shadow p-6 relative">
               <div className="absolute left-1/2 transform -translate-x-1/2 -top-16">
-                 {/* Log avatar URL for debugging */}
-                 {(() => {
-                    console.log("Avatar URL being used:", isEditing ? (avatarPreview || 'https://via.placeholder.com/120') : (profile.avatar_url || 'https://via.placeholder.com/120'));
-                    return null;
-                 })()}
                  <img
                     src={isEditing ? (avatarPreview || 'https://via.placeholder.com/120') : (profile.avatar_url || 'https://via.placeholder.com/120')}
                     alt={profile.full_name || profile.username || 'User Avatar'}
                     className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
                     onError={(e) => {
-                      console.log("Avatar failed to load, using placeholder");
                       e.currentTarget.src = 'https://via.placeholder.com/120?text=User';
                     }}
                  />
