@@ -62,7 +62,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           setSession(session);
           
           if (session?.user) {
-            console.log("User found in session:", session.user.id);
+            // console.log("User found in session:", session.user.id);
             // Just use the auth user directly for now
             setUser(session.user as UserWithProfile);
           } else {

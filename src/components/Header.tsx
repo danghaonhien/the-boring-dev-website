@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext'; // Adjust path if needed
 import { useTheme } from '../context/ThemeContext';
+import { supabase } from '../utils/supabaseClient'; // Add this import
 
 // Define props for the Header, including menu state from parent if needed
 interface HeaderProps {
@@ -15,9 +16,35 @@ const Header: React.FC<HeaderProps> = ({
   const { darkMode, toggleDarkMode } = useTheme();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   // Determine visibility based on reveal state (passed as prop)
   const headerVisibilityClasses = isRevealed ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0';
+
+  // Fetch profile data including avatar when user changes
+  useEffect(() => {
+    async function fetchProfileData() {
+      if (user?.id) {
+        try {
+          const { data, error } = await supabase
+            .from('profiles')
+            .select('avatar_url')
+            .eq('id', user.id)
+            .single();
+            
+          if (error) {
+            console.error('Error fetching avatar:', error);
+          } else if (data?.avatar_url) {
+            setAvatarUrl(data.avatar_url);
+          }
+        } catch (error) {
+          console.error('Error in profile fetch:', error);
+        }
+      }
+    }
+    
+    fetchProfileData();
+  }, [user?.id]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -35,18 +62,20 @@ const Header: React.FC<HeaderProps> = ({
 
   // Function to render the user icon
   const renderUserIcon = () => {
-    if (user?.avatar_url) {
+    if (avatarUrl) {
       return (
         <img 
-          src={user.avatar_url}
+          id="user-avatar-img"
+          src={avatarUrl}
           alt="User avatar" 
           className={`w-8 h-8 rounded-full object-cover transition-all ${
             isDropdownOpen ? 'ring-2 ring-boring-main dark:ring-boring-main ring-offset-2' : ''
           }`}
-          onError={() => {
-            // If image fails to load, set a flag to force show the default icon
-            const imgElement = document.getElementById('user-avatar-img') as HTMLImageElement;
-            if (imgElement) imgElement.style.display = 'none';
+          onError={(e) => {
+            console.log("Avatar failed to load, falling back to default icon");
+            // If avatar fails to load, hide it and show fallback
+            e.currentTarget.style.display = 'none';
+            setAvatarUrl(null); // Clear the avatar URL state to trigger fallback
           }}
         />
       );
@@ -107,7 +136,28 @@ const Header: React.FC<HeaderProps> = ({
           ) : user ? (
             <div className="relative" ref={dropdownRef}>
               <button 
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)} 
+                onClick={async () => {
+                  // Refresh avatar when dropdown is opened
+                  if (!isDropdownOpen && user?.id) {
+                    try {
+                      // Try to fetch fresh avatar data
+                      const { data, error } = await supabase
+                        .from('profiles')
+                        .select('avatar_url')
+                        .eq('id', user.id)
+                        .single();
+                        
+                      if (error) {
+                        console.error('Error refreshing avatar:', error);
+                      } else if (data?.avatar_url) {
+                        setAvatarUrl(data.avatar_url);
+                      }
+                    } catch (error) {
+                      console.error('Unexpected error refreshing avatar:', error);
+                    }
+                  }
+                  setIsDropdownOpen(!isDropdownOpen);
+                }} 
                 className="focus:outline-none"
                 aria-label="User menu"
               >
