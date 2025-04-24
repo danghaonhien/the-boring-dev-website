@@ -74,13 +74,15 @@ const Header: React.FC<HeaderProps> = ({
                 <img 
                   src={user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.email || 'User')}&background=A0AEC0&color=FFFFFF&size=32&rounded=true&bold=true`} 
                   alt="User avatar" 
-                  className="w-8 h-8 rounded-full object-cover" 
+                  className={`w-8 h-8 rounded-full object-cover transition-all ${
+                    isDropdownOpen ? 'ring-2 ring-boring-main dark:ring-boring-main ring-offset-2' : ''
+                  }`} 
                 />
               </button>
 
               {/* Dropdown Menu */}
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-boring-dark rounded-lg shadow-xl py-2 z-50 border border-gray-200 dark:border-boring-main">
+                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-boring-dark rounded-lg shadow-xl py-2 z-50 border border-gray-200 dark:border-boring-gray700">
                   <div className="px-4 py-2 text-sm text-gray-600 dark:text-boring-offwhite border-b border-gray-200 dark:border-boring-main mb-1">
                     {/* Use full_name or username from profile data, fallback */}
                     <span className="font-medium">{user.full_name || user.username || 'User Name'}</span>
@@ -89,7 +91,7 @@ const Header: React.FC<HeaderProps> = ({
                   <Link 
                     to="/profile"
                     className="block px-4 py-2 text-sm text-gray-700 dark:text-boring-offwhite hover:bg-gray-100 dark:hover:bg-boring-main/20 hover:text-gray-900 dark:hover:text-boring-main w-full text-left z-50"
-                  
+                    onClick={() => setIsDropdownOpen(false)} // Close dropdown on link click
                   >
                     Dashboard
                   </Link>
