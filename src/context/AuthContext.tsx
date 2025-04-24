@@ -36,27 +36,45 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     let isMounted = true; // Prevent state update on unmounted component
+    
+    // Safety timeout to prevent infinite loading
+    const loadingTimeout = setTimeout(() => {
+      if (isMounted && loading) {
+        console.warn("Auth loading timed out, forcing loading to false");
+        setLoading(false);
+      }
+    }, 5000); // 5 second fallback timeout
 
     // 1. Get initial session
     async function getInitialSession() {
       try {
+        console.log("Getting initial session...");
         const { data: { session }, error } = await supabase.auth.getSession();
-        if (error) throw error;
+        
+        if (error) {
+          console.error("Error getting initial session:", error);
+          if (isMounted) setLoading(false);
+          return;
+        }
+        
         if (isMounted) {
+          // Store session if we have one
           setSession(session);
+          
           if (session?.user) {
-            const userWithProfile = await fetchUserWithProfile(session.user.id, session.user);
-            setUser(userWithProfile);
+            console.log("User found in session:", session.user.id);
+            // Just use the auth user directly for now
+            setUser(session.user as UserWithProfile);
           } else {
             setUser(null);
           }
-        }
-      } catch (error) {
-        console.error("Error getting initial session:", error);
-      } finally {
-        if (isMounted) {
+          
+          // Always set loading to false
           setLoading(false);
         }
+      } catch (error) {
+        console.error("Error in getInitialSession:", error);
+        if (isMounted) setLoading(false);
       }
     }
 
@@ -67,16 +85,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       async (event, session) => {
         if (isMounted) {
           console.log(`Supabase auth event: ${event}`);
+          
+          // Update session state
           setSession(session);
           
           if (session?.user) {
-            const userWithProfile = await fetchUserWithProfile(session.user.id, session.user);
-            setUser(userWithProfile);
+            // Just use the auth user directly for now
+            setUser(session.user as UserWithProfile);
           } else {
             setUser(null);
           }
           
-          // We can set loading to false here too, as we now know the auth state
+          // Mark auth loading as complete
           setLoading(false);
         }
       }
@@ -85,11 +105,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Cleanup function
     return () => {
       isMounted = false;
+      clearTimeout(loadingTimeout);
       if (authListener?.subscription) {
         authListener.subscription.unsubscribe();
       }
     };
-  }, []);
+  }, [loading]);
 
   // Sign out function
   const signOut = async () => {
@@ -105,23 +126,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       if (!currentAuthUser) return null;
       
-      // Get profile data
+      // Get profile data - keep this simple
       const { data: profileData } = await supabase
         .from('profiles')
         .select('username, full_name, avatar_url')
         .eq('id', userId)
         .single();
       
-      // Combine auth user with profile data
-      const userWithProfile: UserWithProfile = {
+      // Combine auth user with profile data, even if profile is null
+      return {
         ...currentAuthUser,
         ...(profileData || {})
       };
-      
-      return userWithProfile;
     } catch (error) {
-      console.error("Error fetching user with profile:", error);
-      return null;
+      console.error("Error fetching user profile:", error);
+      return currentAuthUser as UserWithProfile;
     }
   };
 
@@ -147,12 +166,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     signOut,
     refreshUserProfile
   };
-
-  // Don't render children until the initial loading is complete
-  // Or show a loading indicator
-  // if (loading) {
-  //   return <div>Loading Authentication...</div>; // Optional global loading indicator
-  // }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
