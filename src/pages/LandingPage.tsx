@@ -180,13 +180,13 @@ const LandingPage = () => {
         style={{ cursor: isMobile ? 'auto' : 'none' }}
       >
         {!isMobile && <CustomCursor />}
-{/* 
+
         <div
           className="absolute inset-0 h-screen z-0 
                      bg-[url('/src/assets/images/hero-grid-background.svg')]
                      bg-cover bg-center bg-no-repeat"
           aria-hidden="true" 
-        ></div> */}
+        ></div>
 
         <div
           className={`fixed inset-0 z-50 bg-boring-dark dark:bg-boring-dark transition-transform duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] ${startCurtainAnimation ? '-translate-y-full pointer-events-none' : 'translate-y-0'
