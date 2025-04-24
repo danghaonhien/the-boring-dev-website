@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext'; // Adjust path if needed
 import { useTheme } from '../context/ThemeContext';
 
-// Default avatar as base64 to avoid placeholder service issues
-const DEFAULT_AVATAR = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMzEgMjMxIj48cGF0aCBkPSJNMzMuODMsMzMuODNhMTE1LjUsMTE1LjUsMCwxLDEsMCwxNjMuMzQsMTE1LjQ5LDExNS40OSwwLDAsMSwwLTE2My4zNFoiIHN0eWxlPSJmaWxsOiNkMWQxZDE7c3Ryb2tlOiNmZmY7c3Ryb2tlLW1pdGVybGltaXQ6MTA7c3Ryb2tlLXdpZHRoOjhweCIvPjxwYXRoIGQ9Ik0xMTUuNSwxNDBjLTI1LjkyLDAtNDctMjEuMDgtNDctNDdTODkuNTgsNDYsMTE1LjUsNDZzNDcsMjEuMDgsNDcsNDctMjEuMDgsNDctNDcsNDdabTU0LjgsNDcuODlMMTQ2LjM1LDE2NGMtOC45MS01LjEzLTE5LjMyLTguMDktMzAuODUtOC4wOXMtMjIsNC00MS4zNSwxNC41OVY5MC41OUExMTYuNjIsMTE2LjYyLDAsMCwwLDM0LDEyOC45MmMwLDYzLjcxLDUxLjc5LDExNS41LDExNS41LDExNS41QTExNS41NSwxMTUuNTUsMCwwLDAsMjIwLDIwOC42N2MtMTEuNy0xMC44Ni0yOC45MS0xOS40NC00OS43LTIwLjc4WiIgc3R5bGU9ImZpbGw6I2ZmZiIvPjwvc3ZnPg==";
-
 // Define props for the Header, including menu state from parent if needed
 interface HeaderProps {
   isRevealed?: boolean; // Example prop, adjust as needed based on LandingPage logic
@@ -35,6 +32,47 @@ const Header: React.FC<HeaderProps> = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  // Function to render the user icon
+  const renderUserIcon = () => {
+    if (user?.avatar_url) {
+      return (
+        <img 
+          src={user.avatar_url}
+          alt="User avatar" 
+          className={`w-8 h-8 rounded-full object-cover transition-all ${
+            isDropdownOpen ? 'ring-2 ring-boring-main dark:ring-boring-main ring-offset-2' : ''
+          }`}
+          onError={() => {
+            // If image fails to load, set a flag to force show the default icon
+            const imgElement = document.getElementById('user-avatar-img') as HTMLImageElement;
+            if (imgElement) imgElement.style.display = 'none';
+          }}
+        />
+      );
+    }
+    
+    return (
+      <div className={`w-8 h-8 rounded-full bg-white dark:bg-gray-700 flex items-center justify-center transition-all ${
+        isDropdownOpen ? 'ring-2 ring-boring-main dark:ring-boring-main ring-offset-2' : ''
+      }`}>
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="h-5 w-5 text-gray-700 dark:text-gray-300" 
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            strokeWidth={2} 
+            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" 
+          />
+        </svg>
+      </div>
+    );
+  };
 
   return (
     <header
@@ -73,15 +111,7 @@ const Header: React.FC<HeaderProps> = ({
                 className="focus:outline-none"
                 aria-label="User menu"
               >
-                {/* Placeholder Avatar - Replace with actual user image if available */}
-                <img 
-                  src={user.avatar_url || DEFAULT_AVATAR} 
-                  alt="User avatar" 
-                  className={`w-8 h-8 rounded-full object-cover transition-all ${
-                    isDropdownOpen ? 'ring-2 ring-boring-main dark:ring-boring-main ring-offset-2' : ''
-                  }`} 
-                  onError={(e) => { e.currentTarget.src = DEFAULT_AVATAR; }}
-                />
+                {renderUserIcon()}
               </button>
 
               {/* Dropdown Menu */}

@@ -374,7 +374,7 @@ export default function ProfilePage() {
 
       <Header />
       
-      <main className="max-w-4xl mx-auto py-8">
+      <main className=" mx-auto py-8">
         <div className="h-32 bg-gradient-to-r from-indigo-200 via-purple-200 to-pink-200 rounded-t-lg mb-[-60px]"></div>
         
         <div className="flex flex-col md:flex-row md:space-x-8">
