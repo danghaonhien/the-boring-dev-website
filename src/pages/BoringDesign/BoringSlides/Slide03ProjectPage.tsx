@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PageTransition from '../../../components/PageTransition';
 import { ScrollReveal } from '../../../components/EnhancedInteractiveElements'; // Assuming this path is correct
-
+import Header from '../../../components/Header';
 // --- Reusable Slide Component (Copied from Slide02) ---
 interface SlideProps {
   label?: string;
@@ -239,19 +239,10 @@ const Slide03ProjectPage: React.FC = () => {
     <PageTransition>
       <div className="bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-200 transition-colors duration-300 relative">
         {/* Header */}
-        <header className="p-6 md:p-12 w-full absolute top-0 left-0 z-20">
-            <div className="flex justify-between items-center">
-                <Link to="/">
-                  <div className="text-gray-900 dark:text-gray-100 font-bold text-2xl uppercase">
-                    THE BORING DEV
-                  </div>
-                </Link>
-                {/* Link to other slides can be added here */}
-            </div>
-        </header>
+        <Header />
 
         {/* --- Slide 1: Introduction --- */}
-        <div className="pt-24 md:pt-32">
+        <div className="">
            <Slide
              label="Typography Showcase" // Updated Label
              title="Slide 03 - Typography vs. Impostor Syndrome" // Updated Title

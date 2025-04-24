@@ -7,7 +7,7 @@ import { DemoShowcase } from '../../../components/DemoShowcase'; // Corrected pa
 import { DemoWrapper } from '../../../components/DemoWrapper'; // Corrected path
 import codeSnippets from '../../../data/interactionSnippets'; // Corrected path
 import SideNav from '../../../components/SideNav'; // Import SideNav
-
+import Header from '../../../components/Header';
 // --- Reusable Slide Component (MODIFIED TO ACCEPT ID) ---
 interface SlideProps {
   label?: string;
@@ -232,7 +232,7 @@ const ShakyCheckbox: React.FC = () => {
           onChange={handleChange}
           className="h-5 w-5 rounded text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600  dark:checked:bg-indigo-500"
         />
-        <span className="text-gray-800 ">Important Task (Don't skip me)</span>
+        <span className="text-gray-800 dark:text-gray-200">Important Task (Don't skip me)</span>
       </motion.label>
        <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">Try unchecking it. It gets a little anxious.</p> {/* Restored dark:text-gray-400 */}
     </DemoWrapper>
@@ -1497,48 +1497,20 @@ const Interaction01ProjectPage: React.FC = () => {
 
   return (
     <PageTransition>
-      {/* Add overflow-x-hidden to prevent horizontal scroll when mobile nav is out */}
-      {/* Temporarily removing overflow-x-hidden to test sticky positioning */}
-      <div className="min-h-screen bg-gray-50 text-gray-800 transition-colors duration-300 relative"> {/* Removed dark:text-gray-200 */}
-        {/* Header remains absolute */}
-        <header className="p-6 md:p-8 lg:p-12 w-full absolute top-0 left-0 z-30 bg-gray-50/80 dark:bg-black/80 backdrop-blur-sm"> {/* Adjusted padding and added z-index + background */}
-            <div className="flex justify-between items-center">
-                <Link to="/" onClick={() => setIsMobileNavOpen(false)}> {/* Close nav on logo click */}
-                  <div className="text-gray-900 dark:text-gray-100 font-bold text-xl md:text-2xl uppercase">
-                    THE BORING DEV
-                  </div>
-                </Link>
-                {/* Hamburger Menu Button - visible only below lg breakpoint */}
-                <button
-                  className="lg:hidden text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 focus:outline-none z-40" // Ensure button is on top
-                  onClick={() => setIsMobileNavOpen(!isMobileNavOpen)}
-                  aria-label="Toggle menu"
-                >
-                  {isMobileNavOpen ? (
-                    // Close Icon (X)
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                  ) : (
-                    // Hamburger Icon
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-                  )}
-                </button>
-            </div>
-        </header>
-
+      <div className="min-h-screen bg-offwhite dark:bg-boring-dark text-boring-dark dark:text-boring-offwhite transition-colors duration-300 relative">
+        {/* Use shared Header component, remove custom header */}
+        <Header />
         {/* Flex container for SideNav and Main Content */}
-        {/* Adjust top padding to match header height + desired space */}
-        <div className="flex pt-24 md:pt-28 lg:pt-32">
+        {/* Adjust top padding to match Header height (p-6 md:p-12 lg:p-12) */}
+        <div className="flex ">
           {/* Side Navigation - Pass state and handler */}
           <SideNav
              sections={sections}
              isOpen={isMobileNavOpen}
              onClose={() => setIsMobileNavOpen(false)}
            />
-
           {/* Main Content Area takes remaining space */}
-          {/* Add lg:pl-8 back if needed, depending on SideNav mobile styling */}
-          <main className="flex-grow min-w-0"> {/* Added min-w-0 to prevent overflow issues */}
-
+          <main className="flex-grow min-w-0">
             {/* Title Slide - No ID needed, adjust padding */}
             <section className="text-left pb-16 md:pb-20 px-6 md:px-8 lg:px-12"> {/* Added horizontal padding */}
                <ScrollReveal>

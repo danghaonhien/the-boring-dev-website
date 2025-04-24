@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PageTransition from '../../../components/PageTransition';
 import { motion } from 'framer-motion';
 import { ScrollReveal } from '../../../components/EnhancedInteractiveElements'; // Assuming this path is correct
-
+import Header from '../../../components/Header';
 // --- Reusable Slide Component ---
 interface SlideProps {
   label?: string;
@@ -359,22 +359,11 @@ const Pitch01ProjectPage: React.FC = () => {
   return (
     <PageTransition>
       <div className="bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-200 transition-colors duration-300 relative">
-        {/* Add LandingPage Header structure (without menu button functionality) */}
-        <header className="p-12 md:p-12 w-full absolute top-0 left-0 z-20">
-            <div className="flex justify-between items-center">
-                {/* Link the title back to homepage */}
-                <Link to="/">
-                  <div className="text-gray-900 dark:text-gray-100 font-bold text-2xl uppercase">
-                    THE BORING DEV
-                  </div>
-                </Link>
-                {/* Menu button omitted as its functionality isn't needed here */}
-            </div>
-        </header>
+      <Header />
 
         {/* --- Slide 1: Overview --- */}
         {/* Add padding-top to account for absolute header */}
-        <div className="pt-24 md:pt-32"> 
+        <div className=""> 
            <Slide 
              label="Overview" 
              title="Slide 01 - Low Effort, High Impact"

@@ -49,6 +49,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setLoading(false);
       return;
     }
+    
 
     // Start with the basic auth user data
     let combinedUser: UserWithProfile = { ...authUser };
