@@ -26,7 +26,7 @@ interface Profile {
 }
 
 export default function ProfilePage() {
-  const { user } = useAuth();
+  const { user, refreshUserProfile } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -231,52 +231,81 @@ export default function ProfilePage() {
         let avatarPublicUrl: string | null = profile?.avatar_url || null;
 
         if (avatarFile) {
-            const fileExt = avatarFile.name.split('.').pop();
-            const filePath = `${user.id}/${Date.now()}.${fileExt}`;
-            
-            const { data: buckets, error: bucketsError } = await supabase
-                .storage
-                .listBuckets();
+            try {
+                // Check bucket existence with detailed error logging
+                const { data: buckets, error: bucketsError } = await supabase
+                    .storage
+                    .listBuckets();
                 
-            if (bucketsError) {
-                console.error("Error fetching storage buckets:", bucketsError);
-                throw bucketsError;
-            }
-            
-            const avatarBucketExists = buckets?.some(bucket => bucket.name === 'avatars');
-            
-            if (!avatarBucketExists) {
-                console.error("Avatars bucket doesn't exist!");
-                setToastMessage("Avatar upload failed: Storage not configured properly.");
-                setToastType('error');
-                throw new Error("Avatars bucket doesn't exist");
-            }
+                if (bucketsError) {
+                    console.error("Error fetching storage buckets:", bucketsError);
+                    setToastMessage(`Storage error: ${bucketsError.message}`);
+                    setToastType('error');
+                    setUpdateLoading(false);
+                    return;
+                }
+                
+                console.log("Available buckets:", buckets?.map(b => b.name));
+                
+                const avatarBucketExists = buckets?.some(bucket => 
+                    bucket.name.toLowerCase() === 'avatars'
+                );
+                
+                if (!avatarBucketExists) {
+                    console.error("Avatars bucket not found. Available buckets:", buckets?.map(b => b.name));
+                    setToastMessage("Avatar upload failed: Storage bucket 'avatars' not found. Please create it in Supabase.");
+                    setToastType('error');
+                    setUpdateLoading(false);
+                    return;
+                }
 
-            const { error: uploadError } = await supabase.storage
-                .from('avatars')
-                .upload(filePath, avatarFile, { upsert: true });
+                // Once we confirm bucket exists, try upload
+                const fileExt = avatarFile.name.split('.').pop();
+                const filePath = `${user.id}/${Date.now()}.${fileExt}`;
 
-            if (uploadError) {
-                console.error("Avatar upload error:", uploadError);
-                setToastMessage(`Failed to upload avatar: ${uploadError.message}`);
-                setToastType('error');
-                throw uploadError;
-            }
-            
-            const { data: urlData } = supabase.storage
-                .from('avatars')
-                .getPublicUrl(filePath);
+                console.log("Attempting to upload to path:", filePath);
 
-            if (!urlData?.publicUrl) {
-                 console.error("Could not get public URL for avatar");
-                 setToastMessage("Failed to get avatar URL after upload.");
-                 setToastType('error');
-                 avatarPublicUrl = null;
-            } else {
+                const { data: uploadData, error: uploadError } = await supabase.storage
+                    .from('avatars')
+                    .upload(filePath, avatarFile, { upsert: true });
+
+                if (uploadError) {
+                    console.error("Avatar upload error:", uploadError);
+                    setToastMessage(`Upload failed: ${uploadError.message}`);
+                    setToastType('error');
+                    setUpdateLoading(false);
+                    return;
+                }
+
+                console.log("Upload successful:", uploadData);
+                
+                const { data: urlData } = supabase.storage
+                    .from('avatars')
+                    .getPublicUrl(filePath);
+
+                if (!urlData?.publicUrl) {
+                    console.error("Could not get public URL for avatar");
+                    setToastMessage("Failed to get avatar URL after upload.");
+                    setToastType('error');
+                    setUpdateLoading(false);
+                    return;
+                }
+                
+                console.log("Public URL generated:", urlData.publicUrl);
                 avatarPublicUrl = urlData.publicUrl;
+            } catch (uploadErr: unknown) {
+                const errorMessage = uploadErr instanceof Error 
+                    ? uploadErr.message 
+                    : "Unknown error during upload";
+                console.error("Unexpected error during avatar upload:", uploadErr);
+                setToastMessage(`Avatar upload error: ${errorMessage}`);
+                setToastType('error');
+                setUpdateLoading(false);
+                return;
             }
         }
 
+        // Continue with profile update if avatar upload was successful or skipped
         const updates = {
             id: user.id,
             username: username.trim(),
@@ -292,37 +321,42 @@ export default function ProfilePage() {
             updated_at: new Date().toISOString(),
         };
 
-      const { error: updateError } = await supabase.from('profiles').upsert(updates);
+        console.log("Updating profile with:", updates);
 
-      if (updateError) {
-         console.error("Profile update error:", updateError.message);
-         let specificError = 'Failed to update profile. Please try again.';
-         if (updateError.message.includes('duplicate key value violates unique constraint "profiles_username_key"')) {
-            specificError = 'Username is already taken. Please choose another.';
-         } else if (updateError.message.includes('violates row-level security policy')) {
-            specificError = 'You do not have permission to perform this update.';
-         }
-         setToastMessage(specificError);
-         setToastType('error');
-         throw updateError;
-      }
+        const { data: updateData, error: updateError } = await supabase.from('profiles').upsert(updates);
 
-      setProfile(prev => prev ? { ...prev, ...updates } as Profile : updates as Profile);
-      setToastMessage("Profile updated successfully!");
-      setToastType('success');
-      setIsEditing(false);
-      setAvatarFile(null);
+        if (updateError) {
+            console.error("Profile update error:", updateError);
+            let specificError = 'Failed to update profile. Please try again.';
+            if (updateError.message.includes('duplicate key value violates unique constraint "profiles_username_key"')) {
+                specificError = 'Username is already taken. Please choose another.';
+            } else if (updateError.message.includes('violates row-level security policy')) {
+                specificError = 'You do not have permission to perform this update.';
+            } else {
+                specificError = `Update error: ${updateError.message}`;
+            }
+            setToastMessage(specificError);
+            setToastType('error');
+            setUpdateLoading(false);
+            return;
+        }
 
+        console.log("Profile update successful:", updateData);
+        setProfile(prev => prev ? { ...prev, ...updates } as Profile : updates as Profile);
+        setToastMessage("Profile updated successfully!");
+        setToastType('success');
+        setIsEditing(false);
+        setAvatarFile(null);
 
+        // Refresh the user profile data in the context
+        await refreshUserProfile();
 
     } catch (err: any) {
-      console.error("Error during profile update process:", err.message);
-       if (!toastMessage) {
-           setToastMessage('An unexpected error occurred during the update.');
-           setToastType('error');
-       }
+        console.error("Error during profile update process:", err);
+        setToastMessage(`An unexpected error occurred: ${err.message || "Unknown error"}`);
+        setToastType('error');
     } finally {
-      setUpdateLoading(false);
+        setUpdateLoading(false);
     }
   };
 
