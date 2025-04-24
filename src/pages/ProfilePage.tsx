@@ -11,6 +11,9 @@ const PostIcon = () => <svg className="w-4 h-4 inline mr-1" fill="currentColor" 
 const CommentIcon = () => <svg className="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.192-3.377A6.984 6.984 0 012 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd"/></svg>; // Example icon
 const TagIcon = () => <svg className="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a1 1 0 011-1h5a.997.997 0 01.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd"/></svg>; // Example icon
 
+// Default avatar as base64 to avoid placeholder service issues
+const DEFAULT_AVATAR = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMzEgMjMxIj48cGF0aCBkPSJNMzMuODMsMzMuODNhMTE1LjUsMTE1LjUsMCwxLDEsMCwxNjMuMzQsMTE1LjQ5LDExNS40OSwwLDAsMSwwLTE2My4zNFoiIHN0eWxlPSJmaWxsOiNkMWQxZDE7c3Ryb2tlOiNmZmY7c3Ryb2tlLW1pdGVybGltaXQ6MTA7c3Ryb2tlLXdpZHRoOjhweCIvPjxwYXRoIGQ9Ik0xMTUuNSwxNDBjLTI1LjkyLDAtNDctMjEuMDgtNDctNDdTODkuNTgsNDYsMTE1LjUsNDZzNDcsMjEuMDgsNDcsNDctMjEuMDgsNDctNDcsNDdabTU0LjgsNDcuODlMMTQ2LjM1LDE2NGMtOC45MS01LjEzLTE5LjMyLTguMDktMzAuODUtOC4wOXMtMjIsNC00MS4zNSwxNC41OVY5MC41OUExMTYuNjIsMTE2LjYyLDAsMCwwLDM0LDEyOC45MmMwLDYzLjcxLDUxLjc5LDExNS41LDExNS41LDExNS41QTExNS41NSwxMTUuNTUsMCwwLDAsMjIwLDIwOC42N2MtMTEuNy0xMC44Ni0yOC45MS0xOS40NC00OS43LTIwLjc4WiIgc3R5bGU9ImZpbGw6I2ZmZiIvPjwvc3ZnPg==";
+
 interface Profile {
   username: string | null;
   full_name: string | null;
@@ -232,38 +235,11 @@ export default function ProfilePage() {
 
         if (avatarFile) {
             try {
-                // Check bucket existence with detailed error logging
-                const { data: buckets, error: bucketsError } = await supabase
-                    .storage
-                    .listBuckets();
-                
-                if (bucketsError) {
-                    console.error("Error fetching storage buckets:", bucketsError);
-                    setToastMessage(`Storage error: ${bucketsError.message}`);
-                    setToastType('error');
-                    setUpdateLoading(false);
-                    return;
-                }
-                
-                console.log("Available buckets:", buckets?.map(b => b.name));
-                
-                const avatarBucketExists = buckets?.some(bucket => 
-                    bucket.name.toLowerCase() === 'avatars'
-                );
-                
-                if (!avatarBucketExists) {
-                    console.error("Avatars bucket not found. Available buckets:", buckets?.map(b => b.name));
-                    setToastMessage("Avatar upload failed: Storage bucket 'avatars' not found. Please create it in Supabase.");
-                    setToastType('error');
-                    setUpdateLoading(false);
-                    return;
-                }
-
-                // Once we confirm bucket exists, try upload
+                // Skip bucket checking and try upload directly
                 const fileExt = avatarFile.name.split('.').pop();
                 const filePath = `${user.id}/${Date.now()}.${fileExt}`;
 
-                console.log("Attempting to upload to path:", filePath);
+                console.log("Attempting to upload directly to path:", filePath);
 
                 const { data: uploadData, error: uploadError } = await supabase.storage
                     .from('avatars')
@@ -406,11 +382,11 @@ export default function ProfilePage() {
             <div className="bg-white rounded-lg shadow p-6 relative">
               <div className="absolute left-1/2 transform -translate-x-1/2 -top-16">
                  <img
-                    src={isEditing ? (avatarPreview || 'https://via.placeholder.com/120') : (profile.avatar_url || 'https://via.placeholder.com/120')}
+                    src={isEditing ? (avatarPreview || DEFAULT_AVATAR) : (profile.avatar_url || DEFAULT_AVATAR)}
                     alt={profile.full_name || profile.username || 'User Avatar'}
                     className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover"
                     onError={(e) => {
-                      e.currentTarget.src = 'https://via.placeholder.com/120?text=User';
+                      e.currentTarget.src = DEFAULT_AVATAR;
                     }}
                  />
               </div>
@@ -471,9 +447,12 @@ export default function ProfilePage() {
                            <h3 className="text-lg font-medium mb-4 text-gray-800">User</h3>
                             <div className="flex items-center space-x-4">
                                 <img
-                                    src={avatarPreview || 'https://via.placeholder.com/80'}
+                                    src={avatarPreview || DEFAULT_AVATAR}
                                     alt="Avatar Preview"
                                     className="w-20 h-20 rounded-full object-cover border"
+                                    onError={(e) => {
+                                      e.currentTarget.src = DEFAULT_AVATAR;
+                                    }}
                                 />
                                 <div>
                                     <label htmlFor="avatar" className="block text-sm font-medium text-gray-700 mb-1">Profile image</label>

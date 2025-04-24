@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext'; // Adjust path if needed
 import { useTheme } from '../context/ThemeContext';
 
+// Default avatar as base64 to avoid placeholder service issues
+const DEFAULT_AVATAR = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMzEgMjMxIj48cGF0aCBkPSJNMzMuODMsMzMuODNhMTE1LjUsMTE1LjUsMCwxLDEsMCwxNjMuMzQsMTE1LjQ5LDExNS40OSwwLDAsMSwwLTE2My4zNFoiIHN0eWxlPSJmaWxsOiNkMWQxZDE7c3Ryb2tlOiNmZmY7c3Ryb2tlLW1pdGVybGltaXQ6MTA7c3Ryb2tlLXdpZHRoOjhweCIvPjxwYXRoIGQ9Ik0xMTUuNSwxNDBjLTI1LjkyLDAtNDctMjEuMDgtNDctNDdTODkuNTgsNDYsMTE1LjUsNDZzNDcsMjEuMDgsNDcsNDctMjEuMDgsNDctNDcsNDdabTU0LjgsNDcuODlMMTQ2LjM1LDE2NGMtOC45MS01LjEzLTE5LjMyLTguMDktMzAuODUtOC4wOXMtMjIsNC00MS4zNSwxNC41OVY5MC41OUExMTYuNjIsMTE2LjYyLDAsMCwwLDM0LDEyOC45MmMwLDYzLjcxLDUxLjc5LDExNS41LDExNS41LDExNS41QTExNS41NSwxMTUuNTUsMCwwLDAsMjIwLDIwOC42N2MtMTEuNy0xMC44Ni0yOC45MS0xOS40NC00OS43LTIwLjc4WiIgc3R5bGU9ImZpbGw6I2ZmZiIvPjwvc3ZnPg==";
+
 // Define props for the Header, including menu state from parent if needed
 interface HeaderProps {
   isRevealed?: boolean; // Example prop, adjust as needed based on LandingPage logic
@@ -72,11 +75,12 @@ const Header: React.FC<HeaderProps> = ({
               >
                 {/* Placeholder Avatar - Replace with actual user image if available */}
                 <img 
-                  src={user.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.email || 'User')}&background=A0AEC0&color=FFFFFF&size=32&rounded=true&bold=true`} 
+                  src={user.avatar_url || DEFAULT_AVATAR} 
                   alt="User avatar" 
                   className={`w-8 h-8 rounded-full object-cover transition-all ${
                     isDropdownOpen ? 'ring-2 ring-boring-main dark:ring-boring-main ring-offset-2' : ''
                   }`} 
+                  onError={(e) => { e.currentTarget.src = DEFAULT_AVATAR; }}
                 />
               </button>
 
@@ -115,17 +119,15 @@ const Header: React.FC<HeaderProps> = ({
               )}
             </div>
           ) : (
-            <>
-              <Link to="/login" className="text-sm text-boring-dark dark:text-boring-offwhite hover:underline">
-                Sign In
-              </Link>
-              <Link
-                to="/signup"
-                className="text-sm text-boring-dark dark:text-boring-offwhite font-medium bg-gray-200 dark:bg-boring-dark px-3 py-1 rounded hover:bg-gray-300 dark:hover:bg-gray-800 transition-colors"
-              >
-                Sign Up
-              </Link>
-            </>
+            <Link 
+              to="/login" 
+              className="text-sm text-boring-dark dark:text-boring-offwhite hover:text-gray-700 dark:hover:text-gray-300 transition-colors flex items-center"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              Account
+            </Link>
           )}
         </div>
       </div>
