@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Determine visibility based on reveal state (passed as prop)
-  const headerVisibilityClasses = isRevealed ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0 pointer-events-none';
+  const headerVisibilityClasses = isRevealed ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0';
 
   // Close dropdown when clicking outside
   useEffect(() => {

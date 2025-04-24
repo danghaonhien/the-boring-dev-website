@@ -62,8 +62,8 @@ const LandingPage = () => {
         // Set isLoading to false only after curtain animation completes
         setTimeout(() => {
           setIsLoading(false); // Now safe to hide loading state
-          // Reveal hero section slightly after isLoading is false
-          setTimeout(() => setIsHeroRevealed(true), 50);
+          // Reveal hero section immediately after isLoading is false
+          setIsHeroRevealed(true);
         }, curtainStartTime + curtainDuration);
 
       }
@@ -203,10 +203,13 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-        <Header 
-              isRevealed={isHeroRevealed} 
-            />
-        <div className="px-6 md:px-12 lg:px-12  relative z-10 min-h-screen dark:bg-boring-dark">
+        
+        {/* Header with higher z-index to ensure it's above other elements */}
+        <div className="relative z-[60]">
+          <Header isRevealed={isHeroRevealed} />
+        </div>
+        
+        <div className="px-6 md:px-12 lg:px-12 relative z-10 min-h-screen dark:bg-boring-dark">
           <section
             className={`relative h-screen overflow-y-auto md:min-h-screen lg:min-h-screen md:overflow-y-visible pt-16 md:pt-6 lg:pt-48 flex flex-col justify-between transition-opacity duration-500 ${isHeroRevealed ? 'opacity-100' : 'opacity-0 pointer-events-none'} dark:bg-boring-dark`}
           >

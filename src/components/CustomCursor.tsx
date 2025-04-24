@@ -34,7 +34,7 @@ const CustomCursor: React.FC = () => {
 
   return (
     <div 
-      className={`fixed pointer-events-none z-50 transition-opacity duration-100 ease-linear ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      className={`fixed pointer-events-none z-[999] transition-opacity duration-100 ease-linear ${isVisible ? 'opacity-100' : 'opacity-0'}`}
       style={{
         left: `${position.x}px`, 
         top: `${position.y}px`,
