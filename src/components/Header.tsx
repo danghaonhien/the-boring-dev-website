@@ -35,7 +35,7 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <header
-      className={`w-full p-6 md:p-12 lg:p-12  bg-offwhite dark:bg-boring-dark ${headerVisibilityClasses}`}
+      className={`relative overflow-visible w-full p-6 md:p-12 lg:p-12 bg-offwhite dark:bg-boring-dark ${headerVisibilityClasses}`}
     >
       <div className="flex justify-between items-center">
         <div className="text-boring-dark dark:text-boring-offwhite font-bold text-2xl uppercase">
@@ -80,22 +80,22 @@ const Header: React.FC<HeaderProps> = ({
 
               {/* Dropdown Menu */}
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-boring-dark rounded-lg shadow-xl py-2 z-50 border border-gray-200 dark:border-gray-700">
-                  <div className="px-4 py-2 text-sm text-gray-600 dark:text-boring-offwhite border-b border-gray-200 dark:border-gray-700 mb-1">
+                <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-boring-dark rounded-lg shadow-xl py-2 z-50 border border-gray-200 dark:border-boring-main">
+                  <div className="px-4 py-2 text-sm text-gray-600 dark:text-boring-offwhite border-b border-gray-200 dark:border-boring-main mb-1">
                     {/* Use full_name or username from profile data, fallback */}
                     <span className="font-medium">{user.full_name || user.username || 'User Name'}</span>
                     <span className="block text-xs text-gray-500 dark:text-boring-offwhite/70">@{user.email || 'user@example.com'}</span>
                   </div>
                   <Link 
                     to="/profile"
-                    className="block px-4 py-2 text-sm text-gray-700 dark:text-boring-offwhite hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-boring-main w-full text-left z-50"
+                    className="block px-4 py-2 text-sm text-gray-700 dark:text-boring-offwhite hover:bg-gray-100 dark:hover:bg-boring-main/20 hover:text-gray-900 dark:hover:text-boring-main w-full text-left z-50"
                     onClick={() => setIsDropdownOpen(false)} // Close dropdown on link click
                   >
                     Dashboard
                   </Link>
                   <Link 
                     to="/settings" 
-                    className="block px-4 py-2 text-sm text-gray-700 dark:text-boring-offwhite hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-boring-main w-full text-left z-50"
+                    className="block px-4 py-2 text-sm text-gray-700 dark:text-boring-offwhite hover:bg-gray-100 dark:hover:bg-boring-main/20 hover:text-gray-900 dark:hover:text-boring-main w-full text-left z-50"
                     onClick={() => setIsDropdownOpen(false)} // Close dropdown on link click
                   >
                     Settings
@@ -105,7 +105,7 @@ const Header: React.FC<HeaderProps> = ({
                       signOut();
                       setIsDropdownOpen(false); // Close dropdown on sign out
                     }} 
-                    className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900 hover:text-red-800 mt-1 border-t border-gray-200 dark:border-gray-700 pt-2"
+                    className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900 hover:text-red-800 mt-1 border-t border-gray-200 dark:border-boring-main pt-2"
                   >
                     Sign Out
                   </button>
