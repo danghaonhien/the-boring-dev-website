@@ -16,6 +16,7 @@ import Interaction01ProjectPage from './pages/BoringDesign/BoringInteractions/In
 import { AuthProvider } from './context/AuthContext';
 import './App.css';
 import UpdatePasswordPage from './pages/Auth/UpdatePasswordPage';
+import ForgotPasswordPage from './pages/Auth/ForgotPasswordPage';
 import ProfilePage from './pages/ProfilePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import { ThemeProvider } from './context/ThemeContext';
@@ -47,6 +48,8 @@ function App() {
             <Route path="/reword-this" element={<RewordThisPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/login" element={<SignInPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/update-password" element={<UpdatePasswordPage />} />
             <Route path="/projects/slide-01" element={<Slide01ProjectPage />} />
             <Route path="/projects/slide-02" element={<Slide02ProjectPage />} />
             <Route path="/projects/slide-03" element={<Slide03ProjectPage />} />
