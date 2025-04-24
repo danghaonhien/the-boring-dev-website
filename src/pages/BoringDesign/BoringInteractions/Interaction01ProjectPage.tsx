@@ -20,7 +20,7 @@ interface SlideProps {
 const Slide: React.FC<SlideProps> = ({ label, title, children, className = "", id }) => (
   // Add id and scroll-mt-24 (adjust value if header height changes)
   <section id={id} className={`py-12 md:py-16 flex items-center scroll-mt-24 ${className}`}>
-    <div className="px-6 lg:px-6 w-full"> {/* Use container for centering */}
+    <div className="px-6 pt-12 md:pt-12 lg:pt-12  lg:px-6 w-full"> {/* Use container for centering */}
       {/* <ScrollReveal> */}{/* Temporarily commented out */}
         {label && (
           <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400 mb-2 uppercase tracking-wider">
@@ -1512,7 +1512,7 @@ const Interaction01ProjectPage: React.FC = () => {
           {/* Main Content Area takes remaining space */}
           <main className="flex-grow min-w-0">
             {/* Title Slide - No ID needed, adjust padding */}
-            <section className="text-left pb-16 md:pb-20 px-6 md:px-8 lg:px-12"> {/* Added horizontal padding */}
+            <section className="text-left pt-24 lg:pt-32 md:py-20 px-6 md:px-8 lg:px-12"> {/* Added horizontal padding */}
                <ScrollReveal>
                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-4">
                      Interaction Library <span className="text-indigo-600 ">for Boring Devs</span>
