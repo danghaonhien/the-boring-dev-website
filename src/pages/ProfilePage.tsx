@@ -26,7 +26,7 @@ interface Profile {
 }
 
 export default function ProfilePage() {
-  const { user, refreshUserProfile } = useAuth();
+  const { user } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -313,8 +313,7 @@ export default function ProfilePage() {
       setIsEditing(false);
       setAvatarFile(null);
 
-      // Refresh the user profile data in the context
-      await refreshUserProfile();
+
 
     } catch (err: any) {
       console.error("Error during profile update process:", err.message);
