@@ -237,7 +237,7 @@ const Slide03ProjectPage: React.FC = () => {
 
   return (
     <PageTransition>
-      <div className="bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-200 transition-colors duration-300 relative">
+      <div className="bg-gray-50 dark:bg-boring-dark text-gray-800 dark:text-gray-200 transition-colors duration-300 relative">
         {/* Header */}
         <Header />
 

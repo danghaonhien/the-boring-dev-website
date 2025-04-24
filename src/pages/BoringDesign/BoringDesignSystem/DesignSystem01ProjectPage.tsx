@@ -303,8 +303,8 @@ const DesignSystem01ProjectPage: React.FC = () => {
         <PageTransition>
             <Header />
 
-            <div className="bg-white dark:bg-black min-h-screen text-black dark:text-white pt-12 md:pt-12">
-                <div className=" px-6 lg:px-12 py-16 md:py-24">
+            <div className="bg-white dark:bg-boring-dark min-h-screen text-black dark:text-white pt-12 md:pt-12">
+                <div className=" px-6 lg:px-12 ">
 
                     <ScrollReveal>
                         <h1 className="text-4xl md:text-5xl font-bold mb-4">The Boring Design System</h1>

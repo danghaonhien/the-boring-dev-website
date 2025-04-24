@@ -13,7 +13,7 @@ interface SlideProps {
 }
 
 const Slide: React.FC<SlideProps> = ({ label, title, children, className = "" }) => (
-  <section className={` py-12 md:py-12 flex items-center ${className}`}>
+  <section className={`py-12 md:py-12  flex items-center ${className}`}>
     <div className="px-6 lg:px-12 w-full">
       <ScrollReveal>
         {label && (
@@ -309,7 +309,7 @@ const Pitch02ProjectPage: React.FC = () => { // Renamed component
 
   return (
     <PageTransition>
-      <div className="bg-gray-50 dark:bg-black text-gray-800 dark:text-gray-200 transition-colors duration-300 relative">
+      <div className="bg-gray-50 dark:bg-boring-dark text-gray-800 dark:text-gray-200 transition-colors duration-300 relative">
         {/* Header */}
         <Header />
 
