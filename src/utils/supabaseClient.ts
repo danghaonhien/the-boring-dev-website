@@ -70,53 +70,82 @@ export const handleSupabaseError = (error: any, defaultMessage = 'An error occur
 export const debugProfileLoading = async (userId: string) => {
   // Removed detailed logging for security reasons
   try {
-    // Check if user exists in auth.users
-    const { data: authUser, error: authError } = await supabase
-      .rpc('get_auth_user_by_id', { user_id: userId });
+    // Use the fixed repair_user_profile function instead of manual checks
+    const { data, error } = await supabase
+      .rpc('repair_user_profile', { target_user_id: userId });
     
-    // Check if user exists in public.users
-    const { data: publicUser, error: publicUserError } = await supabase
-      .from('users')
-      .select('*')
-      .eq('id', userId)
-      .single();
-    
-    // Check if profile exists
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single();
-    
-    // If no public user but auth user exists, create public user
-    if (publicUserError && publicUserError.code === 'PGRST116' && authUser) {
-      const { data: insertedUser, error: insertError } = await supabase
-        .from('users')
-        .insert({ 
-          id: userId,
-          email: authUser.email || 'unknown@example.com',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        })
-        .select()
-        .single();
-    }
-    
-    // If no profile but public user exists, create profile
-    if (profileError && profileError.code === 'PGRST116' && (publicUser || authUser)) {
-      const { data: insertedProfile, error: insertProfileError } = await supabase
-        .from('profiles')
-        .insert({ 
-          id: userId,
-          updated_at: new Date().toISOString()
-        })
-        .select()
-        .single();
+    if (error) {
+      console.error("Debug process error occurred");
+      return false;
     }
     
     return true;
   } catch (e) {
     console.error("Debug process error occurred");
     return false;
+  }
+};
+
+// Helper for avatar uploads
+export const uploadAvatar = async (userId: string, file: File): Promise<string | null> => {
+  try {
+    // Check if avatars bucket exists, if not create it
+    const { data: buckets, error: bucketsError } = await supabase.storage.listBuckets();
+    
+    if (bucketsError) {
+      console.error("Error checking storage buckets");
+      throw bucketsError;
+    }
+    
+    const avatarBucketExists = buckets?.some(bucket => bucket.name === 'avatars');
+    
+    // Create the avatars bucket if it doesn't exist
+    if (!avatarBucketExists) {
+      const { error: createBucketError } = await supabase.storage.createBucket('avatars', {
+        public: true,
+        fileSizeLimit: 2097152, // 2MB
+      });
+      
+      if (createBucketError) {
+        console.error("Failed to create avatars bucket");
+        throw createBucketError;
+      }
+    }
+    
+    // Ensure proper file extension
+    const fileExt = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+    const allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    const safeExt = allowedExts.includes(fileExt) ? fileExt : 'jpg';
+    
+    // Create a unique file path
+    const filePath = `${userId}/${Date.now()}.${safeExt}`;
+    
+    // Upload the file
+    const { error: uploadError } = await supabase.storage
+      .from('avatars')
+      .upload(filePath, file, { 
+        upsert: true,
+        contentType: file.type
+      });
+    
+    if (uploadError) {
+      console.error("Avatar upload error");
+      throw uploadError;
+    }
+    
+    // Get the public URL
+    const { data: urlData } = supabase.storage
+      .from('avatars')
+      .getPublicUrl(filePath);
+    
+    if (!urlData?.publicUrl) {
+      console.error("Could not get public URL for avatar");
+      return null;
+    }
+    
+    return urlData.publicUrl;
+  } catch (error) {
+    console.error("Avatar upload process failed");
+    return null;
   }
 }; 
