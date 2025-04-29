@@ -83,15 +83,15 @@ const RewordThisPage = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-[#3C3E40] to-[#0D0D0D] py-20 relative overflow-hidden">
+      <section className="bg-gradient-to-b from-[#F2F2F0] to-[#626973] py-40 relative overflow-hidden">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="flex flex-col md:flex-row items-center">
             {/* Left Column - Text Content */}
             <div className="md:w-1/2 text-left md:pr-8 mb-8 md:mb-0">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#F2F2F2]">1-Click Rewriting for Better Communication</h1>
-              <p className="text-xl mb-8 text-[#F2F2F2] opacity-90">Reword This ✍️: Instantly rephrase any text in the tone you want. Works across the web — perfect for job seekers, creators, founders, and ESL users.</p>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-boring-dark">1-Click Rewriting for Better Communication</h1>
+              <p className="text-xl mb-8 text-boring-dark opacity-85">Reword This ✍️: Instantly rephrase any text in the tone you want. Works across the web — perfect for job seekers, creators, founders, and ESL users.</p>
               <a 
-                href="https://chrome.google.com/webstore" 
+                href="https://chromewebstore.google.com/detail/ioohnlppkkhplonalakfapcjhcmbghol?utm_source=item-share-cb" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center px-6 py-3 border border-[#F2F2F2]/30 text-base font-medium rounded-md bg-[#D97904] text-[#F2F2F2] hover:bg-[#D97904]/90 transition-colors md:py-4 md:text-lg md:px-8"
@@ -536,10 +536,10 @@ const RewordThisPage = () => {
               </ul>
               <div className="mt-auto pt-4">
                 <a 
-                  href="https://chrome.google.com/webstore" 
+                  href="https://chromewebstore.google.com/detail/ioohnlppkkhplonalakfapcjhcmbghol?utm_source=item-share-cb" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="block w-full text-center py-2 px-4 border border-[#F2F2F2]/30 rounded-md shadow-sm text-sm font-medium text-[#0D0D0D] bg-[#D97904] hover:bg-[#D97904]/90 transition-colors"
+                  className="block w-full text-center py-2 px-4 border border-[#F2F2F2]/30 rounded-md shadow-sm text-sm font-medium text-boring-offwhite bg-[#D97904] hover:bg-[#D97904]/90 transition-colors"
                 >
                   Get Reword This Free
                 </a>
@@ -601,7 +601,7 @@ const RewordThisPage = () => {
           <h2 className="text-3xl font-bold mb-4 text-[#0D0D0D]">Communicate smarter.</h2>
           <p className="text-xl text-[#6E7073] mb-8">Try Reword This — your AI tone expert, just a click away.</p>
           <a 
-            href="https://chrome.google.com/webstore" 
+            href="https://chromewebstore.google.com/detail/ioohnlppkkhplonalakfapcjhcmbghol?utm_source=item-share-cb" 
             target="_blank" 
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center px-6 py-3 border border-[#D97904]/20 text-base font-medium rounded-md text-[#F2F2F2] bg-[#D97904] hover:bg-[#D97904]/90 transition-colors md:py-4 md:text-lg md:px-8"
