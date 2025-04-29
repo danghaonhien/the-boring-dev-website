@@ -382,7 +382,7 @@ const LandingPage = () => {
           </section>
 
 
-          <nav
+          {/* <nav
             className={`
               fixed inset-0 p-12 bg-white dark:bg-boring-dark z-40 flex flex-col 
               md:absolute md:top-28 md:right-12 md:inset-auto md:p-0 md:bg-transparent md:dark:bg-transparent md:z-20 md:block
@@ -533,7 +533,7 @@ const LandingPage = () => {
                 </ScrollReveal>
               </div>
             </div>
-          </section>
+          </section> */}
 
           <footer className="py-12 bg-boring-offwhite dark:bg-boring-dark relative">
             <div className="container mx-auto px-4">
