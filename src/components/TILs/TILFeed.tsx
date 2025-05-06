@@ -15,7 +15,13 @@ interface TILPost {
   liked_by_user: boolean;
 }
 
-const TILFeed: React.FC = () => {
+type SortOption = 'recent' | 'popular';
+
+interface TILFeedProps {
+  sortBy: SortOption;
+}
+
+const TILFeed: React.FC<TILFeedProps> = ({ sortBy }) => {
   const [posts, setPosts] = useState<TILPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -63,6 +69,25 @@ const TILFeed: React.FC = () => {
         .select('post_id, user_id')
         .in('post_id', postsData.map(post => post.id));
 
+      // Get comment counts for these posts
+      let commentCounts: Record<string, number> = {};
+      try {
+        // First get all comments
+        const { data: allCommentsData } = await supabase
+          .from('til_comments')
+          .select('post_id')
+          .in('post_id', postsData.map(post => post.id));
+          
+        // Count manually
+        if (allCommentsData) {
+          allCommentsData.forEach(comment => {
+            commentCounts[comment.post_id] = (commentCounts[comment.post_id] || 0) + 1;
+          });
+        }
+      } catch (error) {
+        console.warn('Error counting comments:', error);
+      }
+
       // Calculate like counts and user likes
       const likeCounts: Record<string, number> = {};
       let userLikes: Record<string, boolean> = {};
@@ -80,7 +105,7 @@ const TILFeed: React.FC = () => {
       }
 
       // Format posts with profile data
-      const formattedPosts = postsData.map(post => {
+      let formattedPosts = postsData.map(post => {
         const profile = profilesMap[post.user_id] || {};
         return {
           id: post.id,
@@ -90,10 +115,16 @@ const TILFeed: React.FC = () => {
           username: profile.username || post.user_id?.split('-')[0] || 'Anonymous',
           avatar_url: profile.avatar_url,
           likes_count: likeCounts[post.id] || 0,
-          comments_count: 0, // Comments not implemented yet
+          comments_count: commentCounts[post.id] || 0,
           liked_by_user: !!userLikes[post.id]
         };
       });
+
+      // Sort posts based on the current sort option
+      if (sortBy === 'popular') {
+        formattedPosts.sort((a, b) => b.likes_count - a.likes_count);
+      }
+      // If sortBy is 'recent', we've already sorted by created_at in the database query
 
       setPosts(formattedPosts);
     } catch (err: any) {
@@ -104,22 +135,26 @@ const TILFeed: React.FC = () => {
     }
   };
 
-  // Load posts on component mount and when user changes
+  // Load posts on component mount, when user changes, or when sort option changes
   useEffect(() => {
     loadPosts();
     
-    // Subscribe to new posts
+    // Subscribe to new posts, updates, and deletes
     const postsSubscription = supabase
       .channel('public:til_posts')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'til_posts' }, (payload) => {
-        loadPosts(); // Reload all posts for simplicity
+        loadPosts(); // Reload all posts when a new post is added
+      })
+      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'til_posts' }, (payload) => {
+        // Handle deletes locally to avoid a full reload
+        setPosts(current => current.filter(post => post.id !== payload.old.id));
       })
       .subscribe();
       
     return () => {
       supabase.removeChannel(postsSubscription);
     };
-  }, [user?.id]);
+  }, [user?.id, sortBy]);
 
   // Handle post likes
   const handlePostLike = async (postId: string, liked: boolean) => {
@@ -140,10 +175,31 @@ const TILFeed: React.FC = () => {
           .delete()
           .match({ post_id: postId, user_id: user.id });
       }
+
+      // If sorting by popularity, update the sort order after a like/unlike
+      if (sortBy === 'popular') {
+        const updatedPosts = [...posts];
+        const index = updatedPosts.findIndex(post => post.id === postId);
+        if (index !== -1) {
+          updatedPosts[index] = {
+            ...updatedPosts[index],
+            likes_count: liked ? updatedPosts[index].likes_count + 1 : updatedPosts[index].likes_count - 1,
+            liked_by_user: liked
+          };
+          // Re-sort the posts
+          updatedPosts.sort((a, b) => b.likes_count - a.likes_count);
+          setPosts(updatedPosts);
+        }
+      }
     } catch (err) {
       console.error('Error toggling like:', err);
       // The UI was already updated optimistically, so we don't need to do anything else here
     }
+  };
+
+  // Handle post deletion
+  const handlePostDelete = (postId: string) => {
+    setPosts(current => current.filter(post => post.id !== postId));
   };
 
   return (
@@ -160,27 +216,32 @@ const TILFeed: React.FC = () => {
             <code className="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">src/components/TILs/setup_db.sql</code>
           </div>
         </div>
-      ) : posts.length === 0 ? (
-        <div className="text-gray-500 dark:text-gray-400 text-center py-8">
-          No posts yet. Be the first to share!
-        </div>
       ) : (
         <div>
-          {posts.map(post => (
-            <TILCard
-              key={post.id}
-              id={post.id}
-              content={post.content}
-              created_at={post.created_at}
-              user_id={post.user_id}
-              username={post.username || 'Anonymous'}
-              avatar_url={post.avatar_url}
-              likes_count={post.likes_count}
-              comments_count={post.comments_count}
-              liked_by_user={post.liked_by_user}
-              onLike={handlePostLike}
-            />
-          ))}
+          {posts.length === 0 ? (
+            <div className="text-gray-500 dark:text-gray-400 text-center py-8">
+              No posts yet. Be the first to share!
+            </div>
+          ) : (
+            <div>
+              {posts.map(post => (
+                <TILCard
+                  key={post.id}
+                  id={post.id}
+                  content={post.content}
+                  created_at={post.created_at}
+                  user_id={post.user_id}
+                  username={post.username || 'Anonymous'}
+                  avatar_url={post.avatar_url}
+                  likes_count={post.likes_count}
+                  comments_count={post.comments_count}
+                  liked_by_user={post.liked_by_user}
+                  onLike={handlePostLike}
+                  onDelete={handlePostDelete}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
