@@ -19,9 +19,15 @@ type SortOption = 'recent' | 'popular';
 
 interface TILFeedProps {
   sortBy: SortOption;
+  showAllPosts?: boolean;
+  onTotalCountUpdate?: (count: number) => void;
 }
 
-const TILFeed: React.FC<TILFeedProps> = ({ sortBy }) => {
+const TILFeed: React.FC<TILFeedProps> = ({ 
+  sortBy, 
+  showAllPosts = false, 
+  onTotalCountUpdate 
+}) => {
   const [posts, setPosts] = useState<TILPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -127,6 +133,11 @@ const TILFeed: React.FC<TILFeedProps> = ({ sortBy }) => {
       // If sortBy is 'recent', we've already sorted by created_at in the database query
 
       setPosts(formattedPosts);
+      
+      // Update the parent component with the total count of posts
+      if (onTotalCountUpdate) {
+        onTotalCountUpdate(formattedPosts.length);
+      }
     } catch (err: any) {
       console.error('Error loading posts:', err);
       setError('Failed to load posts. Please try again later.');
@@ -147,7 +158,13 @@ const TILFeed: React.FC<TILFeedProps> = ({ sortBy }) => {
       })
       .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'til_posts' }, (payload) => {
         // Handle deletes locally to avoid a full reload
-        setPosts(current => current.filter(post => post.id !== payload.old.id));
+        setPosts(current => {
+          const filtered = current.filter(post => post.id !== payload.old.id);
+          if (onTotalCountUpdate) {
+            onTotalCountUpdate(filtered.length);
+          }
+          return filtered;
+        });
       })
       .subscribe();
       
@@ -199,8 +216,17 @@ const TILFeed: React.FC<TILFeedProps> = ({ sortBy }) => {
 
   // Handle post deletion
   const handlePostDelete = (postId: string) => {
-    setPosts(current => current.filter(post => post.id !== postId));
+    setPosts(current => {
+      const filtered = current.filter(post => post.id !== postId);
+      if (onTotalCountUpdate) {
+        onTotalCountUpdate(filtered.length);
+      }
+      return filtered;
+    });
   };
+
+  // Get the posts to display based on the showAllPosts prop
+  const displayPosts = showAllPosts ? posts : posts.slice(0, 5);
 
   return (
     <div>
@@ -224,7 +250,7 @@ const TILFeed: React.FC<TILFeedProps> = ({ sortBy }) => {
             </div>
           ) : (
             <div>
-              {posts.map(post => (
+              {displayPosts.map(post => (
                 <TILCard
                   key={post.id}
                   id={post.id}

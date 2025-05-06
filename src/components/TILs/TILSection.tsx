@@ -10,6 +10,8 @@ const TILSection: React.FC = () => {
   const [sortBy, setSortBy] = useState<SortOption>('recent');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isHeaderHovered, setIsHeaderHovered] = useState(false);
+  const [showAllPosts, setShowAllPosts] = useState(false);
+  const [totalPostCount, setTotalPostCount] = useState(0);
   const { user } = useAuth();
 
   // Get the header text based on sorting option
@@ -26,8 +28,20 @@ const TILSection: React.FC = () => {
     if (option === sortBy) return;
     setSortBy(option);
     setIsDropdownOpen(false);
+    // Reset view to initial 5 posts when sort changes
+    setShowAllPosts(false);
     // Refresh the feed with the new sort option
     setRefreshKey(prev => prev + 1);
+  };
+
+  // Toggle between showing all posts and just the first 5
+  const toggleShowAllPosts = () => {
+    setShowAllPosts(prev => !prev);
+  };
+  
+  // Update total post count from TILFeed
+  const updateTotalPostCount = (count: number) => {
+    setTotalPostCount(count);
   };
 
   // Close dropdown when clicking outside
@@ -140,7 +154,33 @@ const TILSection: React.FC = () => {
             </button>
           </div>
           
-          <TILFeed key={refreshKey} sortBy={sortBy} />
+          <TILFeed 
+            key={refreshKey} 
+            sortBy={sortBy} 
+            showAllPosts={showAllPosts} 
+            onTotalCountUpdate={updateTotalPostCount} 
+          />
+          
+          {!showAllPosts && totalPostCount > 5 && (
+            <div className="mt-6 text-center">
+              <button
+                onClick={toggleShowAllPosts}
+                className="px-4 py-2 bg-boring-slate text-white rounded-md hover:bg-boring-blue-bold transition-colors"
+              >
+                View More
+              </button>
+            </div>
+          )}
+          {showAllPosts && totalPostCount > 5 && (
+            <div className="mt-6 text-center">
+              <button
+                onClick={toggleShowAllPosts}
+                className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+              >
+                Show Less
+              </button>
+            </div>
+          )}
           
           {/* <div className="mt-8 text-center text-xs text-gray-500 dark:text-gray-400">
             <p>

@@ -6,6 +6,14 @@ import TILCommentSection from './TILCommentSection';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
+// Define the reaction types
+type ReactionType = 'like' | 'fire' | 'mind_blown';
+
+interface ReactionCount {
+  type: ReactionType;
+  count: number;
+}
+
 interface TILCardProps {
   id: string;
   content: string;
@@ -36,12 +44,85 @@ const TILCard: React.FC<TILCardProps> = ({
   const { user } = useAuth();
   const [isLiked, setIsLiked] = useState(liked_by_user);
   const [likesCount, setLikesCount] = useState(likes_count);
+  
+  // New state for additional reactions
+  const [reactions, setReactions] = useState<Record<ReactionType, boolean>>({
+    like: liked_by_user,
+    fire: false,
+    mind_blown: false
+  });
+  const [reactionCounts, setReactionCounts] = useState<Record<ReactionType, number>>({
+    like: likes_count,
+    fire: 0,
+    mind_blown: 0
+  });
+  const [loadingReactions, setLoadingReactions] = useState(true);
+
   const [commentsCount, setCommentsCount] = useState(comments_count);
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  
+  // Load the reactions when the component mounts
+  React.useEffect(() => {
+    loadReactions();
+  }, [id, user?.id]);
+  
+  // Load all reactions for this post
+  const loadReactions = async () => {
+    if (!id) return;
+    
+    setLoadingReactions(true);
+    try {
+      const { data, error } = await supabase
+        .from('til_reactions')
+        .select('reaction_type, user_id')
+        .eq('post_id', id);
+        
+      if (error) throw error;
+      
+      // Count reactions by type
+      const counts: Record<ReactionType, number> = {
+        like: 0,
+        fire: 0,
+        mind_blown: 0
+      };
+      
+      // Track user's reactions
+      const userReactions: Record<ReactionType, boolean> = {
+        like: false,
+        fire: false,
+        mind_blown: false
+      };
+      
+      data?.forEach(reaction => {
+        const type = reaction.reaction_type as ReactionType;
+        if (type in counts) {
+          counts[type]++;
+        }
+        
+        // Check if current user has reacted
+        if (user && reaction.user_id === user.id) {
+          userReactions[type as ReactionType] = true;
+        }
+      });
+      
+      // Also include legacy likes
+      if (likesCount > counts.like) {
+        counts.like = likesCount;
+      }
+      userReactions.like = isLiked;
+      
+      setReactionCounts(counts);
+      setReactions(userReactions);
+    } catch (err) {
+      console.error('Error loading reactions:', err);
+    } finally {
+      setLoadingReactions(false);
+    }
+  };
 
   const handleLikeClick = async () => {
     if (!user) return;
@@ -55,13 +136,107 @@ const TILCard: React.FC<TILCardProps> = ({
       setIsLiked(newLikedState);
       setLikesCount(prev => newLikedState ? prev + 1 : prev - 1);
       
+      // Also update the reactions state
+      setReactions(prev => ({
+        ...prev,
+        like: newLikedState
+      }));
+      setReactionCounts(prev => ({
+        ...prev,
+        like: newLikedState ? prev.like + 1 : prev.like - 1
+      }));
+      
       // Call the parent's onLike function
       onLike(id, newLikedState);
+      
+      // Also save to the new reactions table
+      if (newLikedState) {
+        await supabase
+          .from('til_reactions')
+          .upsert({ 
+            post_id: id, 
+            user_id: user.id,
+            reaction_type: 'like'
+          });
+      } else {
+        await supabase
+          .from('til_reactions')
+          .delete()
+          .match({ 
+            post_id: id, 
+            user_id: user.id,
+            reaction_type: 'like'
+          });
+      }
     } catch (error) {
       // Revert UI on error
       setIsLiked(!newLikedState);
       setLikesCount(prev => !newLikedState ? prev + 1 : prev - 1);
       console.error('Error toggling like:', error);
+      
+      // Also revert the reactions state
+      setReactions(prev => ({
+        ...prev,
+        like: !newLikedState
+      }));
+      setReactionCounts(prev => ({
+        ...prev,
+        like: !newLikedState ? prev.like + 1 : prev.like - 1
+      }));
+    } finally {
+      setIsSaving(false);
+    }
+  };
+  
+  // Handle other reaction types
+  const handleReaction = async (type: ReactionType) => {
+    if (!user) return;
+    if (isSaving) return;
+    
+    setIsSaving(true);
+    const newState = !reactions[type];
+    
+    try {
+      // Update UI optimistically
+      setReactions(prev => ({
+        ...prev,
+        [type]: newState
+      }));
+      setReactionCounts(prev => ({
+        ...prev,
+        [type]: newState ? prev[type] + 1 : prev[type] - 1
+      }));
+      
+      // Save to database
+      if (newState) {
+        await supabase
+          .from('til_reactions')
+          .upsert({ 
+            post_id: id, 
+            user_id: user.id,
+            reaction_type: type
+          });
+      } else {
+        await supabase
+          .from('til_reactions')
+          .delete()
+          .match({ 
+            post_id: id, 
+            user_id: user.id,
+            reaction_type: type
+          });
+      }
+    } catch (error) {
+      // Revert UI on error
+      setReactions(prev => ({
+        ...prev,
+        [type]: !newState
+      }));
+      setReactionCounts(prev => ({
+        ...prev,
+        [type]: !newState ? prev[type] + 1 : prev[type] - 1
+      }));
+      console.error(`Error toggling ${type} reaction:`, error);
     } finally {
       setIsSaving(false);
     }
@@ -72,7 +247,13 @@ const TILCard: React.FC<TILCardProps> = ({
     
     setIsDeleting(true);
     try {
-      // First delete related likes
+      // First delete related reactions
+      await supabase
+        .from('til_reactions')
+        .delete()
+        .eq('post_id', id);
+        
+      // Then delete related likes (legacy)
       await supabase
         .from('til_likes')
         .delete()
@@ -170,6 +351,55 @@ const TILCard: React.FC<TILCardProps> = ({
     }
     
     setShowComments(!showComments);
+  };
+  
+  // Get icon for reaction type
+  const getReactionIcon = (type: ReactionType, active: boolean) => {
+    switch (type) {
+      case 'like':
+        return (
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            className="h-5 w-5 mr-1" 
+            fill={active ? "currentColor" : "none"} 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={active ? 0 : 1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        );
+      case 'fire':
+        return (
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 24 24" fill={active ? "currentColor" : "none"} stroke="currentColor" strokeWidth={active ? 0 : 1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
+          </svg>
+        );
+      case 'mind_blown':
+        return (
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" viewBox="0 0 24 24" fill={active ? "currentColor" : "none"} stroke="currentColor" strokeWidth={active ? 0 : 1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+          </svg>
+        );
+      default:
+        return null;
+    }
+  };
+  
+  // Get color class for reaction type
+  const getReactionColorClass = (type: ReactionType, active: boolean) => {
+    if (!active) return '';
+    
+    switch (type) {
+      case 'like':
+        return 'text-blue-500 dark:text-blue-400';
+      case 'fire':
+        return 'text-orange-500 dark:text-orange-400';
+      case 'mind_blown':
+        return 'text-purple-500 dark:text-purple-400';
+      default:
+        return '';
+    }
   };
   
   return (
@@ -293,40 +523,61 @@ const TILCard: React.FC<TILCardProps> = ({
             </ReactMarkdown>
           </div>
           
-          <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
-            <button 
-              onClick={handleLikeClick}
-              disabled={!user || isSaving}
-              className={`flex items-center mr-4 ${!user ? 'opacity-60 cursor-not-allowed' : 'hover:text-gray-700 dark:hover:text-gray-300'} ${isLiked ? 'text-blue-500 dark:text-blue-400' : ''}`}
-            >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-5 w-5 mr-1" 
-                fill={isLiked ? "currentColor" : "none"} 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
+          <div className="flex flex-wrap items-center text-sm text-gray-500 dark:text-gray-400 gap-2 md:gap-4">
+            {/* Reactions */}
+            <div className="flex flex-wrap gap-2 items-center">
+              {/* Like reaction */}
+              <button 
+                onClick={handleLikeClick}
+                disabled={!user || isSaving}
+                className={`flex items-center ${!user ? 'opacity-60 cursor-not-allowed' : 'hover:text-gray-700 dark:hover:text-gray-300'} ${getReactionColorClass('like', isLiked)}`}
+                title="Like"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={isLiked ? 0 : 1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-              {likesCount}
-            </button>
+                {getReactionIcon('like', isLiked)}
+                {reactionCounts.like > 0 && reactionCounts.like}
+              </button>
+              
+              {/* Fire reaction */}
+              <button 
+                onClick={() => handleReaction('fire')}
+                disabled={!user || isSaving}
+                className={`flex items-center ${!user ? 'opacity-60 cursor-not-allowed' : 'hover:text-gray-700 dark:hover:text-gray-300'} ${getReactionColorClass('fire', reactions.fire)}`}
+                title="Fire"
+              >
+                {getReactionIcon('fire', reactions.fire)}
+                {reactionCounts.fire > 0 && reactionCounts.fire}
+              </button>
+              
+              {/* Mind blown reaction */}
+              <button 
+                onClick={() => handleReaction('mind_blown')}
+                disabled={!user || isSaving}
+                className={`flex items-center ${!user ? 'opacity-60 cursor-not-allowed' : 'hover:text-gray-700 dark:hover:text-gray-300'} ${getReactionColorClass('mind_blown', reactions.mind_blown)}`}
+                title="Mind Blown"
+              >
+                {getReactionIcon('mind_blown', reactions.mind_blown)}
+                {reactionCounts.mind_blown > 0 && reactionCounts.mind_blown}
+              </button>
+            </div>
             
-            <button 
-              ref={commentBtnRef}
-              onClick={handleCommentClick}
-              className={`flex items-center ${showComments ? 'text-blue-500 dark:text-blue-400' : ''} hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200`}
-            >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-5 w-5 mr-1" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
+            <div className="ml-auto">
+              <button 
+                ref={commentBtnRef}
+                onClick={handleCommentClick}
+                className={`flex items-center ${showComments ? 'text-blue-500 dark:text-blue-400' : ''} hover:text-gray-700 dark:hover:text-gray-300 transition-colors duration-200`}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-              </svg>
-              {commentsCount}
-            </button>
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  className="h-5 w-5 mr-1" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                {commentsCount}
+              </button>
+            </div>
           </div>
           
           {showComments && (
