@@ -19,6 +19,7 @@ import MemeGenerator from '../components/MemeGenerator';
 import BoringDesignsSection from '../components/BoringDesignsSection';
 import IdeaGenerator from '../components/IdeaGenerator';
 import Header from '../components/Header';
+import { TILSection } from '../components/TILs';
 import { useTheme } from '../context/ThemeContext';
 // import boringSvg from '../assets/images/homepage/BORING.svg'; // Removed SVG import
 
@@ -319,6 +320,10 @@ const LandingPage = () => {
 
           {/* Boring Designs Section */}
           <ScrollReveal delay={300}>
+            <TILSection />
+          </ScrollReveal>
+          
+          <ScrollReveal delay={300}>
             <BoringDesignsSection />
           </ScrollReveal>
 
@@ -331,12 +336,7 @@ const LandingPage = () => {
             </ScrollReveal>
           </section>
 
-          {/* Boring Designs Section */}
-          <ScrollReveal delay={300}>
-            <BoringDesignsSection />
-          </ScrollReveal>
-
-           {/* Idea Generator Section */}
+          {/* Idea Generator Section */}
            <section className="py-20 md:py-32">
              <ScrollReveal delay={300}>
                <IdeaGenerator />
